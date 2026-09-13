@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Zero-to-Hero | Ingliz tilini 0 dan o'rganing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #3b82f6;
+            --accent: #f59e0b;
+            --accent-dark: #d97706;
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-hover: #334155;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --gradient-1: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            --gradient-2: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            --gradient-3: linear-gradient(135deg, #06b6d4 0%, #2563eb 100%);
+            --shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            --radius: 16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ---- NAVBAR ---- */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: rgba(15,23,42,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(51,65,85,0.5);
+            transition: all 0.3s;
+        }
+        nav .container {
+            max-width: 1200px; margin: 0 auto;
+            padding: 16px 24px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo {
+            font-size: 1.5rem; font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a {
+            color: var(--text-muted); text-decoration: none;
+            font-weight: 500; transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 28px; border-radius: 12px;
+            font-weight: 600; font-size: 1rem;
+            text-decoration: none; border: none; cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: var(--gradient-1); color: #fff;
+            box-shadow: 0 4px 20px rgba(37,99,235,0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(37,99,235,0.6);
+        }
+        .btn-accent {
+            background: var(--gradient-2); color: #fff;
+            box-shadow: 0 4px 20px rgba(245,158,11,0.4);
+        }
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(245,158,11,0.6);
+        }
+        .btn-outline {
+            background: transparent; color: var(--text);
+            border: 2px solid var(--border);
+        }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary-light); }
+
+        /* ---- HERO ---- */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            padding: 120px 24px 80px; position: relative;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: -50%; left: -20%;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(37,99,235,0.15) 0%, transparent 70%);
+            border-radius: 50%; animation: float 8s ease-in-out infinite;
+        }
+        .hero::after {
+            content: ''; position: absolute; bottom: -30%; right: -10%;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 70%);
+            border-radius: 50%; animation: float 10s ease-in-out infinite reverse;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
+        }
+        .hero .container {
+            max-width: 1200px; margin: 0 auto; width: 100%;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+            align-items: center; position: relative; z-index: 1;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 16px; border-radius: 100px;
+            background: rgba(37,99,235,0.1); border: 1px solid rgba(37,99,235,0.3);
+            color: var(--primary-light); font-size: 0.875rem; font-weight: 600;
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-size: 3.5rem; font-weight: 900; line-height: 1.1;
+            margin-bottom: 24px;
+        }
+        .hero h1 span {
+            background: var(--gradient-1);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.25rem; color: var(--text-muted);
+            margin-bottom: 32px; max-width: 500px;
+        }
+        .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+        .hero-stats {
+            display: flex; gap: 40px; margin-top: 48px;
+        }
+        .stat { text-align: left; }
+        .stat-num {
+            font-size: 2rem; font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .stat-label { color: var(--text-muted); font-size: 0.875rem; }
+
+        /* Phone mockup */
+        .phone-mockup {
+            width: 320px; height: 640px;
+            background: var(--bg-card);
+            border-radius: 40px;
+            border: 3px solid var(--border);
+            padding: 16px;
+            box-shadow: var(--shadow), 0 0 80px rgba(37,99,235,0.1);
+            position: relative;
+            animation: phoneFloat 6s ease-in-out infinite;
+        }
+        @keyframes phoneFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+        }
+        .phone-screen {
+            width: 100%; height: 100%;
+            background: #0d1117;
+            border-radius: 28px;
+            overflow: hidden;
+            display: flex; flex-direction: column;
+        }
+        .phone-header {
+            padding: 20px 16px 12px;
+            background: linear-gradient(180deg, #1a365d 0%, #0d1117 100%);
+            text-align: center;
+        }
+        .phone-header h3 { font-size: 1rem; font-weight: 700; }
+        .phone-header p { font-size: 0.75rem; color: var(--text-muted); }
+        .phone-messages {
+            flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 8px;
+            overflow: hidden;
+        }
+        .msg {
+            padding: 10px 14px; border-radius: 14px;
+            font-size: 0.8rem; line-height: 1.4;
+            max-width: 85%; animation: msgIn 0.5s ease-out both;
+        }
+        .msg-bot {
+            background: var(--bg-card); align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        .msg-user {
+            background: var(--primary-dark); align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        @keyframes msgIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .msg:nth-child(1) { animation-delay: 0.3s; }
+        .msg:nth-child(2) { animation-delay: 0.8s; }
+        .msg:nth-child(3) { animation-delay: 1.3s; }
+        .msg:nth-child(4) { animation-delay: 1.8s; }
+        .msg:nth-child(5) { animation-delay: 2.3s; }
+        .phone-input {
+            padding: 12px 16px;
+            border-top: 1px solid var(--border);
+            display: flex; gap: 8px; align-items: center;
+        }
+        .phone-input span {
+            flex: 1; padding: 10px 14px; border-radius: 20px;
+            background: var(--bg-card); font-size: 0.75rem; color: var(--text-muted);
+        }
+
+        /* ---- SECTIONS ---- */
+        section { padding: 100px 24px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 64px; }
+        .section-header h2 {
+            font-size: 2.5rem; font-weight: 800; margin-bottom: 16px;
+        }
+        .section-header p {
+            font-size: 1.125rem; color: var(--text-muted); max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ---- FEATURES ---- */
+        .features-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+        }
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+            transition: all 0.3s;
+            position: relative; overflow: hidden;
+        }
+        .feature-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .feature-card::before {
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: var(--gradient-1); opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .feature-card:hover::before { opacity: 1; }
+        .feature-icon {
+            width: 56px; height: 56px; border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.75rem; margin-bottom: 20px;
+        }
+        .fi-blue { background: rgba(37,99,235,0.15); }
+        .fi-amber { background: rgba(245,158,11,0.15); }
+        .fi-purple { background: rgba(124,58,237,0.15); }
+        .fi-cyan { background: rgba(6,182,212,0.15); }
+        .feature-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
+        .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* ---- HOW IT WORKS ---- */
+        .steps { display: flex; gap: 32px; position: relative; }
+        .steps::before {
+            content: ''; position: absolute; top: 40px; left: 60px;
+            right: 60px; height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), #7c3aed);
+        }
+        .step {
+            flex: 1; text-align: center; position: relative; z-index: 1;
+        }
+        .step-num {
+            width: 80px; height: 80px; margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.75rem; font-weight: 800;
+            color: #fff;
+        }
+        .step:nth-child(1) .step-num { background: var(--gradient-1); }
+        .step:nth-child(2) .step-num { background: var(--gradient-2); }
+        .step:nth-child(3) .step-num { background: var(--gradient-3); }
+        .step:nth-child(4) .step-num { background: linear-gradient(135deg, #7c3aed, #ec4899); }
+        .step h3 { font-size: 1.125rem; font-weight: 700; margin-bottom: 8px; }
+        .step p { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* ---- SKILLS SHOWCASE ---- */
+        .skills-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .skill-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 28px 20px;
+            text-align: center; transition: all 0.3s;
+        }
+        .skill-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+        }
+        .skill-emoji { font-size: 3rem; margin-bottom: 16px; display: block; }
+        .skill-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
+        .skill-card p { color: var(--text-muted); font-size: 0.85rem; }
+        .skill-xp {
+            display: inline-block; margin-top: 12px;
+            padding: 4px 12px; border-radius: 100px;
+            background: rgba(245,158,11,0.15);
+            color: var(--accent); font-size: 0.8rem; font-weight: 600;
+        }
+
+        /* ---- TESTIMONIALS ---- */
+        .testimonials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .testimonial {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 28px;
+        }
+        .testimonial-stars { color: var(--accent); font-size: 1.1rem; margin-bottom: 12px; }
+        .testimonial p {
+            color: var(--text-muted); font-size: 0.95rem;
+            margin-bottom: 16px; font-style: italic;
+        }
+        .testimonial-author { display: flex; align-items: center; gap: 12px; }
+        .testimonial-avatar {
+            width: 44px; height: 44px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.25rem; font-weight: 700; color: #fff;
+        }
+        .ta-1 { background: var(--gradient-1); }
+        .ta-2 { background: var(--gradient-2); }
+        .ta-3 { background: linear-gradient(135deg, #7c3aed, #ec4899); }
+        .testimonial-name { font-weight: 600; font-size: 0.95rem; }
+        .testimonial-role { color: var(--text-muted); font-size: 0.8rem; }
+
+        /* ---- CTA ---- */
+        .cta {
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg) 0%, #1a1a2e 100%);
+        }
+        .cta-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 64px;
+            position: relative; overflow: hidden;
+        }
+        .cta-box::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(37,99,235,0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(124,58,237,0.08) 0%, transparent 50%);
+        }
+        .cta-box h2 {
+            font-size: 2.5rem; font-weight: 800;
+            margin-bottom: 16px; position: relative;
+        }
+        .cta-box p {
+            font-size: 1.125rem; color: var(--text-muted);
+            margin-bottom: 32px; position: relative;
+        }
+        .cta-buttons { display: flex; gap: 16px; justify-content: center; position: relative; }
+
+        /* ---- FOOTER ---- */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 24px; text-align: center;
+            color: var(--text-muted); font-size: 0.875rem;
+        }
+        footer a { color: var(--primary-light); text-decoration: none; }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 900px) {
+            .hero .container { grid-template-columns: 1fr; text-align: center; }
+            .hero p { margin: 0 auto 32px; }
+            .hero-buttons { justify-content: center; }
+            .hero-stats { justify-content: center; }
+            .phone-mockup { margin: 40px auto 0; }
+            .features-grid { grid-template-columns: 1fr; }
+            .steps { flex-direction: column; }
+            .steps::before { display: none; }
+            .skills-row { grid-template-columns: repeat(2, 1fr); }
+            .testimonials { grid-template-columns: 1fr; }
+            .cta-box { padding: 40px 24px; }
+            .cta-box h2 { font-size: 1.75rem; }
+            .nav-links { display: none; }
+        }
+
+        /* ---- ANIMATIONS ---- */
+        .fade-in {
+            opacity: 0; transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="container">
+        <div class="logo">🇺🇸 English Zero-to-Hero</div>
+        <ul class="nav-links">
+            <li><a href="#features">Imkoniyatlar</a></li>
+            <li><a href="#how">Qanday ishlaydi</a></li>
+            <li><a href="#skills">Ko'nikmalar</a></li>
+            <li><a href="#reviews">Sharhlar</a></li>
+        </ul>
+        <a href="https://t.me/" class="btn btn-primary" target="_blank">
+            🚀 Botni boshlash
+        </a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-text">
+            <div class="hero-badge">🤖 AI bilan o'rganing</div>
+            <h1>Ingliz tilini <span>0 dan</span> erkin gapirguncha</h1>
+            <p>Telegram bot orqali kuniga 5-10 daqiqa ajrating. 4 ta ko'nikma, AI tahlili va gamifikatsiya bilan tezroq o'rganing.</p>
+            <div class="hero-buttons">
+                <a href="https://t.me/" class="btn btn-accent" target="_blank">
+                    🎯 Bepul boshlash
+                </a>
+                <a href="#how" class="btn btn-outline">
+                    ▶ Qanday ishlaydi?
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-num">500+</div>
+                    <div class="stat-label">O'quvchi</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">4</div>
+                    <div class="stat-label">Ko'nikma</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">50+</div>
+                    <div class="stat-label">Darslar</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="phone-mockup">
+                <div class="phone-screen">
+                    <div class="phone-header">
+                        <h3>🇺🇸 English Zero-to-Hero</h3>
+                        <p>Online</p>
+                    </div>
+                    <div class="phone-messages">
+                        <div class="msg msg-bot">👋 Assalomu alaykum! Ingliz tilini 0 dan o'rganishni boshlaysizmi?</div>
+                        <div class="msg msg-user">Ha, boshlamoqchiman!</div>
+                        <div class="msg msg-bot">📖 <b>1-Dars: Salomlashish</b><br>Yangi so'zlar: Hello, Name, Goodbye</div>
+                        <div class="msg msg-user">🎧 Audio tingladim!</div>
+                        <div class="msg msg-bot">🎉 <b>To'g'ri!</b> +15 XP qo'shildi!</div>
+                    </div>
+                    <div class="phone-input">
+                        <span>✏️ Javobingizni yozing...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+    <div class="container">
+        <div class="section-header fade-in">
+            <h2>Nega aynan biz?</h2>
+            <p>Boshqa kurslardan farqli o'laroq, biz faqat nazariya emas, amaliyotga asoslangan metodika qo'llaymiz.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-icon fi-blue">🤖</div>
+                <h3>AI Repetitor</h3>
+                <p>Google Gemini AI sizning yozgan jumlalaringizni tekshiradi, xatolarni o'zbek tilida tushuntiradi va to'g'ri variantini ko'rsatadi.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon fi-amber">🎧</div>
+                <h3>Ovozli mashqlar</h3>
+                <p>Toza inglizcha talaffuzni eshiting va ovozli xabar orqali o'z talaffuzingizni mashq qiling.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon fi-purple">🗂</div>
+                <h3>Interval takrorlash</h3>
+                <p>O'rganilgan so'zlar avtomatik ravishda 1, 3, 7, 14 kunlik oraliqda qayta eslatiladi — xotirada mustahkamlang!</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon fi-cyan">🎮</div>
+                <h3>Gamifikatsiya</h3>
+                <p>XP ballar, kunlik streak, darajalar va reyting — o'rganish qiziqarli va motivatsiyali bo'ladi!</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+    <div class="container">
+        <div class="section-header fade-in">
+            <h2>Qanday ishlaydi?</h2>
+            <p>Faqat 4 ta oddiy qadam — kuniga 5-10 daqiqa ajrating</p>
+        </div>
+        <div class="steps fade-in">
+            <div class="step">
+                <div class="step-num">1</div>
+                <h3>📡 Botni ishga tushiring</h3>
+                <p>Telegram'da /start ni bosing va ro'yxatdan o'ting</p>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <h3>📚 Darsni tanlang</h3>
+                <p>Boshlang'ich darajadan boshlab ketma-ket darslarni o'rganing</p>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <h3>✍️ Mashqlarni bajarang</h3>
+                <p>Reading, Listening, Writing, Speaking — 4 ta ko'nikmani amalda mashq qiling</p>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <h3>🏆 Rivojlaning</h3>
+                <p>XP to'plang, darajangizni oshiring va A1 darajasiga yeting!</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+    <div class="container">
+        <div class="section-header fade-in">
+            <h2>4 ta ko'nikma — to'liq kurs</h2>
+            <p>Har bir darsda 4 ta ko'nikmani amalda bajaring</p>
+        </div>
+        <div class="skills-row fade-in">
+            <div class="skill-card">
+                <span class="skill-emoji">📖</span>
+                <h3>Reading</h3>
+                <p>Sodda matnlarni o'qing va tushunishni mashq qiling</p>
+                <span class="skill-xp">+10 XP</span>
+            </div>
+            <div class="skill-card">
+                <span class="skill-emoji">🎧</span>
+                <h3>Listening</h3>
+                <p>Ovozli diktant — eshitganingizni yozing</p>
+                <span class="skill-xp">+15 XP</span>
+            </div>
+            <div class="skill-card">
+                <span class="skill-emoji">✍️</span>
+                <h3>Writing</h3>
+                <p>AI grammatikangizni tekshiradi va tuzatadi</p>
+                <span class="skill-xp">+20 XP</span>
+            </div>
+            <div class="skill-card">
+                <span class="skill-emoji">🗣</span>
+                <h3>Speaking</h3>
+                <p>Ovozli xabar yuboring — talaffuzingizni baholang</p>
+                <span class="skill-xp">+25 XP</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="reviews">
+    <div class="container">
+        <div class="section-header fade-in">
+            <h2>O'quvchilarimiz nima deydi?</h2>
+            <p>Haqiqiy foydalanuvchilarimizning tajribalari</p>
+        </div>
+        <div class="testimonials fade-in">
+            <div class="testimonial">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p>"Kuniga 10 daqiqa vaqtim bor edi. Shu bot orqali 3 oyda A0 dan A1 ga o'tdim! AI juda yaxshi tushuntiradi."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar ta-1">D</div>
+                    <div>
+                        <div class="testimonial-name">Dilshod K.</div>
+                        <div class="testimonial-role">Talaba, Toshkent</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p>"Speaking mashqi juda yoqdi! Ovozli xabar yuborib talaffuzimni yaxshiladim. Boshqa botlarda bunday yo'q."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar ta-2">N</div>
+                    <div>
+                        <div class="testimonial-name">Nilufar M.</div>
+                        <div class="testimonial-role">O'qituvchi, Samarqand</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p>"Interval takrorlash tizimi juda foydali. Yangi so'zlarni unutmay qoldim. Gamifikatsiya ham qiziq!"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar ta-3">A</div>
+                    <div>
+                        <div class="testimonial-name">Abror T.</div>
+                        <div class="testimonial-role">Dasturchi, Buxoro</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <div class="container">
+        <div class="cta-box fade-in">
+            <h2>Ingliz tilini hoziroq boshlang! 🚀</h2>
+            <p>Bepul Telegram bot — hech qanday ro'yxatdan o'tish, hech qanday kredit karta kerak emas.</p>
+            <div class="cta-buttons">
+                <a href="https://t.me/" class="btn btn-accent" target="_blank">
+                    🎯 Telegram'da boshlash
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <p>© 2025 English Zero-to-Hero Bot. Barcha huquqlar himoyalangan.</p>
+        <p style="margin-top: 8px;">
+            <a href="https://t.me/">Telegram Bot</a> · 
+            <a href="#features">Imkoniyatlar</a> · 
+            <a href="#how">Qanday ishlaydi</a>
+        </p>
+    </div>
+</footer>
+
+<script>
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 50) {
+        nav.style.background = 'rgba(15,23,42,0.95)';
+    } else {
+        nav.style.background = 'rgba(15,23,42,0.85)';
+    }
+});
+</script>
+
+</body>
+</html>

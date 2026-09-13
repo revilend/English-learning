@@ -6,6 +6,7 @@ from aiogram.client.default import DefaultBotProperties
 from config import config
 from database import db
 from handlers import main_router
+from keep_alive import run_keep_alive
 
 logging.basicConfig(
     level=logging.INFO,
@@ -38,6 +39,10 @@ async def main():
 
 if __name__ == "__main__":
     try:
+        # Keep-alive serverni ishga tushir (Render uyquga ketmaslik uchun)
+        run_keep_alive()
+        
+        # Botni ishga tushir
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
         logger.info("Bot to'xtatildi.")
