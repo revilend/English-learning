@@ -126,14 +126,144 @@ LESSONS = [
             "task": "Ovozli tarzda ayting:\n\n👉 'I drink coffee every day.'",
             "target_phrase": "I drink coffee every day."
         }
+    },
+    {
+        "id": 5,
+        "title": "Taom va Ichimlik (Food & Drinks)",
+        "level": "A1",
+        "vocabulary": [
+            {"word": "Water", "translation": "Suv"},
+            {"word": "Bread", "translation": "Non"},
+            {"word": "Apple", "translation": "Olma"},
+            {"word": "Rice", "translation": "Guruch"},
+            {"word": "I would like", "translation": "Men ... istayman"}
+        ],
+        "reading": {
+            "title": "Restoranda",
+            "text": "Waiter: Good evening! What would you like?\nTom: I would like water and bread, please.\nWaiter: Anything else?\nTom: No, thank you.",
+            "question": "Tom nima buyurtma berdi?",
+            "options": ["Juice and cake", "Water and bread", "Coffee and sandwich", "Milk and rice"],
+            "correct_option": 1
+        },
+        "listening": {
+            "audio_text": "I would like water and bread, please.",
+            "task": "Audioni tinglang va to'liq yozing:",
+            "expected_text": "I would like water and bread, please."
+        },
+        "writing": {
+            "task": "Ingliz tilida yozing:\n\n'Men suv va non istayman, iltimos.'",
+            "sample_solution": "I would like water and bread, please."
+        },
+        "speaking": {
+            "task": "Ovozli xabar yuboring:\n\n👉 'I would like an apple, please.'",
+            "target_phrase": "I would like an apple, please."
+        }
+    },
+    {
+        "id": 6,
+        "title": "Ranglar va Buyumlar (Colors & Objects)",
+        "level": "A1",
+        "vocabulary": [
+            {"word": "Red", "translation": "Qizil"},
+            {"word": "Blue", "translation": "Ko'k"},
+            {"word": "Green", "translation": "Yashil"},
+            {"word": "This is", "translation": "Bu ..."},
+            {"word": "Beautiful", "translation": "Chiroyli"}
+        ],
+        "reading": {
+            "title": "Do'konda",
+            "text": "Lisa: Look! This is a beautiful red dress.\nAnna: Oh, I like green more.\nLisa: This green bag is very nice too!",
+            "question": "Lisa nima yoqtiradi?",
+            "options": ["Green bag", "Red dress", "Blue shirt", "Yellow hat"],
+            "correct_option": 1
+        },
+        "listening": {
+            "audio_text": "This is a beautiful blue car.",
+            "task": "Audioni tinglang va rangni yozing:\n\nThis is a beautiful _____ car.",
+            "expected_text": "blue"
+        },
+        "writing": {
+            "task": "Ingliz tilida yozing:\n\n'Bu chiroyli yashil daftar.'",
+            "sample_solution": "This is a beautiful green notebook."
+        },
+        "speaking": {
+            "task": "Ovozli xabar yuboring:\n\n👉 'This is a beautiful red flower.'",
+            "target_phrase": "This is a beautiful red flower."
+        }
+    },
+    {
+        "id": 7,
+        "title": "Vaqt va Kun (Time & Days)",
+        "level": "A1",
+        "vocabulary": [
+            {"word": "What time is it?", "translation": "Soat nechida?"},
+            {"word": "Monday", "translation": "Dushanba"},
+            {"word": "Weekend", "translation": "Dam olish kuni"},
+            {"word": "Breakfast", "translation": "Nonushta"},
+            {"word": "Soon", "translation": "Tez orada"}
+        ],
+        "reading": {
+            "title": "Dushanba kuni",
+            "text": "It is Monday morning. The time is 8 AM. Sarah has breakfast and goes to school. On weekends, she stays at home.",
+            "question": "Sarah qachon maktabga boradi?",
+            "options": ["On weekends", "Monday morning", "Sunday", "At night"],
+            "correct_option": 1
+        },
+        "listening": {
+            "audio_text": "What time is it? It is eight o'clock.",
+            "task": "Audioni tinglang va soatni yozing:\n\nIt is _____ o'clock.",
+            "expected_text": "eight"
+        },
+        "writing": {
+            "task": "Ingliz tilida yozing:\n\n'Hozir soat ertalab 9. Men maktabga boraman.'",
+            "sample_solution": "It is 9 AM. I go to school."
+        },
+        "speaking": {
+            "task": "Ovozli xabar yuboring:\n\n👉 'What time is it? It is nine o'clock.'",
+            "target_phrase": "What time is it? It is nine o'clock."
+        }
+    },
+    {
+        "id": 8,
+        "title": "Sayohat va Joylar (Travel & Places)",
+        "level": "A1",
+        "vocabulary": [
+            {"word": "Airport", "translation": "Aeroport"},
+            {"word": "Hotel", "translation": "Mehmonxona"},
+            {"word": "Beach", "translation": " Plyaj"},
+            {"word": "Where is?", "translation": "Qayerda?"},
+            {"word": "Ticket", "translation": "Chipta"}
+        ],
+        "reading": {
+            "title": "Sayohat rejalari",
+            "text": "Ali is going to Istanbul. He buys a ticket at the airport. The hotel is near the beach. It is a beautiful city.",
+            "question": "Ali qayerga ketyapti?",
+            "options": ["London", "Istanbul", "Paris", "Dubai"],
+            "correct_option": 1
+        },
+        "listening": {
+            "audio_text": "Where is the hotel? It is near the beach.",
+            "task": "Audioni tinglang va javobni yozing:\n\nHotel _____ the beach.",
+            "expected_text": "near"
+        },
+        "writing": {
+            "task": "Ingliz tilida yozing:\n\n'Mehmonxona plyaj yaqinida. Men chipta oldim.'",
+            "sample_solution": "The hotel is near the beach. I bought a ticket."
+        },
+        "speaking": {
+            "task": "Ovozli xabar yuboring:\n\n👉 'Where is the airport? I need a ticket.'",
+            "target_phrase": "Where is the airport? I need a ticket."
+        }
     }
 ]
+
 
 def get_lesson(lesson_id: int):
     for l in LESSONS:
         if l["id"] == lesson_id:
             return l
     return None
+
 
 def get_total_lessons():
     return len(LESSONS)
