@@ -3,15 +3,18 @@ from config import config
 
 logger = logging.getLogger(__name__)
 
+
 class AIService:
     def __init__(self):
         self.api_key = config.GEMINI_API_KEY
-        self.model = None
+        self.client = None
+        self.model_name = "gemini-2.0-flash"
+
         if self.api_key:
             try:
-                import google.generativeai as genai
-                genai.configure(api_key=self.api_key)
-                self.model = genai.GenerativeModel('gemini-1.5-flash')
+                from google import genai
+                self.client = genai.Client(api_key=self.api_key)
+                logger.info("Gemini AI muvaffaqiyatli konfiguratsiya qilindi (google-genai)")
             except Exception as e:
                 logger.error(f"Gemini AI konfiguratsiyasida xatolik: {e}")
 
@@ -19,14 +22,14 @@ class AIService:
         """
         Foydalanuvchi yozgan inglizcha gapni tekshiradi, xatolarni tuzatadi va o'zbekcha izoh beradi.
         """
-        if not self.model:
+        if not self.client:
             # Fallback - agar API key kiritilmagan bo'lsa
             user_clean = user_answer.strip().lower()
             expected_clean = expected_sample.strip().lower()
             is_close = any(word in user_clean for word in expected_clean.split() if len(word) > 3)
             return {
                 "score": 85 if is_close else 60,
-                "feedback": f"Sizning javobingiz: {user_answer}\nNamuna javob: {expected_sample}\n\n(Eslatma: To'liq AI tahlili uchun .env faylida GEMINI_API_KEY ni sozlang)",
+                "feedback": f"Sizning javobingiz: {user_answer}\nNamuna javob: {expected_sample}\n\n(Eslatma: To'liq AI tahlili uchun GEMINI_API_KEY ni sozlang)",
                 "corrected": expected_sample
             }
 
@@ -48,7 +51,10 @@ Tuzatilgan variant: [Inglizcha to'g'ri matn]
 Izoh: [O'zbek tilida 2-3 jumlada qisqa va aniq izoh]
 """
         try:
-            response = self.model.generate_content(prompt)
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=prompt,
+            )
             text = response.text
             return {
                 "score": 90,
@@ -71,5 +77,6 @@ Izoh: [O'zbek tilida 2-3 jumlada qisqa va aniq izoh]
             "score": 90,
             "feedback": f"Barakalla! Talaffuzingiz qabul qilindi.\nMaqsadli jumla: '{target_phrase}'\nHar kuni mashq qilishda davom eting!"
         }
+
 
 ai_service = AIService()
