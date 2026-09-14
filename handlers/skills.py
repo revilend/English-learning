@@ -220,6 +220,38 @@ async def handle_speaking_voice(message: Message, state: FSMContext):
     )
     await message.answer(response_text, reply_markup=get_skills_keyboard(lesson_id, skills_status), parse_mode="HTML")
 
-@router.message(SkillStates.waiting_speaking, ~F.voice)
+@router.message(SkillStates.waiting_speaking, F.text)
+async def handle_speaking_text(message: Message, state: FSMContext):
+    """Foydalanuvchi o'rniga matn yozsa — AI baholaydi."""
+    data = await state.get_data()
+    lesson_id = data.get("lesson_id", 1)
+    lesson = get_lesson(lesson_id)
+
+    wait_msg = await message.answer("🎙 <i>Talaffuzingiz baholanmoqda...</i>", parse_mode="HTML")
+
+    evaluation = await ai_service.evaluate_speaking(
+        lesson["speaking"]["target_phrase"],
+        transcribed_text=message.text
+    )
+
+    await db.mark_skill_completed(message.from_user.id, lesson_id, "speaking")
+    await db.add_xp(message.from_user.id, 25)
+    await state.clear()
+
+    await wait_msg.delete()
+
+    skills_status = await db.get_lesson_skills_status(message.from_user.id, lesson_id)
+
+    response_text = (
+        f"🗣 <b>Speaking natijasi:</b>\n\n"
+        f"Siz yozdingiz: <i>{message.text}</i>\n"
+        f"Maqsadli: <i>{lesson['speaking']['target_phrase']}</i>\n\n"
+        f"{evaluation['feedback']}\n\n"
+        "⭐ <b>+25 XP</b> qo'shildi!"
+    )
+    await message.answer(response_text, reply_markup=get_skills_keyboard(lesson_id, skills_status), parse_mode="HTML")
+
+
+@router.message(SkillStates.waiting_speaking, ~F.voice & ~F.text)
 async def handle_non_voice_speaking(message: Message):
-    await message.answer("Iltimos, Speaking mashqi uchun <b>ovozli xabar (Voice message)</b> yuboring! 🎙", parse_mode="HTML")
+    await message.answer("Iltimos, <b>ovozli xabar</b> yoki <b>matn</b> yuboring! 🎙", parse_mode="HTML")

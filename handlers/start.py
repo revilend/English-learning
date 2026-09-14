@@ -236,6 +236,33 @@ async def handle_level_test_answer(callback: CallbackQuery, state: FSMContext):
 # ----------------- AI CHAT (Oddiy yozishmalar) -----------------
 # Bu handler boshqa handlerlardan keyin kelishi kerak,
 # shuning uchun eng oxirida
+# ----------------- AI CHAT (Voice messages) -----------------
+@router.message(F.voice)
+async def ai_voice_handler(message: Message):
+    """Foydalanuvchi ovozli xabar yuborsa — AI javob beradi."""
+    wait_msg = await message.answer("🤖 <i>Ovozingiz tahlil qilinmoqda...</i>", parse_mode="HTML")
+
+    # Voice message transkripsiyasi yo'q, shuning uchun umumiy javob
+    user_name = message.from_user.full_name or "O'quvchi"
+    response = (
+        f"🗣 <b>Ovozli xabar qabul qilindi!</b>\n\n"
+        f"Afsuski, ovozni matnga aylantirish hozircha mavjud emas.\n"
+        f"Iltimos, matn ko'rinishida yozing — men sizga javob beraman! 💬\n\n"
+        f"💡 Maslahat: Inglizcha yozsangiz — grammatikangizni tekshiraman.\n"
+        f"O'zbekcha yozsangiz — tarjima beraman."
+    )
+
+    try:
+        await wait_msg.delete()
+    except Exception:
+        pass
+
+    await message.answer(response, parse_mode="HTML")
+
+
+# ----------------- AI CHAT (Oddiy yozishmalar) -----------------
+# Bu handler boshqa handlerlardan keyin kelishi kerak,
+# shuning uchun eng oxirida
 @router.message(F.text & ~F.text.startswith("/"))
 async def ai_chat_handler(message: Message):
     """Foydalanuvchi oddiy matn yozganda AI javob beradi."""

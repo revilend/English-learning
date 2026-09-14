@@ -38,6 +38,9 @@
 .vi{display:flex;align-items:center;gap:4px}
 .rec-btn{position:absolute;right:50px;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:var(--err);cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;transition:.2s}.rec-btn:hover{background:var(--err);color:#fff}.rec-btn.recording{background:var(--err);color:#fff;animation:rpulse 1s infinite}@keyframes rpulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.4)}50%{box-shadow:0 0 0 8px rgba(239,68,68,0)}}
 
+
+.spk-mic{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#ec4899,#a855f7);color:#fff;border:none;cursor:pointer;font-size:1.1rem;transition:.2s;box-shadow:0 4px 16px rgba(236,72,153,.4)}.spk-mic:hover{transform:scale(1.1)}.spk-mic.recording{background:var(--err);animation:rpulse 1s infinite}
+.skill-done{color:var(--ok)!important;font-weight:700}
 @media(max-width:640px){.tp .sts{gap:6px}.tp .st{font-size:.7rem;padding:2px 7px}.cb{width:290px;height:370px}.wod .wd{font-size:1.9rem}.cg{grid-template-columns:1fr}}
 </style>
 </head>
@@ -123,6 +126,8 @@ var W=[{w:'Hello',t:'Salom',ex:'Hello, how are you?',l:'A0'},{w:'Goodbye',t:'Xay
 
 var AC=[{id:'f',n:'Boshlang\'ich',i:'🌱',d:'Birinchi dars'},{id:'5',n:'O\'quvchi',i:'📚',d:'5 ta dars'},{id:'10',n:'Talaba',i:'🎓',d:'10 ta dars'},{id:'a',n:'Ustoz',i:'👨‍🏫',d:'34 ta dars'},{id:'x1',n:'Yulduz',i:'⭐',d:'100 XP'},{id:'x5',n:'Masters',i:'🏆',d:'500 XP'},{id:'xk',n:'Chempion',i:'🥇',d:'1000 XP'},{id:'s3',n:'Davomiy',i:'🔥',d:'3 kun streak'},{id:'s7',n:'Haftalik',i:'💪',d:'7 kun streak'},{id:'s30',n:'Oylik',i:'👑',d:'30 kun streak'},{id:'l1',n:'A1 daraja',i:'📗',d:'A1 ga yetish'},{id:'l2',n:'A2 daraja',i:'📘',d:'A2 ga yetish'},{id:'l3',n:'B1 daraja',i:'📕',d:'B1 ga yetish'}];
 
+var WT={1:['Salom! Mening ismim ... Tanishganimdan xursandman.','Mening ismim ... Men ... danman.','Keling tanishamiz! Men ... yoshdaman.'],2:['Men ... yoshdaman.','Mening tug\'ilgan kunim ...','Men ... da tug\'ilganman.'],3:['Mening oilam ... kishi.','Mening otam ... , onam ...','Otamning kasbi ...'],4:['Men har kuni ... da uyg\'onaman.','Ertalab men ... ichaman, keyin ... .','Mening kunlik ... .'],5:['Men ... istayman, iltimos.','Men ... yaxshi ko\'raman.','Restoranda: Men ... olishni xohlayman.'],6:['Bu ... rangli ... .','Mening sevimli rangim ... .','Men ... rangli ... sotib oldim.'],7:['Hozir soat ... .','Men ... da ... ga boraman.','... kuni men ... qilaman.'],8:['... qayerda?','Men ... ga ... bilan boraman.','... yaqinida ... bor.'],9:['Bu ... qancha turadi?','Men ... sotib olmoqchiman.','... arzon / qimmat.'],10:['Bugun ob-havo ... .','Men ... kiyaman chunki ... .','... faslida men ... yoqtiraman.'],11:['Men ... ishlayman.','Mening kasbim ... .','Men ... kasbini yoqtiraman.'],12:['Mening sevimli ... .','Men ... ni yaxshi ko\'raman.','Hafta oxirida men ... .'],13:['Men ... bilan ... ga boraman.','Mashina ... tez / sekin.','Men har kuni ... ga boraman.'],14:['Mening eng yaxshi do\'stim ... .','Biz birga ... qilamiz.','Do\'stim ... .'],15:['Kecha men ... ga bordim.','Men ... ni ko\'rdim.','O\'tgan hafta men ... qildim.'],16:['Ertaga men ... ga boraman.','Mening rejam ... .','Kelajakda men ... bo\'lmoqchiman.'],17:['... mendan kattaroq.','Bu ... yaxshiroq.','Men ... ni yoqtiraman.'],18:['... mumkinmi?','Iltimos, ... bera olasizmi?','... olasizmi?'],19:['Bu ... qancha turadi?','Men ... pul sarfladim.','... arzon edi.'],20:['Boshim og\'riyapti.','Men kasalman.','Men ... ga bordim.'],21:['Men ... ishlataman.','Internetdan ... foydalanaman.','... ni yuklab oldim.'],22:['Men ... dan keyin ... qildim.','U allaqachon ... edi.','Men ... gacha ... edim.'],23:['Bu uy ... qurilgan.','Kitob ... tomonidan yozilgan.','... qilingan.'],24:['U dedi: ... .','U menga ... deb aytdi.','... so\'radi.'],25:['Agar ... , men ... .','Agar ... bo\'lsa, men ... .','Men ... qilardim.'],26:['Men ertalab ... .','... ni yoqdingizmi?','U ... qidiryapti.'],27:['Bu juda oson.','... oson edi.','Vaqt tez o\'tadi.'],28:['Men ... bilan yig\'ilishga bordim.','Rahbarim ... aytdi.','Mening ... .'],29:['Men pasportimni ko\'rsatdim.','... oldim va ... ga uchdim.','... bron qildim.'],30:['Navroz — bu ... .','Biz ... bilan ... ni nishonlaymiz.','An\'ana ... .'],31:['Men har kuni ... o\'qiyman.','Hozir men ... o\'qiyapman.','... doimo ... .'],32:['Men ... oldim. ... qizil.','... mushuk uyda.','Men ... olib bordim.'],33:['Kitob ... ustida.','Mashina uyning ... da.','Biz ... yonida turamiz.'],34:['Men ... o\'qiyotganda telefon qo\'ng\'iroq qildi.','... tayyorlayotganda ... ochildi.','... edim.']};
+
 var S=JSON.parse(localStorage.getItem('ezh')||'null')||{xp:0,stk:0,done:[],ach:[],lv:'A0',fci:0};
 function sv(){localStorage.setItem('ezh',JSON.stringify(S));uT()}
 function uT(){document.getElementById('sxp').textContent=S.xp;document.getElementById('ssk').textContent=S.stk;document.getElementById('sdn').textContent=S.done.length;var b=document.getElementById('slv');b.textContent=S.lv;b.className='bg b-'+S.lv.toLowerCase()}
@@ -130,7 +135,7 @@ uT();
 
 (function(){var d=Math.floor(Date.now()/86400000)%W.length;var w=W[d];document.getElementById('ww').textContent=w.w;document.getElementById('wt').textContent=w.t;document.getElementById('we').textContent=w.ex})();
 
-function go(id){document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('a')});document.getElementById(id).classList.add('a');window.scrollTo(0,0);if(id==='p1')rL();if(id==='p4')rP();if(id==='p3')rFc()}
+var curLid=0;function go(id){document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('a')});document.getElementById(id).classList.add('a');window.scrollTo(0,0);if(id==='p1')rL();if(id==='p4')rP();if(id==='p3')rFc()}
 
 // Lesson locking: first lesson always open, next only if prev done
 function maxOpen(){var m=1;for(var i=1;i<=34;i++){if(S.done.indexOf(i)>=0)m=i+1;}return m;}
@@ -141,21 +146,40 @@ var dots='';for(var i=0;i<4;i++){var sk=['📖','🎧','✍️','🗣'][i];dots+
 return '<div class="cd'+(locked?' locked':'')+'" onclick="'+(locked?'':'oL('+l.id+')')+'" style="cursor:pointer;position:relative">'+(locked?'<span class="lk-icon"><i class="fa-solid fa-lock"></i></span>':'')+'<span class="bg b-'+l.lv+'">'+l.lv+'</span>'+(d?'<span style="float:right;color:var(--ok)">✅</span>':'')+'<h3 style="margin-top:6px">'+l.id+'. '+l.t+'</h3><p style="color:var(--tx2);font-size:.82rem">'+l.v.length+' ta so\'z</p>'+(locked?'<p style="color:var(--tx2);font-size:.78rem;margin-top:4px">🔒 Oldingi darsni tugating</p>':'<div style="display:flex;gap:3px;margin-top:4px">'+dots+'</div>')+'</div>'}).join('')}
 function fL(lv,el){var tabs=el.parentElement.querySelectorAll('.tab');tabs.forEach(function(t){t.classList.remove('ac')});el.classList.add('ac');rL(lv)}
 
-function oL(id){var l=L.find(function(x){return x.id===id});if(!l)return;if(id>maxOpen())return;
-var d=S.done.indexOf(id)>=0;var vw=l.v.map(function(v){return '<div class="vi" onclick="speakWord(this.childNodes[0].textContent.replace(/[^a-zA-Z .]/g,\'\').trim())" style="cursor:pointer"><b>'+v[0]+' <span class="spk-btn" onclick="event.stopPropagation();speakWord(this.parentNode.childNodes[0].textContent.replace(/[^a-zA-Z .]/g,\'\').trim())"><i class="fa-solid fa-volume-high"></i></span></b>'+v[1]+'</div>'}).join('');
+function oL(id){curLid=id;var l=L.find(function(x){return x.id===id});if(!l)return;if(id>maxOpen())return;
+var d=S.done.indexOf(id)>=0;var sk=S.skills?S.skills[id]:null;var vw=l.v.map(function(v){return '<div class="vi" onclick="speakWord(this.childNodes[0].textContent.replace(/[^a-zA-Z .]/g,\'\').trim())" style="cursor:pointer"><b>'+v[0]+' <span class="spk-btn" onclick="event.stopPropagation();speakWord(this.parentNode.childNodes[0].textContent.replace(/[^a-zA-Z .]/g,\'\').trim())"><i class="fa-solid fa-volume-high"></i></span></b>'+v[1]+'</div>'}).join('');
 document.getElementById('lc').innerHTML='<span class="bg b-'+l.lv+'">'+l.lv+'</span><h2 style="margin:10px 0">'+l.id+'. '+l.t+'</h2>'+(d?'<p style="color:var(--ok);margin-bottom:14px">✅ Yakunlangan!</p>':'')+
 '<div class="cd"><h3>🔤 So\'zlar ('+l.v.length+')</h3><div class="vl">'+vw+'</div></div>'+
 '<div class="cd"><h3>📖 Reading</h3><pre style="white-space:pre-wrap;margin:8px 0;color:var(--tx2);font-family:Inter,sans-serif">'+l.r.t+'</pre><p class="qq">'+l.r.q+'</p><div class="qos">'+l.r.o.map(function(o,i){return '<div class="qo" onclick="cQ(this,'+i+','+l.r.c+')">'+o+'</div>'}).join('')+'</div></div>'+
 '<div class="cd"><h3>🎧 Listening</h3><p style="color:var(--tx2);margin:6px 0">Bu jumlani yozing:</p><p style="font-style:italic;margin:6px 0">"'+l.ls+'"</p><div style="display:flex;gap:6px;margin-top:8px"><button class="btn bp bs" onclick="speakSlow(L.find(function(x){return x.id==='+id+'}).ls)"><i class="fa-solid fa-volume-high"></i> Eshittirish</button><button class="btn bp bs" onclick="speakSlow(L.find(function(x){return x.id==='+id+'}).ls)" title="Sekin"><i class="fa-solid fa-turtle"></i> Sekin</button></div><input class="inp" id="li'+id+'" placeholder="Javob..." style="margin-top:6px"><button class="btn bp bs" style="margin-top:6px" onclick="cLs('+id+')">Tekshirish</button><div id="lr'+id+'" style="margin-top:6px"></div></div></div>'+
 '<div class="cd"><h3>✍️ Writing</h3><p style="color:var(--tx2);margin:6px 0">'+l.w+'</p><textarea class="inp" id="wi'+id+'" placeholder="Inglizcha javob..."></textarea><button class="btn bp bs" style="margin-top:8px" onclick="cWr('+id+')">Tekshirish</button><div id="wr'+id+'" style="margin-top:6px"></div></div>'+
-'<div class="cd"><h3>🗣 Speaking</h3><p style="color:var(--tx2);margin:6px 0">'+l.sp+'</p></div>'+
+'<div class="cd"><h3>🗣 Speaking</h3><p style="color:var(--tx2);margin:6px 0">'+l.sp+'</p><p style="color:var(--tx2);font-size:.83rem;margin:4px 0">Namunani eshiting, keyin ovozingizni yozib tekshiring:</p><div style="display:flex;gap:6px;margin-top:6px"><button class="btn bp bs" onclick="speakSlow(\''+l.sp.replace(/'/g,"\'").replace(/\\/g,"\\\\")+'\')"><i class="fa-solid fa-volume-high"></i> Eshittirish</button><button class="btn bp bs" onclick="startSpkRec(\''+id+'\')" id="spkRecBtn'+id+'"><i class="fa-solid fa-microphone"></i> Gapirish</button></div><div id="spkResult'+id+'" style="margin-top:8px"></div></div>'+
 (l.g?'<div class="gt"><b>📝 Tip:</b> '+l.g+'</div>':'')+
-(!d?'<button class="btn bp" onclick="dL('+id+')" style="width:100%;justify-content:center;margin-top:12px;background:var(--ok)">✅ Darsni yakunlash (+20 XP)</button>':'');go('p5')}
+(!d?'<div id="doneWrap'+id+'" style="margin-top:12px"><button class="btn bp" onclick="dL('+id+')" style="width:100%;justify-content:center;background:var(--ok)">✅ Darsni yakunlash (+20 XP)</button><p style="color:var(--tx2);font-size:.78rem;margin-top:4px;text-align:center">Barcha 4 ta ko'nikmani bajarganingizdan keyin bosing</p></div>':'');go('p5')}
 
-function cQ(el,s,c){el.parentElement.querySelectorAll('.qo').forEach(function(o){o.classList.add('ds')});if(s===c){el.classList.add('ok');el.innerHTML+=' ✅'}else{el.classList.add('no');el.innerHTML+=' ❌';el.parentElement.children[c].classList.add('ok')}}
-function cLs(id){var l=L.find(function(x){return x.id===id});var v=document.getElementById('li'+id).value.trim().toLowerCase();var ex=l.ls.toLowerCase();var r=document.getElementById('lr'+id);if(v.length>2&&(ex.indexOf(v)>=0||v.indexOf(ex.split(' ').slice(0,3).join(' '))>=0)){r.innerHTML='<p style="color:var(--ok)">✅ +15 XP</p>';S.xp+=15;sv()}else{r.innerHTML='<p style="color:var(--err)">❌ To\'g\'ri: <i>'+l.ls+'</i></p>'}}
-function cWr(id){var l=L.find(function(x){return x.id===id});var v=document.getElementById('wi'+id).value.trim();var r=document.getElementById('wr'+id);if(v.length>5){r.innerHTML='<p style="color:var(--ok)">✅ +20 XP</p><p style="color:var(--tx2);margin-top:4px">Namuna: <i>'+l.ws+'</i></p>';S.xp+=20;sv()}else{r.innerHTML='<p style="color:var(--err)">❌ To\'liq yozing.</p>'}}
-function dL(id){if(S.done.indexOf(id)<0){S.done.push(id);S.xp+=20;sv();cA();oL(id)}}
+function cQ(el,s,c){el.parentElement.querySelectorAll('.qo').forEach(function(o){o.classList.add('ds')});if(s===c){el.classList.add('ok');el.innerHTML+=' ✅';if(!S.skills)S.skills={};var id=parseInt(el.closest('[id^="lc"]').innerHTML.match(/(\d+)\. /)[1]);if(!S.skills[id])S.skills[id]={};S.skills[id].r=1;sv()}else{el.classList.add('no');el.innerHTML+=' ❌';el.parentElement.children[c].classList.add('ok')}}
+function cLs(id){var l=L.find(function(x){return x.id===id});var v=document.getElementById('li'+id).value.trim().toLowerCase();var ex=l.ls.toLowerCase();var r=document.getElementById('lr'+id);if(v.length>2&&(ex.indexOf(v)>=0||v.indexOf(ex.split(' ').slice(0,3).join(' '))>=0)){r.innerHTML='<p style="color:var(--ok)">✅ +15 XP</p>';S.xp+=15;if(!S.skills)S.skills={};if(!S.skills[id])S.skills[id]={};S.skills[id].l=1;sv()}else{r.innerHTML='<p style="color:var(--err)">❌ To\'g\'ri: <i>'+l.ls+'</i></p>';if(!S.skills)S.skills={};if(!S.skills[id])S.skills[id]={};S.skills[id].l=1;S.xp+=5;sv()}}
+function cWr(id){var l=L.find(function(x){return x.id===id});var v=document.getElementById('wi'+id).value.trim();var r=document.getElementById('wr'+id);if(v.length>5){if(!S.skills)S.skills={};if(!S.skills[id])S.skills[id]={};S.skills[id].w=1;sv();var tips=[];if(v[0]===v[0].toLowerCase()&&v[0]!==v[0].toUpperCase())tips.push('Jumlani katta harf bilan boshlang');if(!v.match(/[.!?]$/))tips.push('Juma oxiriga nuqta (.) qo\'ying');var wrds=v.split(/\s+/).length;if(wrds<3)tips.push('Kamida 3 ta so\'z ishlating');var tipTxt=tips.length?'<p style="color:var(--acc);margin-top:6px;font-size:.83rem">💡 '+tips.join(' | ')+'</p>':'';r.innerHTML='<p style="color:var(--ok)">✅ +20 XP</p><p style="color:var(--tx2);margin-top:4px">Namuna: <i>'+l.ws+'</i></p>'+tipTxt;S.xp+=20;sv()}else{r.innerHTML='<p style="color:var(--err)">❌ Kamida 5 ta belgi yozing.</p>'}}
+function dL(id){
+  if(!S.skills)S.skills={};
+  var sk=S.skills[id]||{};
+  if(!sk.r||!sk.l||!sk.w||!sk.s){
+    var miss=[];
+    if(!sk.r)miss.push('📖 Reading');
+    if(!sk.l)miss.push('🎧 Listening');
+    if(!sk.w)miss.push('✍️ Writing');
+    if(!sk.s)miss.push('🗣 Speaking');
+    alert('Avval barcha 4 ta ko\'nikmani bajaring!\n\nQolgan: '+miss.join('\n'));
+    return;
+  }
+  if(S.done.indexOf(id)<0){
+    S.done.push(id);
+    S.xp+=20;
+    sv();
+    cA();
+    oL(id);
+  }
+}
 
 var ts={c:0,s:0};function sT(){ts={c:0,s:0};rTQ()}
 function rTQ(){var el=document.getElementById('tc');if(ts.c>=TQ.length){var p=Math.round(ts.s/TQ.length*100);var lv,ds;if(p<=25){lv='A0';ds='Boshlash kerak.'}else if(p<=50){lv='A1';ds='Yaxshi boshladingiz!'}else if(p<=75){lv='A2';ds='Yomon emas!'}else{lv='B1';ds='Zo\'r!'}S.lv=lv;sv();el.innerHTML='<div class="cd" style="text-align:center;padding:36px"><div style="font-size:3.5rem;margin-bottom:14px">🎉</div><h2>Test tugadi!</h2><p style="font-size:1.4rem;margin:14px 0"><b>'+ts.s+'/'+TQ.length+'</b> ('+p+'%)</p><p style="font-size:1.15rem;color:var(--acc)">Darajangiz: <b>'+lv+'</b></p><p style="color:var(--tx2)">'+ds+'</p><button class="btn bp" onclick="go(\'p0\')" style="margin-top:20px">Bosh sahifa</button></div>';return}var q=TQ[ts.c];el.innerHTML='<div class="cd"><p style="color:var(--tx2);margin-bottom:6px">'+(ts.c+1)+'/'+TQ.length+'</p><div class="qq">'+q.q+'</div><div class="qos">'+q.o.map(function(o,i){return '<div class="qo" onclick="aT('+i+','+q.c+')">'+String.fromCharCode(65+i)+') '+o+'</div>'}).join('')+'</div></div>'}
@@ -176,16 +200,25 @@ function cA(){var n=S.done.length,x=S.xp;var na=[];if(n>=1&&S.ach.indexOf('f')<0
 
 var cOp=false;function tChat(){cOp=!cOp;var b=document.getElementById('cbox');var f=document.getElementById('cfab');if(cOp){b.classList.add('op');f.classList.add('ac');f.innerHTML='<i class="fa-solid fa-xmark"></i>'}else{b.classList.remove('op');f.classList.remove('ac');f.innerHTML='<i class="fa-solid fa-comment-dots"></i>'}}
 function sMsg(){var inp=document.getElementById('cinp');var txt=inp.value.trim();if(!txt)return;inp.value='';aM(txt,'u');setTimeout(function(){aM(cRep(txt),'b')},300)}
-function cRep(txt){var t=txt.toLowerCase();var av=[];L.forEach(function(l){l.v.forEach(function(v){av.push({en:v[0],uz:v[1],lt:l.t})})});
-var m=av.find(function(v){return t.indexOf(v.en.toLowerCase())>=0});if(m)return '<b>'+m.en+'</b> = "'+m.uz+'" — '+m.lt+' darsidan.\n\n📖 Misol: "I use '+m.en.toLowerCase()+' every day."';
-var uz=av.find(function(v){return t.indexOf(v.uz.toLowerCase())>=0});if(uz)return '"'+uz.uz+'" → <b>'+uz.en+'</b>\n\n📖 Misol: "'+uz.en+', please."';
-if(/^(salom|hello|hi|hey)/.test(t))return 'Salom! 👋 Menga inglizcha yoki o\'zbekcha yozing.\n\n💡 "hello" yozing — sababini tushuntiraman.';
-if(t.indexOf('present')>=0)return '📘 Present Simple: I play / She plays\n📘 Present Continuous: I am playing\n\n📌 Always/Sometimes = Simple\n📌 Now/Right now = Continuous';
-if(t.indexOf('past')>=0)return '📘 Past Simple: I went / She went\n📌 Yesterday / Last week / Ago\n\nMisol: "Yesterday I went to the park."';
-if(t.indexOf('will')>=0||t.indexOf('future')>=0)return '📘 Future: I will go / I am going to go\n📌 Will — bashorat | Going to — reja';
-if(t.indexOf('thank')>=0||t.indexOf('rahmat')>=0)return 'Arzimaydi! 😊 Davom eting!';
-var rv=av[Math.floor(Math.random()*av.length)];return '💡 <b>'+rv.en+'</b> = "'+rv.uz+'"\n📖 '+rv.lt+' darsidan.\n\nYana savol bering! 😊'}
-function aM(t,c){var b=document.getElementById('cbody');var d=document.createElement('div');d.className='msg '+c;d.innerHTML=t.replace(/\n/g,'<br>');b.appendChild(d);b.scrollTop=b.scrollHeight;if(c==='b')try{speak(t.replace(/[^a-zA-Z\s]/g,'').substring(0,200),'en-US',0.85)}catch(e){}}
+function cRep(txt){var t=txt.toLowerCase().trim();var av=[];L.forEach(function(l){l.v.forEach(function(v){av.push({en:v[0],uz:v[1],lt:l.t})})});
+var m=av.find(function(v){return t.indexOf(v.en.toLowerCase())>=0});if(m)return '<b>'+m.en+'</b> = "'+m.uz+'" — '+m.lt+' darsidan.\n📖 Misol: "I use '+m.en.toLowerCase()+' every day."\n🔊 Bosish eshiting.';
+var uz=av.find(function(v){return t.indexOf(v.uz.toLowerCase())>=0});if(uz)return '"'+uz.uz+'" → <b>'+uz.en+'</b>\n📖 Misol: "'+uz.en+', please."\n🔊 Bosish eshiting.';
+if(/^(salom|hello|hi|hey|assalomu)/.test(t))return 'Salom! 👋 Men sizning AI o\'qituvchingizman. Inglizcha yoki o\'zbekcha yozing!\n\n🎓 Maslahat: savol bering, grammatikani tushuntiraman, so\'z o\'rgataman.';
+if(t.indexOf('how are you')>=0||t.indexOf('qanday')>=0)return 'I am fine, thank you! 😊 Siz qandaysiz?\n📖 "How are you?" = "Qandaysiz?" — Salomlashish darsidan.';
+if(t.indexOf('present')>=0)return '📘 <b>Present Simple</b>: I play / She plays / We play\n📘 <b>Present Continuous</b>: I am playing / She is playing\n\n📌 <b>Belgilar</b>:\n• Always / Sometimes / Never → Present Simple\n• Now / Right now / At the moment → Present Continuous\n\n📖 Misol: "I always drink coffee" (Simple)\n📖 Misol: "I am drinking coffee now" (Continuous)';
+if(t.indexOf('past')>=0)return '📘 <b>Past Simple</b>: I went / She went / We played\n📌 <b>Belgilar</b>: Yesterday, Last week, Last month, Ago\n\n📖 Misol: "Yesterday I went to the park."\n📖 Misol: "Last week I visited my grandmother."\n\n💡 Noto\'g\'ri: "I goed" → To\'g\'ri: "I went"';
+if(t.indexOf('will')>=0||t.indexOf('future')>=0||t.indexOf('kelajak')>=0)return '📘 <b>Future</b>: I will go / I am going to go\n\n📌 <b>Will</b> — bashorat, to\'satdli reja\n📌 <b>Going to</b> — oldindan rejalangan\n\n📖 "I will study tomorrow" (bashorat)\n📖 "I am going to visit my friend" (reja)';
+if(t.indexOf('article')>=0||t.indexOf('a an the')>=0)return '📘 <b>Artikellar</b>:\n• <b>A</b> — bitta narsa (unli harf emas): a cat, a book\n• <b>An</b> — bitta narsa (unli harf): an apple, an hour\n• <b>The</b> — ma\'lum narsa: the sun, the book\n\n📖 Misol: "I have a cat. The cat is black."';
+if(t.indexOf('be')>=0&&t.indexOf('verb')>=0)return '📘 <b>Be fe\'llari</b>:\n• I <b>am</b> / You <b>are</b> / He-She-It <b>is</b>\n• We <b>are</b> / They <b>are</b>\n\n📌 Qisqartmalar: I\'m = I am | She\'s = She is | We\'re = We are';
+if(t.indexOf('thank')>=0||t.indexOf('rahmat')>=0)return 'Arzimaydi! 😊\n📖 "Thank you" = "Rahmat" — Salomlashish darsidan.\n📌 "Thank you very much" = "Juda rahmat" — ko\'proq minnatdorchilik.';
+if(t.indexOf('speaking')>=0||t.indexOf('gapir')>=0)return '🗣 <b>Speaking mashqi</b>:\n1. Namunani tinglang 🔊\n2. O\'zingiz takrorlang\n3. Mikrofon tugmasini bosing 🎤\n4. Inglizcha gapiring\n5. Natijani tekshiring\n\n💡 Savolingiz bormi?';
+if(t.indexOf('listening')>=0||t.indexOf('tinglash')>=0)return '🎧 <b>Listening mashqi</b>:\n1. "Eshittirish" tugmasini bosing 🔊\n2. Jumlani diqqat bilan tinglang\n3. Eshitganingizni yozing\n4. "Tekshirish" bosing\n\n💡 Sekinroq eshittirish uchun "Sekin" tugmasini bosing.';
+if(t.indexOf('reading')>=0||t.indexOf('o\'qish')>=0)return '📖 <b>Reading mashqi</b>:\n1. Matnni diqqat bilan o\'qing\n2. Savolga javob bering\n3. To\'g\'ri javob = +10 XP\n\n💡 Yangi so\'zlar avtomatik ravishda lug\'atga qo\'shiladi.';
+if(t.indexOf('writing')>=0||t.indexOf('yozish')>=0)return '✍️ <b>Writing mashqi</b>:\n1. O\'zbekcha jumla beriladi\n2. Uni inglizchaga tarjima qiling\n3. "Tekshirish" bosing\n4. Namunani solishtiring\n\n💡 grammatika maslahatlarini e\'tibor bilan o\'qing.';
+if(t.indexOf('lesson')>=0||t.indexOf('dars')>=0)return '📚 <b>Darslar</b>:\n• 34 ta dars (A0 → B1)\n• Har bir darsda 4 ta ko\'nikma:\n  📖 Reading | 🎧 Listening | ✍️ Writing | 🗣 Speaking\n• Barcha 4 ta mashqni bajargach, keyingi dars ochiladi\n\n💡 Darslar sahifasiga boring!';
+if(t.indexOf('vocab')>=0||t.indexOf('so\'z')>=0||t.indexOf('lug\'at')>=0)return '🗂 <b>Lug\'at</b>:\n• 850+ ta so\'z (A0 dan B1 gacha)\n• Har bir darsda 25 ta yangi so\'z\n• Flashcard bilan takrorlash mumkin\n• Har bir so\'z ustiga bosib talaffuzni eshiting\n\n💡 Flashcards sahifasiga boring!';
+var rv=av[Math.floor(Math.random()*av.length)];return '💡 <b>'+rv.en+'</b> = "'+rv.uz+'"\n📖 '+rv.lt+' darsidan\n🔊 Bosib talaffuzni eshiting!\n\nYana savol bering 😊'}
+function aM(t,c){var b=document.getElementById('cbody');var d=document.createElement('div');d.className='msg '+c;d.innerHTML=t.replace(/\n/g,'<br>');b.appendChild(d);b.scrollTop=b.scrollHeight;if(c==='b'){var clean=t.replace(/[^a-zA-Z\s]/g,'').replace(/\s+/g,' ').trim();if(clean.length>3)try{speak(clean.substring(0,300),'en-US',0.85)}catch(e){}}}
 
 
 // ==================== SPEECH SYNTHESIS ====================
@@ -214,6 +247,37 @@ function toggleRec(){if(!SR){alert('Chrome yoki Edge ishlating.');return;}isRec?
 function startRec(){if(!recog)return;try{recog.start();isRec=true;var b=document.getElementById('recBtn');b.classList.add('recording');b.innerHTML='<i class="fa-solid fa-stop"></i>';}catch(e){}}
 function stopRec(){isRec=false;if(recog)try{recog.stop();}catch(e){}var b=document.getElementById('recBtn');if(b){b.classList.remove('recording');b.innerHTML='<i class="fa-solid fa-microphone"></i>';}}
 
+
+
+// ==================== SPEAKING RECORD ====================
+var spkRecog=null,spkActive=false;
+var SSR=window.SpeechRecognition||window.webkitSpeechRecognition;
+function startSpkRec(lessonId){if(!S.skills)S.skills={};if(!S.skills[lessonId])S.skills[lessonId]={};S.skills[lessonId].s=1;sv();
+  if(!SSR){alert('Chrome yoki Edge ishlating.');return;}
+  spkRecog=new SSR();spkRecog.continuous=false;spkRecog.interimResults=false;spkRecog.lang='en-US';
+  spkRecog.onresult=function(e){
+    var heard=e.results[0][0].transcript;
+    var l=L.find(function(x){return x.id==lessonId});
+    var target=l.sp.toLowerCase();
+    var user=heard.toLowerCase();
+    var score=0;
+    var targetWords=target.split(/\s+/);
+    var heardWords=user.split(/\s+/);
+    targetWords.forEach(function(w){if(user.indexOf(w)>=0)score++;});
+    var pct=Math.round((score/Math.max(targetWords.length,1))*100);
+    var resEl=document.getElementById('spkResult'+lessonId);
+    if(pct>=60){resEl.innerHTML='<div style="padding:10px;border-radius:8px;border:1px solid var(--ok);background:rgba(16,185,129,.1)"><p style="color:var(--ok);font-weight:700">✅ Ajoyib! ('+pct+'%)</p><p style="font-size:.83rem;color:var(--tx2)">Siz aytdingiz: <i>"'+heard+'"</i></p><p style="font-size:.83rem;color:var(--tx2)">Kutilgan: <i>"'+l.sp+'"</i></p></div>';S.xp+=25;sv();}else{resEl.innerHTML='<div style="padding:10px;border-radius:8px;border:1px solid var(--acc);background:rgba(245,158,11,.1)"><p style="color:var(--acc);font-weight:700">🎤 Esitildi ('+pct+'%)</p><p style="font-size:.83rem;color:var(--tx2)">Siz: <i>"'+heard+'"</i></p><p style="font-size:.83rem;color:var(--tx2)">Yana urinib ko\'ring!</p></div>';}
+    spkActive=false;var b=document.getElementById('spkRecBtn'+lessonId);if(b){b.classList.remove('recording');b.innerHTML='<i class=\"fa-solid fa-microphone\"></i> Gapirish';}
+  };
+  spkRecog.onerror=function(){spkActive=false;var b=document.getElementById('spkRecBtn'+lessonId);if(b){b.classList.remove('recording');b.innerHTML='<i class=\"fa-solid fa-microphone\"></i> Gapirish';}};
+  spkRecog.onend=function(){spkActive=false;};
+  try{spkRecog.start();spkActive=true;var b=document.getElementById('spkRecBtn'+lessonId);if(b){b.classList.add('recording');b.innerHTML='<i class=\"fa-solid fa-stop\"></i> To\'xtatish';}}catch(e){}
+}
+
+
+// ==================== SKILL TRACKING ====================
+function chkSkill(lessonId,skill){var key='sk_'+lessonId+'_'+skill;if(!localStorage.getItem(key)){localStorage.setItem(key,'1');}}
+function isSkillDone(lessonId,skill){return localStorage.getItem('sk_'+lessonId+'_'+skill)==='1';}
 
 rL();bFc();
 </script>
