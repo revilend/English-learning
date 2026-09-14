@@ -4,934 +4,596 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>English Zero-to-Hero | Ingliz tilini 0 dan o'rganing</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --primary-light: #3b82f6;
-            --accent: #f59e0b;
-            --accent-dark: #d97706;
-            --bg: #0f172a;
-            --bg-card: #1e293b;
-            --bg-card-hover: #334155;
-            --text: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: #334155;
-            --gradient-1: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-            --gradient-2: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-            --gradient-3: linear-gradient(135deg, #06b6d4 0%, #2563eb 100%);
-            --gradient-4: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
-            --shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-            --radius: 16px;
+            --primary: #2563eb; --primary-dark: #1d4ed8; --accent: #f59e0b;
+            --bg: #0f172a; --bg-card: #1e293b; --text: #f8fafc; --text-muted: #94a3b8;
+            --border: #334155; --success: #10b981; --danger: #ef4444;
+            --gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+        /* NAV */
+        .topnav { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(15,23,42,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; }
+        .topnav .logo { font-size: 1.25rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .topnav .stats { display: flex; gap: 16px; font-size: 0.85rem; }
+        .topnav .stat { display: flex; align-items: center; gap: 4px; }
+        .topnav .stat-num { font-weight: 700; color: var(--accent); }
 
-        /* ---- PARTICLES ---- */
-        #particles {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
+        /* PAGES */
+        .page { display: none; padding: 80px 24px 40px; max-width: 900px; margin: 0 auto; min-height: 100vh; }
+        .page.active { display: block; }
+        .page-title { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+        .page-subtitle { color: var(--text-muted); margin-bottom: 32px; }
 
-        /* ---- NAVBAR ---- */
-        nav {
-            position: fixed; top: 0; width: 100%; z-index: 100;
-            background: rgba(15,23,42,0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(51,65,85,0.3);
-            transition: all 0.3s;
-        }
-        nav .container {
-            max-width: 1200px; margin: 0 auto;
-            padding: 16px 24px;
-            display: flex; align-items: center; justify-content: space-between;
-        }
-        .logo {
-            font-size: 1.5rem; font-weight: 800;
-            background: var(--gradient-1);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            display: flex; align-items: center; gap: 8px;
-        }
-        .nav-links { display: flex; gap: 32px; list-style: none; }
-        .nav-links a {
-            color: var(--text-muted); text-decoration: none;
-            font-weight: 500; transition: all 0.3s; position: relative;
-        }
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: -4px; left: 0;
-            width: 0; height: 2px;
-            background: var(--gradient-1); transition: width 0.3s;
-        }
-        .nav-links a:hover { color: var(--text); }
-        .nav-links a:hover::after { width: 100%; }
-        .btn {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 12px 28px; border-radius: 12px;
-            font-weight: 600; font-size: 1rem;
-            text-decoration: none; border: none; cursor: pointer;
-            transition: all 0.3s; position: relative; overflow: hidden;
-        }
-        .btn-primary {
-            background: var(--gradient-1); color: #fff;
-            box-shadow: 0 4px 20px rgba(37,99,235,0.4);
-        }
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 40px rgba(37,99,235,0.6);
-        }
-        .btn-accent {
-            background: var(--gradient-2); color: #fff;
-            box-shadow: 0 4px 20px rgba(245,158,11,0.4);
-        }
-        .btn-accent:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 40px rgba(245,158,11,0.6);
-        }
-        .btn-outline {
-            background: transparent; color: var(--text);
-            border: 2px solid var(--border);
-        }
-        .btn-outline:hover {
-            border-color: var(--primary);
-            background: rgba(37,99,235,0.1);
-            transform: translateY(-3px);
-        }
-        .btn-glow {
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-        @keyframes glow {
-            from { box-shadow: 0 4px 20px rgba(37,99,235,0.4); }
-            to { box-shadow: 0 4px 40px rgba(37,99,235,0.8); }
-        }
+        /* BUTTONS */
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 12px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: all 0.3s; font-size: 1rem; }
+        .btn-primary { background: var(--gradient); color: #fff; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,99,235,0.5); }
+        .btn-success { background: var(--success); color: #fff; }
+        .btn-danger { background: var(--danger); color: #fff; }
+        .btn-outline { background: transparent; color: var(--text); border: 2px solid var(--border); }
+        .btn-outline:hover { border-color: var(--primary); }
+        .btn-sm { padding: 8px 16px; font-size: 0.85rem; }
 
-        /* ---- HERO ---- */
-        .hero {
-            min-height: 100vh; display: flex; align-items: center;
-            padding: 120px 24px 80px; position: relative;
-        }
-        .hero::before {
-            content: ''; position: absolute; top: -50%; left: -20%;
-            width: 800px; height: 800px;
-            background: radial-gradient(circle, rgba(37,99,235,0.2) 0%, transparent 70%);
-            border-radius: 50%; animation: float 8s ease-in-out infinite;
-        }
-        .hero::after {
-            content: ''; position: absolute; bottom: -30%; right: -10%;
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
-            border-radius: 50%; animation: float 10s ease-in-out infinite reverse;
-        }
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(30px, -30px); }
-        }
-        .hero .container {
-            max-width: 1200px; margin: 0 auto; width: 100%;
-            display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
-            align-items: center; position: relative; z-index: 1;
-        }
-        .hero-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 8px 20px; border-radius: 100px;
-            background: rgba(37,99,235,0.1); border: 1px solid rgba(37,99,235,0.3);
-            color: var(--primary-light); font-size: 0.875rem; font-weight: 600;
-            margin-bottom: 24px;
-            animation: fadeInUp 0.8s ease-out;
-        }
-        .hero h1 {
-            font-size: 4rem; font-weight: 900; line-height: 1.1;
-            margin-bottom: 24px;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-        }
-        .hero h1 span {
-            background: var(--gradient-1);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            position: relative;
-        }
-        .hero h1 span::after {
-            content: '';
-            position: absolute; bottom: 0; left: 0;
-            width: 100%; height: 8px;
-            background: var(--gradient-1); opacity: 0.3;
-            border-radius: 4px;
-        }
-        .hero p {
-            font-size: 1.25rem; color: var(--text-muted);
-            margin-bottom: 32px; max-width: 500px;
-            animation: fadeInUp 0.8s ease-out 0.4s both;
-        }
-        .hero-buttons {
-            display: flex; gap: 16px; flex-wrap: wrap;
-            animation: fadeInUp 0.8s ease-out 0.6s both;
-        }
-        .hero-stats {
-            display: flex; gap: 40px; margin-top: 48px;
-            animation: fadeInUp 0.8s ease-out 0.8s both;
-        }
-        .stat { text-align: left; }
-        .stat-num {
-            font-size: 2.5rem; font-weight: 800;
-            background: var(--gradient-1);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .stat-label { color: var(--text-muted); font-size: 0.875rem; }
+        /* CARDS */
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 16px; transition: all 0.3s; }
+        .card:hover { border-color: var(--primary); transform: translateY(-2px); }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Phone mockup */
-        .phone-mockup {
-            width: 320px; height: 640px;
-            background: var(--bg-card);
-            border-radius: 40px;
-            border: 3px solid var(--border);
-            padding: 16px;
-            box-shadow: var(--shadow), 0 0 100px rgba(37,99,235,0.15);
-            position: relative;
-            animation: phoneFloat 6s ease-in-out infinite, fadeInUp 1s ease-out 0.5s both;
-        }
-        @keyframes phoneFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(1deg); }
-        }
-        .phone-screen {
-            width: 100%; height: 100%;
-            background: #0d1117;
-            border-radius: 28px;
-            overflow: hidden;
-            display: flex; flex-direction: column;
-        }
-        .phone-header {
-            padding: 20px 16px 12px;
-            background: linear-gradient(180deg, #1a365d 0%, #0d1117 100%);
-            text-align: center;
-        }
-        .phone-header h3 { font-size: 1rem; font-weight: 700; }
-        .phone-header p { font-size: 0.75rem; color: var(--text-muted); }
-        .phone-messages {
-            flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 8px;
-            overflow: hidden;
-        }
-        .msg {
-            padding: 10px 14px; border-radius: 14px;
-            font-size: 0.8rem; line-height: 1.4;
-            max-width: 85%; animation: msgIn 0.5s ease-out both;
-        }
-        .msg-bot {
-            background: var(--bg-card); align-self: flex-start;
-            border-bottom-left-radius: 4px;
-        }
-        .msg-user {
-            background: var(--primary-dark); align-self: flex-end;
-            border-bottom-right-radius: 4px;
-        }
-        @keyframes msgIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .msg:nth-child(1) { animation-delay: 1s; }
-        .msg:nth-child(2) { animation-delay: 1.5s; }
-        .msg:nth-child(3) { animation-delay: 2s; }
-        .msg:nth-child(4) { animation-delay: 2.5s; }
-        .msg:nth-child(5) { animation-delay: 3s; }
-        .phone-input {
-            padding: 12px 16px;
-            border-top: 1px solid var(--border);
-            display: flex; gap: 8px; align-items: center;
-        }
-        .phone-input span {
-            flex: 1; padding: 10px 14px; border-radius: 20px;
-            background: var(--bg-card); font-size: 0.75rem; color: var(--text-muted);
-        }
-
-        /* ---- SECTIONS ---- */
-        section { padding: 100px 24px; position: relative; z-index: 1; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .section-header { text-align: center; margin-bottom: 64px; }
-        .section-header h2 {
-            font-size: 3rem; font-weight: 800; margin-bottom: 16px;
-        }
-        .section-header p {
-            font-size: 1.125rem; color: var(--text-muted); max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* ---- LEVEL SELECTOR ---- */
-        .level-selector {
-            display: flex; gap: 16px; justify-content: center; margin-bottom: 48px;
-            flex-wrap: wrap;
-        }
-        .level-btn {
-            padding: 12px 24px; border-radius: 12px;
-            background: var(--bg-card); border: 2px solid var(--border);
-            color: var(--text); font-weight: 600; cursor: pointer;
-            transition: all 0.3s;
-        }
-        .level-btn:hover, .level-btn.active {
-            border-color: var(--primary);
-            background: rgba(37,99,235,0.1);
-            transform: translateY(-2px);
-        }
-        .level-btn.active {
-            box-shadow: 0 4px 20px rgba(37,99,235,0.3);
-        }
-
-        /* ---- FEATURES ---- */
-        .features-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
-        }
-        .feature-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 32px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative; overflow: hidden;
-        }
-        .feature-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-        .feature-card::before {
-            content: ''; position: absolute; top: 0; left: 0;
-            width: 100%; height: 3px;
-            background: var(--gradient-1); opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .feature-card:hover::before { opacity: 1; }
-        .feature-icon {
-            width: 64px; height: 64px; border-radius: 16px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 2rem; margin-bottom: 20px;
-            transition: transform 0.3s;
-        }
-        .feature-card:hover .feature-icon { transform: scale(1.1); }
-        .fi-blue { background: rgba(37,99,235,0.15); }
-        .fi-amber { background: rgba(245,158,11,0.15); }
-        .fi-purple { background: rgba(124,58,237,0.15); }
-        .fi-cyan { background: rgba(6,182,212,0.15); }
-        .fi-green { background: rgba(16,185,129,0.15); }
-        .fi-pink { background: rgba(236,72,153,0.15); }
-        .feature-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
-        .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
-
-        /* ---- CURRICULUM ---- */
-        .curriculum-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;
-        }
-        .curriculum-card {
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 24px;
-            transition: all 0.3s;
-        }
-        .curriculum-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-        }
-        .curriculum-card .level-badge {
-            display: inline-block; padding: 4px 12px;
-            border-radius: 100px; font-size: 0.75rem; font-weight: 700;
-            margin-bottom: 12px;
-        }
-        .level-a0 { background: rgba(37,99,235,0.15); color: var(--primary-light); }
+        /* LEVEL BADGES */
+        .level-badge { display: inline-block; padding: 4px 12px; border-radius: 100px; font-size: 0.75rem; font-weight: 700; }
+        .level-a0 { background: rgba(37,99,235,0.15); color: #3b82f6; }
         .level-a1 { background: rgba(16,185,129,0.15); color: #10b981; }
-        .level-a2 { background: rgba(245,158,11,0.15); color: var(--accent); }
+        .level-a2 { background: rgba(245,158,11,0.15); color: #f59e0b; }
         .level-b1 { background: rgba(236,72,153,0.15); color: #ec4899; }
-        .curriculum-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
-        .curriculum-card p { color: var(--text-muted); font-size: 0.85rem; }
 
-        /* ---- HOW IT WORKS ---- */
-        .steps { display: flex; gap: 32px; position: relative; }
-        .steps::before {
-            content: ''; position: absolute; top: 40px; left: 60px;
-            right: 60px; height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--accent), #7c3aed, #ec4899);
-            border-radius: 2px;
-        }
-        .step {
-            flex: 1; text-align: center; position: relative; z-index: 1;
-        }
-        .step-num {
-            width: 80px; height: 80px; margin: 0 auto 20px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.75rem; font-weight: 800;
-            color: #fff; position: relative;
-        }
-        .step-num::after {
-            content: '';
-            position: absolute; inset: -4px;
-            border-radius: 50%;
-            background: inherit; opacity: 0.3;
-            filter: blur(10px);
-        }
-        .step:nth-child(1) .step-num { background: var(--gradient-1); }
-        .step:nth-child(2) .step-num { background: var(--gradient-2); }
-        .step:nth-child(3) .step-num { background: var(--gradient-3); }
-        .step:nth-child(4) .step-num { background: linear-gradient(135deg, #7c3aed, #ec4899); }
-        .step h3 { font-size: 1.125rem; font-weight: 700; margin-bottom: 8px; }
-        .step p { color: var(--text-muted); font-size: 0.9rem; }
+        /* QUIZ */
+        .quiz-question { font-size: 1.5rem; font-weight: 700; margin-bottom: 24px; }
+        .quiz-options { display: grid; gap: 12px; }
+        .quiz-option { padding: 16px 20px; background: var(--bg-card); border: 2px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s; font-size: 1rem; }
+        .quiz-option:hover { border-color: var(--primary); background: rgba(37,99,235,0.1); }
+        .quiz-option.correct { border-color: var(--success); background: rgba(16,185,129,0.2); }
+        .quiz-option.wrong { border-color: var(--danger); background: rgba(239,68,68,0.2); }
+        .quiz-option.disabled { pointer-events: none; opacity: 0.6; }
 
-        /* ---- SKILLS SHOWCASE ---- */
-        .skills-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-        .skill-card {
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 32px 20px;
-            text-align: center; transition: all 0.4s;
-            position: relative; overflow: hidden;
-        }
-        .skill-card::before {
-            content: '';
-            position: absolute; inset: 0;
-            background: var(--gradient-1);
-            opacity: 0; transition: opacity 0.3s;
-        }
-        .skill-card:hover::before { opacity: 0.05; }
-        .skill-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary);
-            box-shadow: 0 16px 40px rgba(0,0,0,0.3);
-        }
-        .skill-emoji { font-size: 3.5rem; margin-bottom: 16px; display: block; position: relative; z-index: 1; }
-        .skill-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; position: relative; z-index: 1; }
-        .skill-card p { color: var(--text-muted); font-size: 0.85rem; position: relative; z-index: 1; }
-        .skill-xp {
-            display: inline-block; margin-top: 12px;
-            padding: 6px 16px; border-radius: 100px;
-            background: rgba(245,158,11,0.15);
-            color: var(--accent); font-size: 0.8rem; font-weight: 600;
-            position: relative; z-index: 1;
+        /* FLASHCARD */
+        .flashcard { width: 100%; max-width: 400px; height: 250px; perspective: 1000px; margin: 0 auto 24px; cursor: pointer; }
+        .flashcard-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+        .flashcard-front, .flashcard-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center; }
+        .flashcard-front { background: var(--gradient); }
+        .flashcard-back { background: var(--bg-card); border: 2px solid var(--primary); transform: rotateY(180deg); }
+        .flashcard-word { font-size: 2rem; font-weight: 800; }
+        .flashcard-translation { font-size: 1.5rem; color: var(--text-muted); }
+        .flashcard-hint { font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-top: 16px; }
+
+        /* PROGRESS */
+        .progress-bar { width: 100%; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; margin: 8px 0; }
+        .progress-fill { height: 100%; background: var(--gradient); border-radius: 4px; transition: width 0.5s; }
+        .stat-card { text-align: center; padding: 24px; }
+        .stat-card .num { font-size: 2.5rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-card .label { color: var(--text-muted); font-size: 0.85rem; }
+
+        /* NAV TABS */
+        .nav-tabs { display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; }
+        .nav-tab { padding: 10px 20px; border-radius: 10px; background: var(--bg-card); border: 2px solid var(--border); color: var(--text); font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .nav-tab.active, .nav-tab:hover { border-color: var(--primary); background: rgba(37,99,235,0.1); }
+
+        /* SKILL CARDS */
+        .skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 16px; }
+        .skill-card { padding: 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; text-align: center; transition: all 0.3s; }
+        .skill-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+        .skill-card.completed { border-color: var(--success); }
+        .skill-card .icon { font-size: 2rem; margin-bottom: 8px; }
+
+        /* WORD OF DAY */
+        .wod-card { background: var(--gradient); border-radius: 20px; padding: 40px; text-align: center; margin-bottom: 32px; }
+        .wod-card .word { font-size: 3rem; font-weight: 900; margin-bottom: 8px; }
+        .wod-card .translation { font-size: 1.5rem; opacity: 0.9; margin-bottom: 16px; }
+        .wod-card .example { font-style: italic; opacity: 0.8; }
+
+        /* ACHIEVEMENT */
+        .achievement { display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; }
+        .achievement .icon { font-size: 2rem; }
+        .achievement .info { flex: 1; }
+        .achievement .name { font-weight: 700; }
+        .achievement .desc { color: var(--text-muted); font-size: 0.85rem; }
+        .achievement.unlocked { border-color: var(--success); }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .card-grid { grid-template-columns: 1fr; }
+            .skill-grid { grid-template-columns: 1fr; }
+            .quiz-question { font-size: 1.25rem; }
         }
 
-        /* ---- TESTIMONIALS ---- */
-        .testimonials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-        .testimonial {
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 32px;
-            transition: all 0.3s;
-        }
-        .testimonial:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-        }
-        .testimonial-stars { color: var(--accent); font-size: 1.2rem; margin-bottom: 12px; }
-        .testimonial p {
-            color: var(--text-muted); font-size: 0.95rem;
-            margin-bottom: 16px; font-style: italic;
-        }
-        .testimonial-author { display: flex; align-items: center; gap: 12px; }
-        .testimonial-avatar {
-            width: 48px; height: 48px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.25rem; font-weight: 700; color: #fff;
-        }
-        .ta-1 { background: var(--gradient-1); }
-        .ta-2 { background: var(--gradient-2); }
-        .ta-3 { background: linear-gradient(135deg, #7c3aed, #ec4899); }
-        .testimonial-name { font-weight: 600; font-size: 0.95rem; }
-        .testimonial-role { color: var(--text-muted); font-size: 0.8rem; }
-
-        /* ---- CTA ---- */
-        .cta {
-            text-align: center;
-            background: linear-gradient(180deg, var(--bg) 0%, #1a1a2e 100%);
-        }
-        .cta-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 32px;
-            padding: 80px 64px;
-            position: relative; overflow: hidden;
-        }
-        .cta-box::before {
-            content: ''; position: absolute; top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle at 30% 50%, rgba(37,99,235,0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 50%, rgba(124,58,237,0.1) 0%, transparent 50%);
-        }
-        .cta-box h2 {
-            font-size: 3rem; font-weight: 800;
-            margin-bottom: 16px; position: relative;
-        }
-        .cta-box p {
-            font-size: 1.25rem; color: var(--text-muted);
-            margin-bottom: 40px; position: relative;
-        }
-        .cta-buttons { display: flex; gap: 16px; justify-content: center; position: relative; flex-wrap: wrap; }
-
-        /* ---- FOOTER ---- */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 40px 24px; text-align: center;
-            color: var(--text-muted); font-size: 0.875rem;
-            position: relative; z-index: 1;
-        }
-        footer a { color: var(--primary-light); text-decoration: none; }
-
-        /* ---- RESPONSIVE ---- */
-        @media (max-width: 900px) {
-            .hero .container { grid-template-columns: 1fr; text-align: center; }
-            .hero h1 { font-size: 2.5rem; }
-            .hero p { margin: 0 auto 32px; }
-            .hero-buttons { justify-content: center; }
-            .hero-stats { justify-content: center; }
-            .phone-mockup { margin: 40px auto 0; }
-            .features-grid { grid-template-columns: 1fr; }
-            .steps { flex-direction: column; }
-            .steps::before { display: none; }
-            .skills-row { grid-template-columns: repeat(2, 1fr); }
-            .testimonials { grid-template-columns: 1fr; }
-            .cta-box { padding: 40px 24px; }
-            .cta-box h2 { font-size: 2rem; }
-            .nav-links { display: none; }
-            .curriculum-grid { grid-template-columns: 1fr; }
-        }
-
-        /* ---- ANIMATIONS ---- */
-        .fade-in {
-            opacity: 0; transform: translateY(30px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
-        .fade-in-delay-1 { transition-delay: 0.1s; }
-        .fade-in-delay-2 { transition-delay: 0.2s; }
-        .fade-in-delay-3 { transition-delay: 0.3s; }
+        /* ANIMATIONS */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate { animation: fadeIn 0.5s ease-out; }
     </style>
 </head>
 <body>
 
-<!-- PARTICLES -->
-<canvas id="particles"></canvas>
+<!-- TOP NAV -->
+<div class="topnav">
+    <div class="logo">🇺🇸 English Zero-to-Hero</div>
+    <div class="stats">
+        <div class="stat">⭐ <span class="stat-num" id="total-xp">0</span> XP</div>
+        <div class="stat">🔥 <span class="stat-num" id="streak">0</span> kun</div>
+        <div class="stat">📖 <span class="stat-num" id="lessons-done">0</span>/34</div>
+    </div>
+</div>
 
-<!-- NAVBAR -->
-<nav>
-    <div class="container">
-        <div class="logo">🇺🇸 English Zero-to-Hero</div>
-        <ul class="nav-links">
-            <li><a href="#features">Imkoniyatlar</a></li>
-            <li><a href="#curriculum">Kurikulum</a></li>
-            <li><a href="#how">Qanday ishlaydi</a></li>
-            <li><a href="#skills">Ko'nikmalar</a></li>
-            <li><a href="#reviews">Sharhlar</a></li>
-        </ul>
-        <a href="https://t.me/" class="btn btn-primary btn-glow" target="_blank">
-            🚀 Botni boshlash
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+    <div class="wod-card animate">
+        <div style="font-size: 3rem; margin-bottom: 16px;">📖</div>
+        <div class="word" id="wod-word">Loading...</div>
+        <div class="translation" id="wod-translation"></div>
+        <div class="example" id="wod-example"></div>
+    </div>
+
+    <h2 class="page-title">O'rganishni boshlang</h2>
+    <p class="page-subtitle">34 dars, 4 ta ko'nikma, AI yordamida</p>
+
+    <div class="card-grid">
+        <div class="card" onclick="showPage('page-lessons')" style="cursor:pointer">
+            <div style="font-size: 2rem; margin-bottom: 12px;">📚</div>
+            <h3>Darslar</h3>
+            <p style="color:var(--text-muted)">34 ta dars — A0 dan B1 gacha</p>
+        </div>
+        <div class="card" onclick="showPage('page-test')" style="cursor:pointer">
+            <div style="font-size: 2rem; margin-bottom: 12px;">📝</div>
+            <h3>Daraja Testi</h3>
+            <p style="color:var(--text-muted)">20 ta savol bilan darajangizni aniqlang</p>
+        </div>
+        <div class="card" onclick="showPage('page-flashcards')" style="cursor:pointer">
+            <div style="font-size: 2rem; margin-bottom: 12px;">🃏</div>
+            <h3>Flashcards</h3>
+            <p style="color:var(--text-muted)">So'zlarni takrorlang</p>
+        </div>
+        <div class="card" onclick="showPage('page-progress')" style="cursor:pointer">
+            <div style="font-size: 2rem; margin-bottom: 12px;">📊</div>
+            <h3>Rivojlanish</h3>
+            <p style="color:var(--text-muted)">Statistika va yutuqlar</p>
+        </div>
+    </div>
+
+    <div style="margin-top: 32px;">
+        <a href="https://t.me/" class="btn btn-primary" target="_blank" style="width:100%; justify-content:center;">
+            🤖 Telegram botda davom etish
         </a>
     </div>
-</nav>
+</div>
 
-<!-- HERO -->
-<section class="hero">
-    <div class="container">
-        <div class="hero-text">
-            <div class="hero-badge">🤖 AI bilan o'rganing</div>
-            <h1>Ingliz tilini <span>0 dan</span> erkin gapirguncha</h1>
-            <p>Telegram bot orqali kuniga 5-10 daqiqa ajrating. 24 dars, 4 ta ko'nikma, AI tahlili va gamifikatsiya bilan tezroq o'rganing.</p>
-            <div class="hero-buttons">
-                <a href="https://t.me/" class="btn btn-accent btn-glow" target="_blank">
-                    🎯 Bepul boshlash
-                </a>
-                <a href="#how" class="btn btn-outline">
-                    ▶ Qanday ishlaydi?
-                </a>
-            </div>
-            <div class="hero-stats">
-                <div class="stat">
-                    <div class="stat-num" data-target="500">0</div>
-                    <div class="stat-label">O'quvchi</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-num" data-target="24">0</div>
-                    <div class="stat-label">Darslar</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-num" data-target="4">0</div>
-                    <div class="stat-label">Ko'nikma</div>
-                </div>
-            </div>
-        </div>
-        <div class="hero-visual">
-            <div class="phone-mockup">
-                <div class="phone-screen">
-                    <div class="phone-header">
-                        <h3>🇺🇸 English Zero-to-Hero</h3>
-                        <p>Online</p>
-                    </div>
-                    <div class="phone-messages">
-                        <div class="msg msg-bot">👋 Assalomu alaykum! Ingliz tilini 0 dan o'rganishni boshlaysizmi?</div>
-                        <div class="msg msg-user">Ha, boshlamoqchiman!</div>
-                        <div class="msg msg-bot">📝 <b>Daraja testi</b> bormi? Yoki <b>📚 Darslar</b> dan boshlaysizmi?</div>
-                        <div class="msg msg-user">Daraja testini bermoqchiman</div>
-                        <div class="msg msg-bot">🎯 <b>Sizning darajangiz: A1</b><br>9-darsdan boshlaysiz!</div>
-                    </div>
-                    <div class="phone-input">
-                        <span>✏️ Javobingizni yozing...</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- LESSONS PAGE -->
+<div class="page" id="page-lessons">
+    <button class="btn btn-outline btn-sm" onclick="showPage('page-home')" style="margin-bottom:24px">← Orqaga</button>
+    <h2 class="page-title">📚 Darslar</h2>
+    <p class="page-subtitle">34 ta dars — A0 dan B1 gacha</p>
+
+    <div class="nav-tabs" id="level-tabs">
+        <button class="nav-tab active" onclick="filterLessons('all')">Barchasi</button>
+        <button class="nav-tab" onclick="filterLessons('A0')">A0</button>
+        <button class="nav-tab" onclick="filterLessons('A1')">A1</button>
+        <button class="nav-tab" onclick="filterLessons('A2')">A2</button>
+        <button class="nav-tab" onclick="filterLessons('B1')">B1</button>
     </div>
-</section>
 
-<!-- FEATURES -->
-<section id="features">
-    <div class="container">
-        <div class="section-header fade-in">
-            <h2>Nega aynan biz?</h2>
-            <p>Boshqa kurslardan farqli o'laroq, biz faqat nazariya emas, amaliyotga asoslangan metodika qo'llaymiz.</p>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card fade-in fade-in-delay-1">
-                <div class="feature-icon fi-blue">🤖</div>
-                <h3>AI Repetitor</h3>
-                <p>Google Gemini AI sizning yozgan jumlalaringizni tekshiradi, xatolarni o'zbek tilida tushuntiradi va to'g'ri variantini ko'rsatadi.</p>
-            </div>
-            <div class="feature-card fade-in fade-in-delay-2">
-                <div class="feature-icon fi-amber">🎧</div>
-                <h3>Ovozli mashqlar</h3>
-                <p>Toza inglizcha talaffuzni eshiting va ovozli xabar orqali o'z talaffuzingizni mashq qiling.</p>
-            </div>
-            <div class="feature-card fade-in fade-in-delay-3">
-                <div class="feature-icon fi-purple">🗂</div>
-                <h3>Interval takrorlash</h3>
-                <p>O'rganilgan so'zlar avtomatik ravishda 1, 3, 7, 14 kunlik oraliqda qayta eslatiladi.</p>
-            </div>
-            <div class="feature-card fade-in fade-in-delay-1">
-                <div class="feature-icon fi-cyan">📝</div>
-                <h3>Daraja Testi</h3>
-                <p>20 ta savol bilan darajangizni aniqlang (A0→B1) va o'z darajangizdan boshlab o'rganing!</p>
-            </div>
-            <div class="feature-card fade-in fade-in-delay-2">
-                <div class="feature-icon fi-green">💬</div>
-                <h3>AI Chat</h3>
-                <p>Istalgan vaqtda AI bilan ingliz tilida suhbatlashing, yangi so'zlar o'rganing!</p>
-            </div>
-            <div class="feature-card fade-in fade-in-delay-3">
-                <div class="feature-icon fi-pink">🎮</div>
-                <h3>Gamifikatsiya</h3>
-                <p>XP ballar, kunlik streak, darajalar va reyting — o'rganish qiziqarli bo'ladi!</p>
-            </div>
-        </div>
+    <div id="lessons-list" class="card-grid"></div>
+</div>
+
+<!-- LESSON DETAIL PAGE -->
+<div class="page" id="page-lesson-detail">
+    <button class="btn btn-outline btn-sm" onclick="showPage('page-lessons')" style="margin-bottom:24px">← Darslar ro'yxatiga</button>
+    <div id="lesson-content"></div>
+</div>
+
+<!-- QUIZ PAGE -->
+<div class="page" id="page-quiz">
+    <div id="quiz-content"></div>
+</div>
+
+<!-- TEST PAGE -->
+<div class="page" id="page-test">
+    <button class="btn btn-outline btn-sm" onclick="showPage('page-home')" style="margin-bottom:24px">← Orqaga</button>
+    <h2 class="page-title">📝 Daraja Testi</h2>
+    <p class="page-subtitle">20 ta savol — A0 dan B1 gacha</p>
+    <div id="test-content">
+        <p style="margin-bottom: 24px;">Test sizning ingliz tili darajangizni aniqlaydi. Har bir to'g'ri javob uchun ball olinadi.</p>
+        <button class="btn btn-primary" onclick="startTest()">🚀 Testni boshlash</button>
     </div>
-</section>
+</div>
 
-<!-- CURRICULUM -->
-<section id="curriculum">
-    <div class="container">
-        <div class="section-header fade-in">
-            <h2>To'liq kurikulum (A0 → B1)</h2>
-            <p>24 dars — salomlashishdan boshlab idiogramlargacha</p>
-        </div>
-        <div class="level-selector fade-in">
-            <button class="level-btn active" onclick="filterLevel('all')">Barchasi (24)</button>
-            <button class="level-btn" onclick="filterLevel('A0')">A0 (3)</button>
-            <button class="level-btn" onclick="filterLevel('A1')">A1 (9)</button>
-            <button class="level-btn" onclick="filterLevel('A2')">A2 (6)</button>
-            <button class="level-btn" onclick="filterLevel('B1')">B1 (6)</button>
-        </div>
-        <div class="curriculum-grid fade-in" id="curriculum-grid">
-            <!-- Filled by JS -->
-        </div>
-    </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section id="how">
-    <div class="container">
-        <div class="section-header fade-in">
-            <h2>Qanday ishlaydi?</h2>
-            <p>Faqat 4 ta oddiy qadam — kuniga 5-10 daqiqa ajrating</p>
-        </div>
-        <div class="steps fade-in">
-            <div class="step">
-                <div class="step-num">1</div>
-                <h3>📝 Darajangizni aniqlang</h3>
-                <p>20 ta savol bilan daraja testini bosing — A0, A1, A2 yoki B1</p>
-            </div>
-            <div class="step">
-                <div class="step-num">2</div>
-                <h3>📚 Darsni tanlang</h3>
-                <p>Sizning darajangizdan boshlab ketma-ket darslarni o'rganing</p>
-            </div>
-            <div class="step">
-                <div class="step-num">3</div>
-                <h3>✍️ Mashqlarni bajarang</h3>
-                <p>Reading, Listening, Writing, Speaking — 4 ta ko'nikmani amalda mashq qiling</p>
-            </div>
-            <div class="step">
-                <div class="step-num">4</div>
-                <h3>🏆 Rivojlaning</h3>
-                <p>XP to'plang, darajangizni oshiring va B1 darajasiga yeting!</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills">
-    <div class="container">
-        <div class="section-header fade-in">
-            <h2>4 ta ko'nikma — to'liq kurs</h2>
-            <p>Har bir darsda 4 ta ko'nikmani amalda bajaring</p>
-        </div>
-        <div class="skills-row fade-in">
-            <div class="skill-card">
-                <span class="skill-emoji">📖</span>
-                <h3>Reading</h3>
-                <p>Sodda matnlarni o'qing va tushunishni mashq qiling</p>
-                <span class="skill-xp">+10 XP</span>
-            </div>
-            <div class="skill-card">
-                <span class="skill-emoji">🎧</span>
-                <h3>Listening</h3>
-                <p>Ovozli diktant — eshitganingizni yozing</p>
-                <span class="skill-xp">+15 XP</span>
-            </div>
-            <div class="skill-card">
-                <span class="skill-emoji">✍️</span>
-                <h3>Writing</h3>
-                <p>AI grammatikangizni tekshiradi va tuzatadi</p>
-                <span class="skill-xp">+20 XP</span>
-            </div>
-            <div class="skill-card">
-                <span class="skill-emoji">🗣</span>
-                <h3>Speaking</h3>
-                <p>Ovozli xabar yuboring — talaffuzingizni baholang</p>
-                <span class="skill-xp">+25 XP</span>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section id="reviews">
-    <div class="container">
-        <div class="section-header fade-in">
-            <h2>O'quvchilarimiz nima deydi?</h2>
-            <p>Haqiqiy foydalanuvchilarimizning tajribalari</p>
-        </div>
-        <div class="testimonials fade-in">
-            <div class="testimonial">
-                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                <p>"Kuniga 10 daqiqa vaqtim bor edi. Shu bot orqali 3 oyda A0 dan A1 ga o'tdim! AI juda yaxshi tushuntiradi."</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar ta-1">D</div>
-                    <div>
-                        <div class="testimonial-name">Dilshod K.</div>
-                        <div class="testimonial-role">Talaba, Toshkent</div>
-                    </div>
+<!-- FLASHCARDS PAGE -->
+<div class="page" id="page-flashcards">
+    <button class="btn btn-outline btn-sm" onclick="showPage('page-home')" style="margin-bottom:24px">← Orqaga</button>
+    <h2 class="page-title">🃏 Flashcards</h2>
+    <p class="page-subtitle">So'zlarni takrorlang — kartochkani bosing</p>
+    <div id="flashcard-area">
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    <div class="flashcard-word" id="fc-word">Loading...</div>
+                    <div class="flashcard-hint">Bosing — tarjimani ko'ring</div>
                 </div>
-            </div>
-            <div class="testimonial">
-                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                <p>"Speaking mashqi juda yoqdi! Ovozli xabar yuborib talaffuzimni yaxshiladim. Boshqa botlarda bunday yo'q."</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar ta-2">N</div>
-                    <div>
-                        <div class="testimonial-name">Nilufar M.</div>
-                        <div class="testimonial-role">O'qituvchi, Samarqand</div>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial">
-                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                <p>"Daraja testi juda foydali — menga to'g'ri darajadan boshlashga yordam berdi. Endi B2 ga tayyorgarlik ko'rayapman!"</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar ta-3">A</div>
-                    <div>
-                        <div class="testimonial-name">Abror T.</div>
-                        <div class="testimonial-role">Dasturchi, Buxoro</div>
-                    </div>
+                <div class="flashcard-back">
+                    <div class="flashcard-translation" id="fc-translation">...</div>
+                    <div style="margin-top: 8px; color: var(--text-muted); font-size: 0.85rem;" id="fc-example"></div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-<!-- CTA -->
-<section class="cta">
-    <div class="container">
-        <div class="cta-box fade-in">
-            <h2>Ingliz tilini hoziroq boshlang! 🚀</h2>
-            <p>Bepul Telegram bot — hech qanday ro'yxatdan o'tish, hech qanday kredit karta kerak emas.</p>
-            <div class="cta-buttons">
-                <a href="https://t.me/" class="btn btn-accent btn-glow" target="_blank">
-                    🎯 Telegram'da boshlash
-                </a>
-                <a href="#curriculum" class="btn btn-outline">
-                    📚 Kurikumni ko'rish
-                </a>
-            </div>
+        <div style="display: flex; gap: 12px; justify-content: center; margin-top: 16px;">
+            <button class="btn btn-danger btn-sm" onclick="prevFlashcard()">← Oldingi</button>
+            <button class="btn btn-success btn-sm" onclick="nextFlashcard()">Keyingi →</button>
         </div>
     </div>
-</section>
+</div>
 
-<!-- FOOTER -->
-<footer>
-    <div class="container">
-        <p>© 2025 English Zero-to-Hero Bot. Barcha huquqlar himoyalangan.</p>
-        <p style="margin-top: 8px;">
-            <a href="https://t.me/">Telegram Bot</a> · 
-            <a href="#features">Imkoniyatlar</a> · 
-            <a href="#curriculum">Kurikulum</a> · 
-            <a href="#how">Qanday ishlaydi</a>
-        </p>
+<!-- PROGRESS PAGE -->
+<div class="page" id="page-progress">
+    <button class="btn btn-outline btn-sm" onclick="showPage('page-home')" style="margin-bottom:24px">← Orqaga</button>
+    <h2 class="page-title">📊 Rivojlanish</h2>
+
+    <div class="card-grid" style="margin-bottom: 32px;">
+        <div class="card stat-card"><div class="num" id="p-xp">0</div><div class="label">XP ballar</div></div>
+        <div class="card stat-card"><div class="num" id="p-streak">0</div><div class="label">Kunlik streak</div></div>
+        <div class="card stat-card"><div class="num" id="p-lessons">0</div><div class="label">Yakunlangan darslar</div></div>
+        <div class="card stat-card"><div class="num" id="p-level">A0</div><div class="label">Daraja</div></div>
     </div>
-</footer>
+
+    <h3 style="margin-bottom: 16px;">🏆 Yutuqlar</h3>
+    <div id="achievements-list"></div>
+</div>
 
 <script>
-// ---- PARTICLES ----
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-const particles = [];
-const particleCount = 50;
-
-for (let i = 0; i < particleCount; i++) {
-    particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 2 + 0.5,
-        speedX: (Math.random() - 0.5) * 0.5,
-        speedY: (Math.random() - 0.5) * 0.5,
-        opacity: Math.random() * 0.5 + 0.1
-    });
-}
-
-function animateParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-        ctx.fillStyle = `rgba(37, 99, 235, ${p.opacity})`;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-        p.x += p.speedX;
-        p.y += p.speedY;
-        if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
-    });
-    requestAnimationFrame(animateParticles);
-}
-animateParticles();
-
-window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
-
-// ---- CURRICULUM DATA ----
-const lessons = [
-    {id:1, level:'A0', title:'Salomlashish va Tanishuv', desc:'Hello, Name, Goodbye — asosiy salomlashish'},
-    {id:2, level:'A0', title:'Raqamlar va Yosh', desc:'One-Twenty, How old are you?'},
-    {id:3, level:'A0', title:'Oila va Qarindoshlar', desc:'Father, Mother, Brother, Sister'},
-    {id:4, level:'A1', title:'Kundalik Harakatlar', desc:'Wake up, Go to work, Every day'},
-    {id:5, level:'A1', title:'Taom va Ichimlik', desc:'Water, Bread, I would like'},
-    {id:6, level:'A1', title:'Ranglar va Buyumlar', desc:'Red, Blue, Green, Beautiful'},
-    {id:7, level:'A1', title:'Vaqt va Kun', desc:'What time is it? Monday, Weekend'},
-    {id:8, level:'A1', title:'Sayohat va Joylar', desc:'Airport, Hotel, Beach, Ticket'},
-    {id:9, level:'A1', title:'Do\'kon va Xarid', desc:'How much? Cheap, Expensive'},
-    {id:10, level:'A1', title:'Ob-havo va Fasllar', desc:'Hot, Cold, Rain, Summer'},
-    {id:11, level:'A1', title:'Kasblar va Ish', desc:'Doctor, Teacher, Engineer'},
-    {id:12, level:'A1', title:'Hobbi va Qiziqishlar', desc:'Football, Music, Reading'},
-    {id:13, level:'A2', title:'O\'tgan Zamon (Past Simple)', desc:'Yesterday, Went, Ate, Saw'},
-    {id:14, level:'A2', title:'Kelajak Rejalari', desc:'Tomorrow, Will, Going to'},
-    {id:15, level:'A2', title:'Taqqoslash (Comparatives)', desc:'Bigger, Better, Than, The most'},
-    {id:16, level:'A2', title:'So\'rov va Ruxsat', desc:'Can I? Could you? Please'},
-    {id:17, level:'A2', title:'Sarflar va Byudjet', desc:'Price, Discount, Cheap, Pay'},
-    {id:18, level:'A2', title:'Sog\'liq va Tibbiyot', desc:'Headache, Fever, Medicine'},
-    {id:19, level:'B1', title:'Past Perfect', desc:'Had + past participle, Before'},
-    {id:20, level:'B1', title:'Passive Voice', desc:'Was/were + past participle'},
-    {id:21, level:'B1', title:'Reported Speech', desc:'Said, Told, Asked, That'},
-    {id:22, level:'B1', title:'Conditionals', desc:'If, Will, Would, Unless'},
-    {id:23, level:'B1', title:'Phrasal Verbs', desc:'Look after, Give up, Get up'},
-    {id:24, level:'B1', title:'Idioms', desc:'Break a leg, Piece of cake'}
+// ==================== DATA ====================
+const LESSONS = [
+    {id:1,level:'A0',title:'Salomlashish va Tanishuv',vocab:[{w:'Hello',t:'Salom'},{w:'Name',t:'Ism'},{w:'Nice to meet you',t:'Tanishganimdan xursandman'},{w:'I am',t:'Men ... man'},{w:'Goodbye',t:'Xayr'}],reading:{text:'Alex: Hello! My name is Alex.\nSarah: Hi Alex! I am Sarah. Nice to meet you.',q:'Sarah kim bilan tanishdi?',opts:['Alex','John','David','Tom'],correct:0},listening:'Hello, my name is Alex. Nice to meet you.',writing:'Salom! Mening ismim ... Tanishganimdan xursandman.',writingSample:'Hello! My name is ... Nice to meet you.'},
+    {id:2,level:'A0',title:'Raqamlar va Yosh',vocab:[{w:'One',t:'Bir'},{w:'Ten',t:"O'n"},{w:'Years old',t:'Yoshda'},{w:'Student',t:'Talaba'}],reading:{text:'This is David. He is twenty years old. David is a student.',q:'David necha yoshda?',opts:['15','20','25','10'],correct:1},listening:'I am twenty years old and I am a student.',writing:'Men 18 yoshdaman va men talabaman.',writingSample:'I am 18 years old and I am a student.'},
+    {id:3,level:'A0',title:'Oila va Qarindoshlar',vocab:[{w:'Father',t:'Ota'},{w:'Mother',t:'Ona'},{w:'Family',t:'Oila'},{w:'Love',t:'Sevmoq'}],reading:{text:'I have a small family. My father is a doctor. My mother is a teacher.',q:'Onasi kim?',opts:['Doctor','Driver','Teacher','Engineer'],correct:2},listening:'My father is a doctor and my mother is a teacher.',writing:'Mening otam shifokor.',writingSample:'My father is a doctor.'},
+    {id:4,level:'A1',title:'Kundalik Harakatlar',vocab:[{w:'Wake up',t:"Uyg'onmoq"},{w:'Every day',t:'Har kuni'},{w:'Go to work',t:'Ishga bormoq'}],reading:{text:'Every day, I wake up at 7 AM. I drink coffee. Then I go to work.',q:'U ertalab nima ichadi?',opts:['Tea','Juice','Milk','Coffee'],correct:3},listening:'Every day I wake up at seven and drink coffee.',writing:'Men har kuni ertalab soat 7 da uyg’onaman.',writingSample:'I wake up at 7 every morning.'},
+    {id:5,level:'A1',title:'Taom va Ichimlik',vocab:[{w:'Water',t:'Suv'},{w:'Bread',t:'Non'},{w:'Apple',t:'Olma'}],reading:{text:'Waiter: What would you like?\nTom: I would like water and bread.',q:'Tom nima buyurtma berdi?',opts:['Juice','Water and bread','Coffee','Milk'],correct:1},listening:'I would like water and bread, please.',writing:'Men suv va non istayman.',writingSample:'I would like water and bread, please.'},
+    {id:6,level:'A1',title:'Ranglar va Buyumlar',vocab:[{w:'Red',t:'Qizil'},{w:'Blue',t:"Ko'k"},{w:'Green',t:'Yashil'},{w:'Beautiful',t:'Chiroyli'}],reading:{text:'Lisa: Look! This is a beautiful red dress.',q:'Lisa nima yoqtiradi?',opts:['Green bag','Red dress','Blue shirt','Yellow hat'],correct:1},listening:'This is a beautiful blue car.',writing:'Bu chiroyli yashil daftar.',writingSample:'This is a beautiful green notebook.'},
+    {id:7,level:'A1',title:'Vaqt va Kun',vocab:[{w:'Monday',t:'Dushanba'},{w:'Weekend',t:'Dam olish kuni'},{w:'Breakfast',t:'Nonushta'}],reading:{text:'It is Monday morning. The time is 8 AM.',q:'Sarah qachon maktabga boradi?',opts:['Weekends','Monday morning','Sunday','Night'],correct:1},listening:'What time is it? It is eight o\'clock.',writing:'Hozir soat ertalab 9.',writingSample:'It is 9 AM.'},
+    {id:8,level:'A1',title:'Sayohat va Joylar',vocab:[{w:'Airport',t:'Aeroport'},{w:'Hotel',t:'Mehmonxona'},{w:'Ticket',t:'Chipta'}],reading:{text:'Ali is going to Istanbul. He buys a ticket.',q:'Ali qayerga ketyapti?',opts:['London','Istanbul','Paris','Dubai'],correct:1},listening:'Where is the hotel? It is near the beach.',writing:'Mehmonxona plyaj yaqinida.',writingSample:'The hotel is near the beach.'},
+    {id:9,level:'A1',title:"Do'kon va Xarid",vocab:[{w:'Shop',t:"Do'kon"},{w:'How much?',t:'Nechada?'},{w:'Cheap',t:'Arzon'},{w:'Expensive',t:'Qimmat'}],reading:{text:'Mum: How much is this shirt?\nSeller: It is 50,000 so\'m.',q:'Ko\'ylak qancha turadi?',opts:['30,000','50,000','20,000','100,000'],correct:1},listening:'How much is this book? It costs ten dollars.',writing:'Bu ko\'ylak qancha turadi?',writingSample:'How much is this shirt?'},
+    {id:10,level:'A1',title:'Ob-havo va Fasllar',vocab:[{w:'Hot',t:'Issiq'},{w:'Cold',t:'Sovuq'},{w:'Rain',t:"Yomg'ir"},{w:'Summer',t:'Yoz'}],reading:{text:'Today is very hot. The sun is shining.',q:'Bugun qanday ob-havo?',opts:['Sovuq','Issiq',"Yomg'irli",'Bulutli'],correct:1},listening:'It is raining today. I need an umbrella.',writing:'Bugun juda issiq.',writingSample:'Today is very hot.'},
+    {id:11,level:'A1',title:'Kasblar va Ish',vocab:[{w:'Doctor',t:'Shifokor'},{w:'Teacher',t:"O'qituvchi"},{w:'Engineer',t:'Muhandis'}],reading:{text:'My father is a doctor. He works at a hospital.',q:'Onasi qayerda ishlaydi?',opts:['Hospital','School','Bank','Office'],correct:1},listening:'My father is a doctor.',writing:'Mening otam shifokor.',writingSample:'My father is a doctor.'},
+    {id:12,level:'A1',title:'Hobbi va Qiziqishlar',vocab:[{w:'Football',t:'Futbol'},{w:'Music',t:'Musiqa'},{w:'Reading',t:"O'qish"},{w:'Favorite',t:'Sevimli'}],reading:{text:'I like playing football. My favorite team is Barcelona.',q:'Uning sevimli jamoasi?',opts:['Real Madrid','Barcelona','Liverpool','Chelsea'],correct:1},listening:'My favorite hobby is reading books.',writing:'Mening sevimlim futbol.',writingSample:'My favorite hobby is playing football.'},
+    {id:13,level:'A1',title:'Transport va Sayohat',vocab:[{w:'Bus',t:'Avtobus'},{w:'Train',t:'Poyezd'},{w:'Car',t:'Mashina'}],reading:{text:'I go to the train station every morning.',q:'U qayerga boradi?',opts:['Maktabga',"Do'konga",'Stansiyaga','Kasalxonaga'],correct:2},listening:'I take the bus to school every day.',writing:'Men avtobusda ishga boraman.',writingSample:'I go to work by bus.'},
+    {id:14,level:'A1',title:"Do'stlar va Ijtimoiy Hayot",vocab:[{w:'Friend',t:"Do'st"},{w:'Party',t:'Ziyofat'},{w:'Together',t:'Birga'}],reading:{text:'I have many friends. We play together.',q:'Juma kuni nima qilishadi?',opts:['Maktabga','Ziyofat','Uyqqa','Ish'],correct:1},listening:'My best friend is Ali.',writing:"Mening do'stim bilan futbol o'ynaymiz.",writingSample:'My friend and I play football together.'},
+    {id:15,level:'A2',title:'Past Simple',vocab:[{w:'Yesterday',t:'Kecha'},{w:'Went',t:'Bordi'},{w:'Ate',t:'Yedi'},{w:'Played',t:"O'ynadi"}],reading:{text:'Yesterday I went to the park. We played football.',q:'Ular nima qilishdi?',opts:['Swimming','Football','Kitob','Film'],correct:1},listening:'Yesterday I went to the park and played football.',writing:'Kecha men kinoga bordim.',writingSample:'Yesterday I went to the cinema.'},
+    {id:16,level:'A2',title:'Kelajak Rejalari',vocab:[{w:'Tomorrow',t:'Ertaga'},{w:'Will',t:'-man'},{w:'Going to',t:'Rejalanyapti'}],reading:{text:'Next week, I am going to visit my grandmother.',q:'U qayerga boradi?',opts:['Tashkent','Bukhara','Samarkand','Khiva'],correct:2},listening:'I am going to visit my grandmother tomorrow.',writing:'Ertaga men kinoga boraman.',writingSample:'Tomorrow I am going to the cinema.'},
+    {id:17,level:'A2',title:'Taqqoslash',vocab:[{w:'Bigger',t:'Kattaroq'},{w:'Better',t:'Yaxshiroq'},{w:'Than',t:'Dan'}],reading:{text:'Tashkent is bigger than Samarkand.',q:'Qaysi shahar kattaroq?',opts:['Samarkand','Bukhara','Tashkent','Khiva'],correct:2},listening:'Samarkand is more beautiful than Tashkent.',writing:'Mening akam mendan kattaroq.',writingSample:'My brother is bigger than me.'},
+    {id:18,level:'A2',title:"So'rov va Ruxsat",vocab:[{w:'Can I?',t:'Mumkinmi?'},{w:'Could you?',t:'Olasizmi?'},{w:'Please',t:'Iltimos'}],reading:{text:'Student: Excuse me, can I borrow this book?',q:'Talaba nima so\'rayapti?',opts:['Pul','Kitob','Yordam','Ruxsat'],correct:1},listening:'Could you please help me?',writing:'Kechirasiz, yordam bera olasizmi?',writingSample:'Excuse me, could you help me?'},
+    {id:19,level:'A2',title:'Sarflar va Byudjet',vocab:[{w:'Price',t:'Narx'},{w:'Discount',t:'Chegirma'},{w:'Pay',t:"To'lash"}],reading:{text:'I bought a new phone for 500 dollars.',q:'Telefon qancha turdi?',opts:['600','500','400','700'],correct:1},listening:'The phone costs five hundred dollars.',writing:'Men telefon sotib oldim.',writingSample:'I bought a new phone.'},
+    {id:20,level:'A2',title:"Sog'liq va Tibbiyot",vocab:[{w:'Headache',t:'Bosh og\'rig\'i'},{w:'Fever',t:'Isitma'},{w:'Medicine',t:'Dori'}],reading:{text:'I feel sick today. I have a headache.',q:'U nima sezmoqda?',opts:['Ochlik','Charchash','Kasallik','Uyqu'],correct:2},listening:'I have a headache and I need medicine.',writing:'Mening boshim og\'riyapti.',writingSample:'I have a headache.'},
+    {id:21,level:'A2',title:'Texnologiya',vocab:[{w:'Phone',t:'Telefon'},{w:'Computer',t:'Kompyuter'},{w:'Internet',t:'Internet'}],reading:{text:'I use my phone every day. I use social media.',q:'U nima ishlatadi?',opts:['Telefon','Kompyuter','Internet','Hammasi'],correct:3},listening:'I use social media every day.',writing:'Men internetdan foydalanaman.',writingSample:'I use the internet every day.'},
+    {id:22,level:'B1',title:'Past Perfect',vocab:[{w:'Had',t:'...gan edi'},{w:'Before',t:'Oldin'},{w:'Already',t:'Allaqachon'}],reading:{text:'When I arrived, the plane had already left.',q:'Samolyot qachon ketgan edi?',opts:['Keyin','Oldin','Bir vaqtda','Ertaga'],correct:1},listening:'I had already finished before she came.',writing:'Men kelganimda u ketgan edi.',writingSample:'When I came, he had already left.'},
+    {id:23,level:'B1',title:'Passive Voice',vocab:[{w:'Was',t:'Edi (passiv)'},{w:'Built',t:'Qurilgan'},{w:'Written',t:'Yozilgan'}],reading:{text:'The Registan was built in the 15th century.',q:'Registan qachon qurilgan?',opts:['14-asrda','15-asrda','16-asrda','20-asrda'],correct:1},listening:'The book was written by a famous author.',writing:'Bu uy 2020-yilda qurilgan.',writingSample:'This house was built in 2020.'},
+    {id:24,level:'B1',title:'Reported Speech',vocab:[{w:'Said',t:'Dedi'},{w:'Told',t:'Aytdi'},{w:'That',t:' deb'}],reading:{text:'Tom said that he was tired.',q:'Tom nima dedi?',opts:['Charchaganini','Och','Uyqu','Xursand'],correct:0},listening:'She said that she was coming tomorrow.',writing:'U dedi: Men ertaga kelaman.',writingSample:'He said that he was coming tomorrow.'},
+    {id:25,level:'B1',title:'Conditionals',vocab:[{w:'If',t:'Agar'},{w:'Will',t:'-man'},{w:'Would',t:'-ardim'}],reading:{text:'If it rains, I will stay home.',q:'U nima qiladi?',opts:['Uy','Sayohat','Maktab','Ish'],correct:0},listening:'If it rains, I will take an umbrella.',writing:'Agar men boy bo\'lsam, uy olaman.',writingSample:'If I am rich, I will buy a house.'},
+    {id:26,level:'B1',title:'Phrasal Verbs',vocab:[{w:'Get up',t:"Uyg'onmoq"},{w:'Give up',t:'Vaz kechmoq'},{w:'Turn on',t:'Yoqmoq'}],reading:{text:'Every morning I get up at 7. I never give up.',q:'U ertalab nima qiladi?',opts:["O'chiradi",'Yoqadi','Kitob','Sport'],correct:1},listening:'I need to look after my brother.',writing:'Men ertalab uyg’onaman.',writingSample:'I get up at 7 AM.'},
+    {id:27,level:'B1',title:'Idioms',vocab:[{w:'Piece of cake',t:'Juda oson'},{w:'Break a leg',t:'Omad!'},{w:'Under the weather',t:'Kasal'}],reading:{text:"Tom's exam was a piece of cake.",q:'Imtihon qanday o\'tadi?',opts:['Qiyin','Oson','Uzoq','Noto\'g\'ri'],correct:1},listening:'The new phone costs an arm and a leg.',writing:'Mening imtihonim oson edi.',writingSample:'My exam was a piece of cake.'},
+    {id:28,level:'A2',title:'Ish va Kasbiy Hayot',vocab:[{w:'Salary',t:'Oylik'},{w:'Meeting',t:"Yig'ilish"},{w:'Boss',t:'Rahbar'}],reading:{text:'I have a meeting at 10 AM.',q:'Qachon yig\'ilish?',opts:['Dushanba','Chorshanba','Juma','Shanba'],correct:2},listening:'I have a meeting with my boss at ten.',writing:'Mening rahbarim bilan yig\'ilish bor.',writingSample:'I have a meeting with my boss.'},
+    {id:29,level:'B1',title:'Sayohat Rejalari',vocab:[{w:'Passport',t:'Pasport'},{w:'Luggage',t:'Yuk'},{w:'Departure',t:"Jo'nash"}],reading:{text:'I arrived two hours before departure.',q:'Qachon keldi?',opts:['1 soat','2 soat','3 soat','4 soat'],correct:1},listening:'Please show your passport.',writing:'Mening pasportim bor.',writingSample:'I have my passport.'},
+    {id:30,level:'B1',title:'Madaniyat va Bayramlar',vocab:[{w:'Tradition',t:"An'ana"},{w:'Celebration',t:'Bayram'},{w:'Festival',t:'Bayram'}],reading:{text:"Navro'z is a traditional Uzbek festival.",q:'Navro\'z qachon?',opts:['Yozda','Bahorda','Kuzda','Qishda'],correct:1},listening:'We celebrate Navroz every year.',writing:'Navroz o\'zbek an\'anasi.',writingSample:'Navroz is a Uzbek tradition.'},
+    {id:31,level:'A1',title:'Present Simple vs Continuous',vocab:[{w:'Always',t:'Doimo'},{w:'Now',t:'Hozir'},{w:'Sometimes',t:"Ba'zan"}],reading:{text:'I play football every day. I am playing now.',q:'Qaysi gap hozirgi?',opts:['I play','I am playing','I played','I will play'],correct:1},listening:'I am reading a book right now.',writing:'Men har kuni sport bilan shug\'ullanaman.',writingSample:'I do sports every day.'},
+    {id:32,level:'A1',title:'Articles (A, An, The)',vocab:[{w:'A',t:'Bitta'},{w:'An',t:'Bitta (unli)'},{w:'The',t:'Aniqlik'}],reading:{text:'I have a cat. The cat is black.',q:'Qaysi artikeldan keyin unli?',opts:['A','An','The','None'],correct:1},listening:'I saw an apple on the table.',writing:'Men kitob oldim.',writingSample:'I bought a book.'},
+    {id:33,level:'A1',title:'Prepositions of Place',vocab:[{w:'In',t:'Ichida'},{w:'On',t:'Ustida'},{w:'Under',t:'Pastida'},{w:'Next to',t:'Yonida'}],reading:{text:'The book is on the table.',q:'Kitob qayerda?',opts:['Under','On','Behind','In'],correct:1},listening:'The keys are in my pocket.',writing:'Mashina uyning ortida.',writingSample:'The car is behind the house.'},
+    {id:34,level:'A2',title:'Past Simple vs Continuous',vocab:[{w:'While',t:'Ayni paytda'},{w:'When',t:'Ganda'},{w:'Was',t:'Edi'}],reading:{text:'I was reading when the phone rang.',q:'Telefon qo\'ng\'iroq qilganda?',opts:['Kitob o\'qiyapti','Ovqat','Telefon','Uxlayapti'],correct:0},listening:'I was sleeping when the alarm went off.',writing:'Men TV ko\'rayotganda eshik ochildi.',writingSample:'The door opened while I was watching TV.'}
 ];
 
-function filterLevel(level) {
-    const grid = document.getElementById('curriculum-grid');
-    const filtered = level === 'all' ? lessons : lessons.filter(l => l.level === level);
-    grid.innerHTML = filtered.map(l => `
-        <div class="curriculum-card">
+const TEST_QUESTIONS = [
+    {q:'Hello! My name ___ Alex.',opts:['am','is','are','be'],correct:1,level:'A0'},
+    {q:'I ___ a student.',opts:['is','am','are','do'],correct:1,level:'A0'},
+    {q:'She ___ from Tashkent.',opts:['am','is','are','do'],correct:1,level:'A0'},
+    {q:'This is ___.',opts:['my','I','me','mine'],correct:0,level:'A0'},
+    {q:'How ___ you?',opts:['is','are','am','do'],correct:1,level:'A0'},
+    {q:'I ___ to school every day.',opts:['go','goes','going','went'],correct:0,level:'A1'},
+    {q:'She ___ reading a book now.',opts:['is','are','am','be'],correct:0,level:'A1'},
+    {q:'They ___ football yesterday.',opts:['play','plays','played','playing'],correct:2,level:'A1'},
+    {q:'___ you like coffee?',opts:['Are','Do','Is','Does'],correct:1,level:'A1'},
+    {q:'I have ___ apple.',opts:['a','an','the','one'],correct:1,level:'A1'},
+    {q:'He ___ TV every evening.',opts:['watch','watches','watching','watched'],correct:1,level:'A1'},
+    {q:'I ___ already finished.',opts:['have','has','had','having'],correct:0,level:'A2'},
+    {q:'She ___ to cinema last night.',opts:['go','goes','went','going'],correct:2,level:'A2'},
+    {q:'This is ___ than that.',opts:['good','better','best','well'],correct:1,level:'A2'},
+    {q:'I ___ never been to London.',opts:['have','has','had','did'],correct:0,level:'A2'},
+    {q:'If it ___ tomorrow, we stay home.',opts:['rains','rain','rained','raining'],correct:0,level:'A2'},
+    {q:'She asked me ___ I was from.',opts:['what','where','who','how'],correct:1,level:'A2'},
+    {q:'I wish I ___ more time.',opts:['have','has','had','having'],correct:2,level:'B1'},
+    {q:'The report ___ by the team.',opts:['was completed','completed','completing','completes'],correct:0,level:'B1'},
+    {q:'He said he ___ tired.',opts:['is','was','are','were'],correct:1,level:'B1'}
+];
+
+const WORDS = [
+    {w:'Hello',t:'Salom',ex:'Hello, how are you?',l:'A0'},{w:'Thank you',t:'Rahmat',ex:'Thank you very much!',l:'A0'},
+    {w:'Please',t:'Iltimos',ex:'Can I have water, please?',l:'A0'},{w:'Sorry',t:'Kechirasiz',ex:'Sorry, I am late.',l:'A0'},
+    {w:'Hungry',t:'Och',ex:'I am very hungry.',l:'A1'},{w:'Beautiful',t:'Chiroyli',ex:'This flower is beautiful.',l:'A1'},
+    {w:'Important',t:'Muhim',ex:'This is very important.',l:'A1'},{w:'Interesting',t:'Qiziq',ex:'This book is interesting.',l:'A1'},
+    {w:'Delicious',t:'Mazzali',ex:'This food is delicious!',l:'A1'},{w:'Tired',t:'Charchagan',ex:'I am tired after work.',l:'A1'},
+    {w:'Happy',t:'Baxtli',ex:'I am happy today.',l:'A1'},{w:'Expensive',t:'Qimmat',ex:'This phone is too expensive.',l:'A2'},
+    {w:'Recommend',t:'Tavsiya qilmoq',ex:'I recommend this restaurant.',l:'A2'},{w:'Experience',t:'Tajriba',ex:'I have good experience.',l:'A2'},
+    {w:'Possible',t:'Mumkin',ex:'Is it possible to help?',l:'A2'},{w:'Immediately',t:'Darhol',ex:'Please come immediately.',l:'A2'},
+    {w:'Government',t:'Hukumat',ex:'The government made a decision.',l:'B1'},{w:'Environment',t:'Atrof-muhit',ex:'Protect the environment.',l:'B1'},
+    {w:'Knowledge',t:'Bilim',ex:'Knowledge is power.',l:'B1'},{w:'Opportunity',t:'Imkoniyat',ex:'This is a great opportunity.',l:'B1'}
+];
+
+const ACHIEVEMENTS = [
+    {id:'first',name:'Boshlang\'ich',icon:'🌱',desc:'Birinchi dars'},
+    {id:'five',name:"O'quvchi",icon:'📚',desc:'5 ta dars'},
+    {id:'ten',name:'Talaba',icon:'🎓',desc:'10 ta dars'},
+    {id:'all',name:'Ustoz',icon:'👨\u200d🏫',desc:'34 ta dars'},
+    {id:'xp100',name:'Yulduz',icon:'⭐',desc:'100 XP'},
+    {id:'xp500',name:'Masters',icon:'🏆',desc:'500 XP'},
+    {id:'streak3',name:'Davomiy',icon:'🔥',desc:'3 kunlik streak'},
+    {id:'streak7',name:'Haftalik',icon:'💪',desc:'7 kunlik streak'}
+];
+
+// ==================== STATE ====================
+let state = JSON.parse(localStorage.getItem('english_state') || '{}');
+if (!state.xp) state = {xp:0,streak:0,lastDay:null,completedLessons:[],achievements:[],level:'A0',flashcardIndex:0};
+function save() { localStorage.setItem('english_state', JSON.stringify(state)); updateStats(); }
+
+// ==================== NAVIGATION ====================
+function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+    if (id === 'page-lessons') renderLessons();
+    if (id === 'page-progress') renderProgress();
+    if (id === 'page-flashcards') renderFlashcard();
+}
+
+// ==================== STATS ====================
+function updateStats() {
+    document.getElementById('total-xp').textContent = state.xp;
+    document.getElementById('streak').textContent = state.streak;
+    document.getElementById('lessons-done').textContent = state.completedLessons.length;
+}
+updateStats();
+
+// ==================== WORD OF DAY ====================
+function renderWOD() {
+    const day = Math.floor(Date.now() / 86400000) % WORDS.length;
+    const w = WORDS[day];
+    document.getElementById('wod-word').textContent = w.w;
+    document.getElementById('wod-translation').textContent = w.t;
+    document.getElementById('wod-example').textContent = `"${w.ex}"`;
+}
+renderWOD();
+
+// ==================== LESSONS ====================
+function renderLessons(filter='all') {
+    const list = document.getElementById('lessons-list');
+    const lessons = filter === 'all' ? LESSONS : LESSONS.filter(l => l.level === filter);
+    list.innerHTML = lessons.map(l => {
+        const done = state.completedLessons.includes(l.id);
+        return `<div class="card" onclick="openLesson(${l.id})" style="cursor:pointer">
             <span class="level-badge level-${l.level.toLowerCase()}">${l.level}</span>
-            <h4>${l.id}. ${l.title}</h4>
-            <p>${l.desc}</p>
-        </div>
-    `).join('');
-    document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
+            ${done ? '<span style="float:right;color:var(--success)">✅</span>' : ''}
+            <h3 style="margin-top:8px">${l.id}. ${l.title}</h3>
+            <p style="color:var(--text-muted);font-size:0.85rem">${l.vocab.length} ta so'z</p>
+        </div>`;
+    }).join('');
+}
+
+function filterLessons(level) {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
     event.target.classList.add('active');
-}
-filterLevel('all');
-
-// ---- SCROLL ANIMATIONS ----
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-// ---- COUNTER ANIMATION ----
-function animateCounters() {
-    document.querySelectorAll('.stat-num').forEach(el => {
-        const target = parseInt(el.dataset.target);
-        const duration = 2000;
-        const step = target / (duration / 16);
-        let current = 0;
-        const timer = setInterval(() => {
-            current += step;
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
-            }
-            el.textContent = Math.floor(current) + '+';
-        }, 16);
-    });
+    renderLessons(level);
 }
 
-// Start counters when hero is visible
-const heroObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            animateCounters();
-            heroObserver.disconnect();
-        }
-    });
-}, { threshold: 0.3 });
-heroObserver.observe(document.querySelector('.hero-stats'));
+function openLesson(id) {
+    const l = LESSONS.find(x => x.id === id);
+    if (!l) return;
+    const done = state.completedLessons.includes(id);
+    const content = document.getElementById('lesson-content');
+    content.innerHTML = `
+        <span class="level-badge level-${l.level.toLowerCase()}">${l.level}</span>
+        <h2 style="margin:12px 0">${l.id}. ${l.title}</h2>
+        ${done ? '<p style="color:var(--success);margin-bottom:16px">✅ Yakunlangan!</p>' : ''}
 
-// ---- NAVBAR SCROLL ----
-window.addEventListener('scroll', () => {
-    const nav = document.querySelector('nav');
-    if (window.scrollY > 50) {
-        nav.style.background = 'rgba(15,23,42,0.95)';
+        <div class="card" style="margin-bottom:16px">
+            <h3>🔤 Yangi so'zlar</h3>
+            ${l.vocab.map(v => `<p style="margin:8px 0"><b>${v.w}</b> — ${v.t}</p>`).join('')}
+        </div>
+
+        <div class="card" style="margin-bottom:16px">
+            <h3>📖 Reading</h3>
+            <p style="white-space:pre-line;margin:8px 0;color:var(--text-muted)">${l.reading.text}</p>
+            <p style="margin:12px 0"><b>Savol:</b> ${l.reading.q}</p>
+            <div class="quiz-options">
+                ${l.reading.opts.map((o,i) => `<div class="quiz-option" onclick="checkQuiz(this,${i},${l.reading.correct})">${o}</div>`).join('')}
+            </div>
+        </div>
+
+        <div class="card" style="margin-bottom:16px">
+            <h3>🎧 Listening</h3>
+            <p style="margin:8px 0;color:var(--text-muted)"> Tinglang va yozing:</p>
+            <p style="margin:8px 0;font-style:italic">"${l.listening}"</p>
+            <input type="text" id="listening-input" placeholder="Javobingizni yozing..." style="width:100%;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);margin-top:8px">
+            <button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="checkListening(${id})">Tekshirish</button>
+            <div id="listening-result" style="margin-top:8px"></div>
+        </div>
+
+        <div class="card" style="margin-bottom:16px">
+            <h3>✍️ Writing</h3>
+            <p style="margin:8px 0;color:var(--text-muted)">${l.writing}</p>
+            <textarea id="writing-input" placeholder="Inglizcha javobingizni yozing..." style="width:100%;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);min-height:80px;margin-top:8px"></textarea>
+            <button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="checkWriting(${id})">Tekshirish</button>
+            <div id="writing-result" style="margin-top:8px"></div>
+        </div>
+
+        ${!done ? `<button class="btn btn-success" onclick="completeLesson(${id})" style="width:100%;justify-content:center">✅ Darsni yakunlash (+${10 + id * 2} XP)</button>` : ''}
+    `;
+    showPage('page-lesson-detail');
+}
+
+function checkQuiz(el, selected, correct) {
+    document.querySelectorAll('.quiz-option').forEach(o => o.classList.add('disabled'));
+    if (selected === correct) {
+        el.classList.add('correct');
+        el.innerHTML += ' ✅';
     } else {
-        nav.style.background = 'rgba(15,23,42,0.8)';
+        el.classList.add('wrong');
+        el.innerHTML += ' ❌';
+        document.querySelectorAll('.quiz-option')[correct].classList.add('correct');
     }
-});
-</script>
+}
 
+function checkListening(lessonId) {
+    const input = document.getElementById('listening-input').value.trim().toLowerCase();
+    const expected = LESSONS.find(l => l.id === lessonId).listening.toLowerCase();
+    const result = document.getElementById('listening-result');
+    if (input === expected || expected.includes(input) || input.includes(expected.split(' ').slice(0,3).join(' '))) {
+        result.innerHTML = '<p style="color:var(--success)">✅ To\'g\'ri! +15 XP</p>';
+        state.xp += 15; save();
+    } else {
+        result.innerHTML = `<p style="color:var(--danger)">❌ Noto'g'ri. To'g'ri javob: <i>${LESSONS.find(l => l.id === lessonId).listening}</i></p>`;
+    }
+}
+
+function checkWriting(lessonId) {
+    const input = document.getElementById('writing-input').value.trim();
+    const l = LESSONS.find(x => x.id === lessonId);
+    const result = document.getElementById('writing-result');
+    if (input.length > 5) {
+        result.innerHTML = `<p style="color:var(--success)">✅ Qabul qilindi! +20 XP</p><p style="color:var(--text-muted);margin-top:8px">Namuna: <i>${l.writingSample}</i></p>`;
+        state.xp += 20; save();
+    } else {
+        result.innerHTML = '<p style="color:var(--danger)">❌ Iltimos, to\'liq javob yozing.</p>';
+    }
+}
+
+function completeLesson(id) {
+    if (!state.completedLessons.includes(id)) {
+        state.completedLessons.push(id);
+        state.xp += 10 + id * 2;
+        save();
+        checkAchievements();
+        openLesson(id);
+    }
+}
+
+// ==================== TEST ====================
+let testState = {current: 0, answers: {}, score: 0};
+
+function startTest() {
+    testState = {current: 0, answers: {}, score: 0};
+    renderTestQuestion();
+}
+
+function renderTestQuestion() {
+    const tc = document.getElementById('test-content');
+    if (testState.current >= TEST_QUESTIONS.length) {
+        const pct = Math.round((testState.score / TEST_QUESTIONS.length) * 100);
+        let level, desc;
+        if (pct <= 25) { level = 'A0'; desc = 'Siz endigina boshlamoqdasiz.'; }
+        else if (pct <= 50) { level = 'A1'; desc = 'Siz oddiy gaplarni tushunasiz.'; }
+        else if (pct <= 75) { level = 'A2'; desc = 'Siz kundalik suhbatlarda qatnasha olasiz.'; }
+        else { level = 'B1'; desc = 'Siz yaxshi darajadasiz!'; }
+        state.level = level; save();
+        tc.innerHTML = `<div class="card" style="text-align:center;padding:40px">
+            <div style="font-size:4rem;margin-bottom:16px">🎉</div>
+            <h2>Test tugadi!</h2>
+            <p style="font-size:1.5rem;margin:16px 0"><b>${testState.score}/${TEST_QUESTIONS.length}</b> (${pct}%)</p>
+            <p style="font-size:1.25rem;color:var(--accent);margin-bottom:8px">Sizning darajangiz: <b>${level}</b></p>
+            <p style="color:var(--text-muted)">${desc}</p>
+            <button class="btn btn-primary" onclick="showPage('page-home')" style="margin-top:24px">Bosh sahifaga</button>
+        </div>`;
+        return;
+    }
+    const q = TEST_QUESTIONS[testState.current];
+    tc.innerHTML = `<div class="card animate">
+        <p style="color:var(--text-muted);margin-bottom:8px">Savol ${testState.current + 1}/${TEST_QUESTIONS.length}</p>
+        <div class="quiz-question">${q.q}</div>
+        <div class="quiz-options">
+            ${q.opts.map((o,i) => `<div class="quiz-option" onclick="answerTest(${i},${q.correct})">${String.fromCharCode(65+i)}) ${o}</div>`).join('')}
+        </div>
+    </div>`;
+}
+
+function answerTest(selected, correct) {
+    if (selected === correct) testState.score++;
+    testState.current++;
+    renderTestQuestion();
+}
+
+// ==================== FLASHCARDS ====================
+function renderFlashcard() {
+    const idx = state.flashcardIndex || 0;
+    const w = WORDS[idx % WORDS.length];
+    document.getElementById('fc-word').textContent = w.w;
+    document.getElementById('fc-translation').textContent = w.t;
+    document.getElementById('fc-example').textContent = `"${w.ex}" (${w.l})`;
+}
+
+function nextFlashcard() {
+    state.flashcardIndex = ((state.flashcardIndex || 0) + 1) % WORDS.length;
+    save();
+    const card = document.querySelector('.flashcard');
+    card.classList.remove('flipped');
+    renderFlashcard();
+}
+
+function prevFlashcard() {
+    state.flashcardIndex = ((state.flashcardIndex || 0) - 1 + WORDS.length) % WORDS.length;
+    save();
+    const card = document.querySelector('.flashcard');
+    card.classList.remove('flipped');
+    renderFlashcard();
+}
+
+// ==================== PROGRESS ====================
+function renderProgress() {
+    document.getElementById('p-xp').textContent = state.xp;
+    document.getElementById('p-streak').textContent = state.streak;
+    document.getElementById('p-lessons').textContent = state.completedLessons.length;
+    document.getElementById('p-level').textContent = state.level || 'A0';
+
+    const list = document.getElementById('achievements-list');
+    list.innerHTML = ACHIEVEMENTS.map(a => {
+        const unlocked = state.achievements.includes(a.id);
+        return `<div class="achievement ${unlocked ? 'unlocked' : ''}">
+            <div class="icon">${a.icon}</div>
+            <div class="info">
+                <div class="name">${a.name} ${unlocked ? '✅' : '🔒'}</div>
+                <div class="desc">${a.desc}</div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function checkAchievements() {
+    const n = state.completedLessons.length;
+    const xp = state.xp;
+    const newA = [];
+    if (n >= 1 && !state.achievements.includes('first')) newA.push('first');
+    if (n >= 5 && !state.achievements.includes('five')) newA.push('five');
+    if (n >= 10 && !state.achievements.includes('ten')) newA.push('ten');
+    if (n >= 34 && !state.achievements.includes('all')) newA.push('all');
+    if (xp >= 100 && !state.achievements.includes('xp100')) newA.push('xp100');
+    if (xp >= 500 && !state.achievements.includes('xp500')) newA.push('xp500');
+    if (state.streak >= 3 && !state.achievements.includes('streak3')) newA.push('streak3');
+    if (state.streak >= 7 && !state.achievements.includes('streak7')) newA.push('streak7');
+    if (newA.length) {
+        state.achievements.push(...newA);
+        save();
+        newA.forEach(id => {
+            const a = ACHIEVEMENTS.find(x => x.id === id);
+            if (a) alert(`🎉 Yangi yutuq: ${a.icon} ${a.name}!`);
+        });
+    }
+}
+
+// Init
+renderLessons();
+</script>
 </body>
 </html>
