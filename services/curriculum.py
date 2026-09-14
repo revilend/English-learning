@@ -492,19 +492,72 @@ LESSONS = [
         "speaking": {"task": "Ovozli xabar yuboring: 'Navroz is our traditional celebration.'",
             "target_phrase": "Navroz is our traditional celebration."}
     }
+    ,
+    {
+        "id": 31, "title": "Present Simple vs Present Continuous", "level": "A1",
+        "vocabulary": [
+            {"word": "Always", "translation": "Doimo"}, {"word": "Sometimes", "translation": "Ba'zan"},
+            {"word": "Never", "translation": "Hech qachon"}, {"word": "Now", "translation": "Hozir"},
+            {"word": "Right now", "translation": "Hozirgina"}
+        ],
+        "reading": {"title": "Grammatika darsi", "text": "I play football every day (Present Simple). I am playing football now (Present Continuous).",
+            "question": "Qaysi gap hozirgi harakatni bildiradi?", "options": ["I play football", "I am playing football", "I played football", "I will play"], "correct_option": 1},
+        "listening": {"audio_text": "I am reading a book right now.",
+            "task": "Audioni tinglang: 'I _____ a book right now.'", "expected_text": "am reading"},
+        "writing": {"task": "Ingliz tilida yozing (Present Simple): 'Men har kuni sport bilan shug'ullanaman.'",
+            "sample_solution": "I do sports every day."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'I am studying English right now.'",
+            "target_phrase": "I am studying English right now."}
+    },
+    {
+        "id": 32, "title": "Articles (A, An, The)", "level": "A1",
+        "vocabulary": [
+            {"word": "A", "translation": "Bitta (old vowel emas)"}, {"word": "An", "translation": "Bitta (old vowel)"},
+            {"word": "The", "translation": "Aniqlik (ma'lum)"},
+            {"word": "Zero article", "translation": "Artikelsiz"},
+            {"word": "Plural", "translation": "Ko'plik"}
+        ],
+        "reading": {"title": "Artikellar", "text": "I have a cat. The cat is black. I like cats (zero article).",
+            "question": "Qaysi artikeldan keyin unli harf keladi?", "options": ["A", "An", "The", "None"], "correct_option": 1},
+        "listening": {"audio_text": "I saw an apple on the table.",
+            "task": "Audioni tinglang: 'I saw _____ apple on _____ table.'", "expected_text": "an apple on the table"},
+        "writing": {"task": "Ingliz tilida yozing: 'Men bitta kitob oldim. Kitob qizil.'",
+            "sample_solution": "I bought a book. The book is red."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'I have a dog. The dog is very friendly.'",
+            "target_phrase": "I have a dog. The dog is very friendly."}
+    },
+    {
+        "id": 33, "title": "Prepositions of Place", "level": "A1",
+        "vocabulary": [
+            {"word": "In", "translation": "Ichida"}, {"word": "On", "translation": "Ustida"},
+            {"word": "Under", "translation": "Pastida"}, {"word": "Next to", "translation": "Yonida"},
+            {"word": "Behind", "translation": "Ortida"}
+        ],
+        "reading": {"title": "Joylashuv", "text": "The book is on the table. The cat is under the table. The lamp is next to the table.",
+            "question": "Kitob qayerda?", "options": ["Under", "On", "Behind", "In"], "correct_option": 1},
+        "listening": {"audio_text": "The keys are in my pocket.",
+            "task": "Audioni tinglang: 'The keys are _____ my pocket.'", "expected_text": "in"},
+        "writing": {"task": "Ingliz tilida yozing: 'Mashina uyning ortida.'",
+            "sample_solution": "The car is behind the house."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'The book is on the desk and the pen is under it.'",
+            "target_phrase": "The book is on the desk and the pen is under it."}
+    },
+    {
+        "id": 34, "title": "Past Simple vs Past Continuous", "level": "A2",
+        "vocabulary": [
+            {"word": "While", "translation": " ...ayni paytda"}, {"word": "When", "translation": "...ganda"},
+            {"word": "Was/were + V-ing", "translation": "O'tgan davomiy"},
+            {"word": "Interrupted", "translation": "To'xtatilgan"},
+            {"word": "Background action", "translation": "Orqa fon harakati"}
+        ],
+        "reading": {"title": "Hikoya", "text": "I was reading a book when the phone rang. My friend was cooking while I was setting the table.",
+            "question": "Telefon qo'ng'iroq qilganda nima qilyapti?", "options": ["Kitob o'qiyapti", "Ovqat pishiryapti", "Telefonga javob berdi", "Uxlayapti"], "correct_option": 0},
+        "listening": {"audio_text": "I was sleeping when the alarm went off.",
+            "task": "Audioni tinglang: 'I was _____ when the alarm went off.'", "expected_text": "sleeping"},
+        "writing": {"task": "Ingliz tilida yozing: 'Men televizor ko'rayotganda eshik ochildi.'",
+            "sample_solution": "The door opened while I was watching TV."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'I was studying when my friend called me.'",
+            "target_phrase": "I was studying when my friend called me."}
+    }
+
 ]
-
-
-def get_lesson(lesson_id: int):
-    for l in LESSONS:
-        if l["id"] == lesson_id:
-            return l
-    return None
-
-
-def get_total_lessons():
-    return len(LESSONS)
-
-
-def get_lessons_by_level(level: str):
-    return [l for l in LESSONS if l["level"] == level]
