@@ -34,16 +34,20 @@
 .gt{background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.2);border-radius:10px;padding:12px 14px;margin:10px 0;font-size:.87rem;line-height:1.5}.gt b{color:var(--acc)}
 .lk-icon{position:absolute;top:10px;right:10px;font-size:1rem;opacity:.7}
 .prog-mini{display:flex;gap:4px;margin-top:6px}.prog-dot{width:8px;height:8px;border-radius:50%;background:var(--bd)}.prog-dot.filled{background:var(--ok)}
+.spk-btn{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.3);color:var(--pri);cursor:pointer;font-size:.65rem;transition:.2s;margin-left:4px;vertical-align:middle;flex-shrink:0}.spk-btn:hover{background:var(--pri);color:#fff;transform:scale(1.15)}.spk-btn.playing{background:var(--ok);color:#fff;border-color:var(--ok);animation:pulse .8s infinite}@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.4)}50%{box-shadow:0 0 0 6px rgba(16,185,129,0)}}
+.vi{display:flex;align-items:center;gap:4px}
+.rec-btn{position:absolute;right:50px;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:var(--err);cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;transition:.2s}.rec-btn:hover{background:var(--err);color:#fff}.rec-btn.recording{background:var(--err);color:#fff;animation:rpulse 1s infinite}@keyframes rpulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.4)}50%{box-shadow:0 0 0 8px rgba(239,68,68,0)}}
+
 @media(max-width:640px){.tp .sts{gap:6px}.tp .st{font-size:.7rem;padding:2px 7px}.cb{width:290px;height:370px}.wod .wd{font-size:1.9rem}.cg{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="tp"><div class="br"><i class="fa-solid fa-language" style="color:var(--acc);-webkit-text-fill-color:var(--acc)"></i> English Zero-to-Hero</div><div class="sts"><div class="st"><i class="fa-solid fa-star"></i> <b id="sxp">0</b> XP</div><div class="st"><i class="fa-solid fa-fire"></i> <b id="ssk">0</b> 🔥</div><div class="st"><i class="fa-solid fa-book-open"></i> <b id="sdn">0</b>/34</div><div class="st"><span class="bg b-a0" id="slv">A0</span></div></div></div>
 <button class="fab" id="cfab" onclick="tChat()"><i class="fa-solid fa-comment-dots"></i></button>
-<div class="cb" id="cbox"><div class="cbh"><div class="nm"><i class="fa-solid fa-robot"></i> AI O'qituvchi</div><button class="cls" onclick="tChat()"><i class="fa-solid fa-xmark"></i></button></div><div class="cbb" id="cbody"><div class="msg b">Salom! 👋 Menga inglizcha yozing — grammatikani tekshiraman. O'zbekcha yozsangiz — tarjima beraman. Har javobda yangi so'z o'rgataman!</div></div><div class="cbf"><input type="text" id="cinp" placeholder="Xabaringizni yozing..." onkeydown="if(event.key==='Enter')sMsg()"><button onclick="sMsg()"><i class="fa-solid fa-paper-plane"></i></button></div></div>
+<div class="cb" id="cbox"><div class="cbh"><div class="nm"><i class="fa-solid fa-robot"></i> AI O'qituvchi</div><button class="cls" onclick="tChat()"><i class="fa-solid fa-xmark"></i></button></div><div class="cbb" id="cbody"><div class="msg b">Salom! 👋 Menga inglizcha yozing — grammatikani tekshiraman. O'zbekcha yozsangiz — tarjima beraman. Har javobda yangi so'z o'rgataman!</div></div><div class="cbf"><input type="text" id="cinp" placeholder="Xabaringizni yozing..." onkeydown="if(event.key==='Enter')sMsg()"><button onclick="sMsg()"><i class="fa-solid fa-paper-plane"></i></button><button class="rec-btn" id="recBtn" onclick="toggleRec()" title="Ovozli gapirish"><i class="fa-solid fa-microphone"></i></button></div></div>
 
 <div class="pg a" id="p0">
-<div class="wod"><span class="lb">📖 Bugungi so'z</span><div class="wd" id="ww">...</div><div class="mn" id="wt"></div><span class="ex" id="we"></span></div>
+<div class="wod"><span class="lb">📖 Bugungi so'z</span><div class="wd" id="ww" onclick="speakWord(this.textContent)" style="cursor:pointer" title="Talaffuzni eshiting">...</div><div class="mn" id="wt"></div><span class="ex" id="we"></span></div>
 <h2 class="pt">🇺🇸 Ingliz tilini 0 dan o'rganing</h2><p class="ps">34 dars · 4 ko'nikma · AI yordamida · A0 dan B1 gacha</p>
 <div class="st2">Tezkor boshlash</div>
 <div class="cg"><div class="cd" onclick="go('p1')" style="cursor:pointer"><div style="font-size:1.8rem;margin-bottom:5px">📚</div><h3 style="margin-bottom:3px">Darslar</h3><p style="color:var(--tx2);font-size:.83rem;margin-bottom:8px">34 dars. Har biri: so'zlar, matn, test, audio, yozish.</p><span class="btn bs bo" style="width:100%;justify-content:center">Darslar <i class="fa-solid fa-arrow-right"></i></span></div>
@@ -67,7 +71,7 @@
 <div class="pg" id="p3"><div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap"><button class="btn bo bs" onclick="go('p0')"><i class="fa-solid fa-arrow-left"></i> Bosh</button></div><h2 class="pt">🃏 Flashcards</h2><p class="ps">100+ so'z. Kartochkani bosing — tarjimani ko'ring.</p>
 <div class="tabs" id="ft"><button class="tab ac" onclick="setFS('a',this)">Umumiy (100+ so'z)</button><button class="tab" onclick="setFS('l',this)">Dars so'zlaridan</button></div>
 <div id="fsl" style="display:none;margin-bottom:12px"><select id="fli" class="inp" style="max-width:300px" onchange="setFL(this.value)"><option value="0">Darsni tanlang...</option></select></div>
-<div class="fcw"><div class="fc" onclick="this.classList.toggle('flp')"><div class="fci"><div class="fcf"><div class="fcw2" id="fw">...</div><div class="fch"><i class="fa-solid fa-hand-pointer"></i> Bosing</div></div><div class="fcb"><div class="fcm" id="fm"></div><div class="fce" id="fe"></div></div></div></div></div>
+<div class="fcw"><div class="fc" onclick="this.classList.toggle('flp')"><div class="fci"><div class="fcf"><div class="fcw2" id="fw" onclick="event.stopPropagation();speakWord(this.textContent)" style="cursor:pointer" title="Talaffuzni eshiting">...</div><div class="fch"><i class="fa-solid fa-hand-pointer"></i> Bosing</div></div><div class="fcb"><div class="fcm" id="fm"></div><div class="fce" id="fe"></div></div></div></div></div>
 <div style="display:flex;justify-content:center;gap:10px;align-items:center;margin:4px 0 12px"><button class="btn bo bs" onclick="mFc(-1)"><i class="fa-solid fa-chevron-left"></i></button><span style="color:var(--tx2);font-size:.85rem" id="fp">1/1</span><button class="btn bp bs" onclick="mFc(1)"><i class="fa-solid fa-chevron-right"></i></button></div>
 <div class="st2">Qidirish</div><div class="cd"><input class="inp" id="si" placeholder="So'z yoki tarjima qidirish..." onkeydown="if(event.key==='Enter')doS()"><div style="margin-top:8px"><button class="btn bs bp" onclick="doS()"><i class="fa-solid fa-magnifying-glass"></i> Qidirish</button> <button class="btn bs bo" onclick="clS()">Tozalash</button></div><div id="sr" style="margin-top:10px"></div></div></div>
 
@@ -138,11 +142,11 @@ return '<div class="cd'+(locked?' locked':'')+'" onclick="'+(locked?'':'oL('+l.i
 function fL(lv,el){var tabs=el.parentElement.querySelectorAll('.tab');tabs.forEach(function(t){t.classList.remove('ac')});el.classList.add('ac');rL(lv)}
 
 function oL(id){var l=L.find(function(x){return x.id===id});if(!l)return;if(id>maxOpen())return;
-var d=S.done.indexOf(id)>=0;var vw=l.v.map(function(v){return '<div class="vi"><b>'+v[0]+'</b>'+v[1]+'</div>'}).join('');
+var d=S.done.indexOf(id)>=0;var vw=l.v.map(function(v){return '<div class="vi" onclick="speakWord(this.childNodes[0].textContent.replace(/[^a-zA-Z .]/g,\'\').trim())" style="cursor:pointer"><b>'+v[0]+' <span class="spk-btn" onclick="event.stopPropagation();speakWord(this.parentNode.childNodes[0].textContent.replace(/[^a-zA-Z .]/g,\'\').trim())"><i class="fa-solid fa-volume-high"></i></span></b>'+v[1]+'</div>'}).join('');
 document.getElementById('lc').innerHTML='<span class="bg b-'+l.lv+'">'+l.lv+'</span><h2 style="margin:10px 0">'+l.id+'. '+l.t+'</h2>'+(d?'<p style="color:var(--ok);margin-bottom:14px">✅ Yakunlangan!</p>':'')+
 '<div class="cd"><h3>🔤 So\'zlar ('+l.v.length+')</h3><div class="vl">'+vw+'</div></div>'+
 '<div class="cd"><h3>📖 Reading</h3><pre style="white-space:pre-wrap;margin:8px 0;color:var(--tx2);font-family:Inter,sans-serif">'+l.r.t+'</pre><p class="qq">'+l.r.q+'</p><div class="qos">'+l.r.o.map(function(o,i){return '<div class="qo" onclick="cQ(this,'+i+','+l.r.c+')">'+o+'</div>'}).join('')+'</div></div>'+
-'<div class="cd"><h3>🎧 Listening</h3><p style="color:var(--tx2);margin:6px 0">Bu jumlani yozing:</p><p style="font-style:italic;margin:6px 0">"'+l.ls+'"</p><input class="inp" id="li'+id+'" placeholder="Javob..."><button class="btn bp bs" style="margin-top:8px" onclick="cLs('+id+')">Tekshirish</button><div id="lr'+id+'" style="margin-top:6px"></div></div>'+
+'<div class="cd"><h3>🎧 Listening</h3><p style="color:var(--tx2);margin:6px 0">Bu jumlani yozing:</p><p style="font-style:italic;margin:6px 0">"'+l.ls+'"</p><div style="display:flex;gap:6px;margin-top:8px"><button class="btn bp bs" onclick="speakSlow(L.find(function(x){return x.id==='+id+'}).ls)"><i class="fa-solid fa-volume-high"></i> Eshittirish</button><button class="btn bp bs" onclick="speakSlow(L.find(function(x){return x.id==='+id+'}).ls)" title="Sekin"><i class="fa-solid fa-turtle"></i> Sekin</button></div><input class="inp" id="li'+id+'" placeholder="Javob..." style="margin-top:6px"><button class="btn bp bs" style="margin-top:6px" onclick="cLs('+id+')">Tekshirish</button><div id="lr'+id+'" style="margin-top:6px"></div></div></div>'+
 '<div class="cd"><h3>✍️ Writing</h3><p style="color:var(--tx2);margin:6px 0">'+l.w+'</p><textarea class="inp" id="wi'+id+'" placeholder="Inglizcha javob..."></textarea><button class="btn bp bs" style="margin-top:8px" onclick="cWr('+id+')">Tekshirish</button><div id="wr'+id+'" style="margin-top:6px"></div></div>'+
 '<div class="cd"><h3>🗣 Speaking</h3><p style="color:var(--tx2);margin:6px 0">'+l.sp+'</p></div>'+
 (l.g?'<div class="gt"><b>📝 Tip:</b> '+l.g+'</div>':'')+
@@ -163,7 +167,7 @@ function setFL(id){fL2=parseInt(id);fI=0;bFc();rFc()}
 function bFc(){fA=[];if(fS==='a'){W.forEach(function(w){fA.push({w:w.w,t:w.t,e:w.ex})});L.forEach(function(l){l.v.forEach(function(v){fA.push({w:v[0],t:v[1],e:l.t})})})}else if(fS==='l'&&fL2){var l=L.find(function(x){return x.id===fL2});if(l)l.v.forEach(function(v){fA.push({w:v[0],t:v[1],e:l.t})})}if(!fA.length)W.forEach(function(w){fA.push({w:w.w,t:w.t,e:w.ex})})}
 function rFc(){if(!fA.length)bFc();var i=fI%fA.length;var f=fA[i];document.getElementById('fw').textContent=f.w;document.getElementById('fm').textContent=f.t;document.getElementById('fe').textContent=f.e;document.getElementById('fp').textContent=(i+1)+'/'+fA.length;var fc=document.querySelector('.fc');if(fc)fc.classList.remove('flp')}
 function mFc(d){fI=((fI+d)%fA.length+fA.length)%fA.length;rFc()}
-function doS(){var q=document.getElementById('si').value.trim().toLowerCase();if(!q)return;var r=[];W.forEach(function(w){if(w.w.toLowerCase().indexOf(q)>=0||w.t.toLowerCase().indexOf(q)>=0)r.push('<div class="vi"><b>'+w.w+'</b>'+w.t+' <span class="bg b-'+w.l+'">'+w.l+'</span></div>')});L.forEach(function(l){l.v.forEach(function(v){if(v[0].toLowerCase().indexOf(q)>=0||v[1].toLowerCase().indexOf(q)>=0)r.push('<div class="vi"><b>'+v[0]+'</b>'+v[1]+' <span class="bg b-'+l.lv+'">'+l.lv+'</span></div>')})});document.getElementById('sr').innerHTML=r.length?'<div class="vl">'+r.join('')+'</div>':'<p style="color:var(--tx2)">Topilmadi.</p>'}
+function doS(){var q=document.getElementById('si').value.trim().toLowerCase();if(!q)return;var r=[];W.forEach(function(w){if(w.w.toLowerCase().indexOf(q)>=0||w.t.toLowerCase().indexOf(q)>=0)r.push('<div class="vi" onclick="speakWord(this.childNodes[0].textContent.replace(/[^a-zA-Z .]/g,\'\').trim())" style="cursor:pointer"><b>'+w.w+' <span class="spk-btn" onclick="event.stopPropagation();speakWord(this.parentNode.childNodes[0].textContent.replace(/[^a-zA-Z .]/g,\'\').trim())"><i class="fa-solid fa-volume-high"></i></span></b>'+w.t+' <span class="bg b-'+w.l+'">'+w.l+'</span></div>')});L.forEach(function(l){l.v.forEach(function(v){if(v[0].toLowerCase().indexOf(q)>=0||v[1].toLowerCase().indexOf(q)>=0)r.push('<div class="vi"><b>'+v[0]+'</b>'+v[1]+' <span class="bg b-'+l.lv+'">'+l.lv+'</span></div>')})});document.getElementById('sr').innerHTML=r.length?'<div class="vl">'+r.join('')+'</div>':'<p style="color:var(--tx2)">Topilmadi.</p>'}
 function clS(){document.getElementById('si').value='';document.getElementById('sr').innerHTML=''}
 
 function rP(){document.getElementById('pxp').textContent=S.xp;document.getElementById('pdn').textContent=S.done.length;document.getElementById('plv').textContent=S.lv;document.getElementById('psk').textContent=S.stk;var p=Math.min(S.xp/30*100,100);document.getElementById('pxf').style.width=p+'%';document.getElementById('pxt').textContent=Math.min(S.xp,30)+'/30';
@@ -181,7 +185,35 @@ if(t.indexOf('past')>=0)return '📘 Past Simple: I went / She went\n📌 Yester
 if(t.indexOf('will')>=0||t.indexOf('future')>=0)return '📘 Future: I will go / I am going to go\n📌 Will — bashorat | Going to — reja';
 if(t.indexOf('thank')>=0||t.indexOf('rahmat')>=0)return 'Arzimaydi! 😊 Davom eting!';
 var rv=av[Math.floor(Math.random()*av.length)];return '💡 <b>'+rv.en+'</b> = "'+rv.uz+'"\n📖 '+rv.lt+' darsidan.\n\nYana savol bering! 😊'}
-function aM(t,c){var b=document.getElementById('cbody');var d=document.createElement('div');d.className='msg '+c;d.innerHTML=t.replace(/\n/g,'<br>');b.appendChild(d);b.scrollTop=b.scrollHeight}
+function aM(t,c){var b=document.getElementById('cbody');var d=document.createElement('div');d.className='msg '+c;d.innerHTML=t.replace(/\n/g,'<br>');b.appendChild(d);b.scrollTop=b.scrollHeight;if(c==='b')try{speak(t.replace(/[^a-zA-Z\s]/g,'').substring(0,200),'en-US',0.85)}catch(e){}}
+
+
+// ==================== SPEECH SYNTHESIS ====================
+var synth=window.speechSynthesis;
+function speak(text,lang,rate){
+  if(synth.speaking)synth.cancel();
+  var u=new SpeechSynthesisUtterance(text);
+  u.lang=lang||'en-US';u.rate=rate||0.9;u.pitch=1;
+  var voices=synth.getVoices();
+  var v=voices.find(function(x){return x.lang.indexOf('en')===0&&x.name.indexOf('Google')>=0})||voices.find(function(x){return x.lang.indexOf('en')===0});
+  if(v)u.voice=v;
+  u.onend=function(){document.querySelectorAll('.spk-btn.playing').forEach(function(b){b.classList.remove('playing')})};
+  synth.speak(u);
+}
+function speakWord(w){speak(w,'en-US',0.75);}
+function speakSlow(t){speak(t,'en-US',0.6);}
+if(synth.onvoiceschanged!==undefined)synth.onvoiceschanged=function(){};
+
+// ==================== SPEECH RECOGNITION ====================
+var recog=null,isRec=false;
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(SR){recog=new SR();recog.continuous=false;recog.interimResults=false;recog.lang='en-US';
+recog.onresult=function(e){var txt=e.results[0][0].transcript;document.getElementById('cinp').value=txt;stopRec();sMsg();};
+recog.onerror=function(){stopRec();};recog.onend=function(){stopRec();}}
+function toggleRec(){if(!SR){alert('Chrome yoki Edge ishlating.');return;}isRec?stopRec():startRec();}
+function startRec(){if(!recog)return;try{recog.start();isRec=true;var b=document.getElementById('recBtn');b.classList.add('recording');b.innerHTML='<i class="fa-solid fa-stop"></i>';}catch(e){}}
+function stopRec(){isRec=false;if(recog)try{recog.stop();}catch(e){}var b=document.getElementById('recBtn');if(b){b.classList.remove('recording');b.innerHTML='<i class="fa-solid fa-microphone"></i>';}}
+
 
 rL();bFc();
 </script>
