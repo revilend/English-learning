@@ -9,7 +9,12 @@ from services.ai_service import ai_service
 from services.level_test import LEVEL_TEST_QUESTIONS, calculate_level
 from services.word_of_day import get_word_of_day
 from services.achievements import check_achievements, format_achievement, ACHIEVEMENTS
+from services.pronunciation import get_random_practice, format_practice_message
+from services.grammar_tips import get_tip_of_day, get_random_tip, format_tip_message
 from keyboards.inline import get_level_test_keyboard
+from services.pronunciation import get_random_practice, format_practice_message
+from services.grammar_tips import get_tip_of_day, get_random_tip, format_tip_message
+
 
 router = Router()
 
@@ -233,9 +238,43 @@ async def handle_level_test_answer(callback: CallbackQuery, state: FSMContext):
     await level_test_next(callback, state)
 
 
+
+# ----------------- PRONUNCIATION PRACTICE -----------------
+@router.message(F.text == "🗣 Talaffuz mashqi")
+async def pronunciation_practice(message: Message):
+    practice = get_random_practice()
+    text = format_practice_message(practice)
+    await message.answer(text, parse_mode="HTML")
+
+
+# ----------------- GRAMMAR TIP OF THE DAY -----------------
+@router.message(F.text == "📘 Kunlik grammatika")
+async def grammar_tip(message: Message):
+    tip = get_tip_of_day()
+    text = format_tip_message(tip)
+    await message.answer(text, parse_mode="HTML")
+
+
 # ----------------- AI CHAT (Oddiy yozishmalar) -----------------
 # Bu handler boshqa handlerlardan keyin kelishi kerak,
 # shuning uchun eng oxirida
+
+# ----------------- PRONUNCIATION PRACTICE -----------------
+@router.message(F.text == "🗣 Talaffuz mashqi")
+async def pronunciation_practice(message: Message):
+    practice = get_random_practice()
+    text = format_practice_message(practice)
+    await message.answer(text, parse_mode="HTML")
+
+
+# ----------------- GRAMMAR TIP OF THE DAY -----------------
+@router.message(F.text == "📘 Kunlik grammatika")
+async def grammar_tip(message: Message):
+    tip = get_tip_of_day()
+    text = format_tip_message(tip)
+    await message.answer(text, parse_mode="HTML")
+
+
 # ----------------- AI CHAT (Voice messages) -----------------
 @router.message(F.voice)
 async def ai_voice_handler(message: Message):
@@ -281,6 +320,23 @@ async def ai_voice_handler(message: Message):
         )
 
 
+
+# ----------------- PRONUNCIATION PRACTICE -----------------
+@router.message(F.text == "🗣 Talaffuz mashqi")
+async def pronunciation_practice(message: Message):
+    practice = get_random_practice()
+    text = format_practice_message(practice)
+    await message.answer(text, parse_mode="HTML")
+
+
+# ----------------- GRAMMAR TIP OF THE DAY -----------------
+@router.message(F.text == "📘 Kunlik grammatika")
+async def grammar_tip(message: Message):
+    tip = get_tip_of_day()
+    text = format_tip_message(tip)
+    await message.answer(text, parse_mode="HTML")
+
+
 # ----------------- AI CHAT (Oddiy yozishmalar) -----------------
 # Bu handler boshqa handlerlardan keyin kelishi kerak,
 # shuning uchun eng oxirida
@@ -294,7 +350,8 @@ async def ai_chat_handler(message: Message):
         "📚 Darslar (0 dan A1 ga)", "🗂 So'z boyligi (Lug'at)",
         "👤 Profil va Natijalar", "🏆 Reyting (Leaderboard)",
         "ℹ️ Qanday o'rganiladi?", "📝 Daraja testi",
-        "📖 Kunlik so'z", "🎯 Kunlik maqsadlar", "🏆 Yutuqlarim"
+        "📖 Kunlik so'z", "🎯 Kunlik maqsadlar", "🏆 Yutuqlarim",
+        "🗣 Talaffuz mashqi", "📘 Kunlik grammatika"
     ]
     if user_text in menu_buttons:
         return

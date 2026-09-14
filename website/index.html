@@ -124,6 +124,16 @@ cx.strokeStyle='rgba(99,102,241,.03)';cx.lineWidth=.5;
 for(var i=0;i<ps.length;i++)for(var j=i+1;j<ps.length;j++){var dx=ps[i].x-ps[j].x,dy=ps[i].y-ps[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<120){cx.beginPath();cx.moveTo(ps[i].x,ps[i].y);cx.lineTo(ps[j].x,ps[j].y);cx.stroke()}}
 requestAnimationFrame(draw)}draw()})();
 </script>
+
+<style>
+.pg.a{animation:pageIn .4s ease-out}
+@keyframes pageIn{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.cd{transition:all .35s cubic-bezier(.4,0,.2,1)}
+.cd:hover{transform:translateY(-4px) scale(1.01)}
+.btn:active{transform:scale(.95)!important;transition:transform .1s ease}
+.tab:active{transform:scale(.93)!important;transition:transform .1s ease}
+.qo:active{transform:scale(.98)!important;transition:transform .1s ease}
+</style>
 </head>
 <body>
 <div class="tp"><div class="br"><i class="fa-solid fa-language" style="color:var(--acc);-webkit-text-fill-color:var(--acc)"></i> English Zero-to-Hero</div><div class="sts"><div class="st"><i class="fa-solid fa-star"></i> <b id="sxp">0</b> XP</div><div class="st"><i class="fa-solid fa-fire"></i> <b id="ssk">0</b> 🔥</div><div class="st"><i class="fa-solid fa-book-open"></i> <b id="sdn">0</b>/50</div><div class="st"><span class="bg b-a0" id="slv">A0</span></div></div></div>
@@ -157,7 +167,7 @@ requestAnimationFrame(draw)}draw()})();
 <div id="fsl" style="display:none;margin-bottom:12px"><select id="fli" class="inp" style="max-width:300px" onchange="setFL(this.value)"><option value="0">Darsni tanlang...</option></select></div>
 <div class="fcw"><div class="fc" onclick="this.classList.toggle('flp')"><div class="fci"><div class="fcf"><div class="fcw2" id="fw" onclick="event.stopPropagation();speakWord(this.textContent)" style="cursor:pointer" title="Talaffuzni eshiting">...</div><div class="fch"><i class="fa-solid fa-hand-pointer"></i> Bosing</div></div><div class="fcb"><div class="fcm" id="fm"></div><div class="fce" id="fe"></div></div></div></div></div>
 <div style="display:flex;justify-content:center;gap:10px;align-items:center;margin:4px 0 12px"><button class="btn bo bs" onclick="mFc(-1)"><i class="fa-solid fa-chevron-left"></i></button><span style="color:var(--tx2);font-size:.85rem" id="fp">1/1</span><button class="btn bp bs" onclick="mFc(1)"><i class="fa-solid fa-chevron-right"></i></button></div>
-<div class="st2">Qidirish</div><div class="cd"><input class="inp" id="si" placeholder="So'z yoki tarjima qidirish..." onkeydown="if(event.key==='Enter')doS()"><div style="margin-top:8px"><button class="btn bs bp" onclick="doS()"><i class="fa-solid fa-magnifying-glass"></i> Qidirish</button> <button class="btn bs bo" onclick="clS()">Tozalash</button></div><div id="sr" style="margin-top:10px"></div></div></div>
+<div class="st2"><i class="fa-solid fa-magnifying-glass"></i> Qidirish</div><div class="cd" style="position:relative"><input class="inp" id="si" style="padding-left:36px" placeholder="So'z yoki tarjima qidirish..." onkeydown="if(event.key==='Enter')doS()"><div style="margin-top:8px"><button class="btn bs bp" onclick="doS()"><i class="fa-solid fa-magnifying-glass"></i> Qidirish</button> <button class="btn bs bo" onclick="clS()">Tozalash</button></div><div id="sr" style="margin-top:10px"></div></div></div>
 
 <div class="pg" id="p4"><div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap"><button class="btn bo bs" onclick="go('p0')"><i class="fa-solid fa-arrow-left"></i> Bosh</button><button class="btn bs bo" onclick="go('p1')"><i class="fa-solid fa-book-open"></i> Darslar</button><button class="btn bs bo" onclick="go('p2')"><i class="fa-solid fa-file-pen"></i> Test</button></div>
 <h2 class="pt">📊 Rivojlanish</h2><p class="ps">Ma'lumotlar brauzer local storage'ida.</p>
@@ -447,6 +457,25 @@ function chkSkill(lessonId,skill){var key='sk_'+lessonId+'_'+skill;if(!localStor
 function isSkillDone(lessonId,skill){return localStorage.getItem('sk_'+lessonId+'_'+skill)==='1';}
 
 rL();bFc();
+</script>
+
+<script>
+(function(){
+var obs=new IntersectionObserver(function(entries){
+entries.forEach(function(e){if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}});
+},{threshold:.1});
+document.querySelectorAll('.cd,.lesson-card,.pb,.ach').forEach(function(el){
+el.style.opacity='0';el.style.transform='translateY(20px)';el.style.transition='all .5s cubic-bezier(.4,0,.2,1)';obs.observe(el);
+});
+})();
+</script>
+
+<button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:80px;left:16px;z-index:199;width:40px;height:40px;border-radius:12px;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.2);color:var(--pri);cursor:pointer;font-size:1rem;display:none;align-items:center;justify-content:center;transition:all .3s ease;backdrop-filter:blur(8px)"><i class="fa-solid fa-arrow-up"></i></button>
+<script>
+window.addEventListener('scroll',function(){
+var b=document.getElementById('topBtn');
+if(window.scrollY>300)b.style.display='flex';else b.style.display='none';
+});
 </script>
 </body>
 </html>
