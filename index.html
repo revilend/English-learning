@@ -1,599 +1,180 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Zero-to-Hero | Ingliz tilini 0 dan o'rganing</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #2563eb; --primary-dark: #1d4ed8; --accent: #f59e0b;
-            --bg: #0f172a; --bg-card: #1e293b; --text: #f8fafc; --text-muted: #94a3b8;
-            --border: #334155; --success: #10b981; --danger: #ef4444;
-            --gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
-        /* NAV */
-        .topnav { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(15,23,42,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; }
-        .topnav .logo { font-size: 1.25rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .topnav .stats { display: flex; gap: 16px; font-size: 0.85rem; }
-        .topnav .stat { display: flex; align-items: center; gap: 4px; }
-        .topnav .stat-num { font-weight: 700; color: var(--accent); }
-
-        /* PAGES */
-        .page { display: none; padding: 80px 24px 40px; max-width: 900px; margin: 0 auto; min-height: 100vh; }
-        .page.active { display: block; }
-        .page-title { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
-        .page-subtitle { color: var(--text-muted); margin-bottom: 32px; }
-
-        /* BUTTONS */
-        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 12px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: all 0.3s; font-size: 1rem; }
-        .btn-primary { background: var(--gradient); color: #fff; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,99,235,0.5); }
-        .btn-success { background: var(--success); color: #fff; }
-        .btn-danger { background: var(--danger); color: #fff; }
-        .btn-outline { background: transparent; color: var(--text); border: 2px solid var(--border); }
-        .btn-outline:hover { border-color: var(--primary); }
-        .btn-sm { padding: 8px 16px; font-size: 0.85rem; }
-
-        /* CARDS */
-        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 16px; transition: all 0.3s; }
-        .card:hover { border-color: var(--primary); transform: translateY(-2px); }
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-
-        /* LEVEL BADGES */
-        .level-badge { display: inline-block; padding: 4px 12px; border-radius: 100px; font-size: 0.75rem; font-weight: 700; }
-        .level-a0 { background: rgba(37,99,235,0.15); color: #3b82f6; }
-        .level-a1 { background: rgba(16,185,129,0.15); color: #10b981; }
-        .level-a2 { background: rgba(245,158,11,0.15); color: #f59e0b; }
-        .level-b1 { background: rgba(236,72,153,0.15); color: #ec4899; }
-
-        /* QUIZ */
-        .quiz-question { font-size: 1.5rem; font-weight: 700; margin-bottom: 24px; }
-        .quiz-options { display: grid; gap: 12px; }
-        .quiz-option { padding: 16px 20px; background: var(--bg-card); border: 2px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s; font-size: 1rem; }
-        .quiz-option:hover { border-color: var(--primary); background: rgba(37,99,235,0.1); }
-        .quiz-option.correct { border-color: var(--success); background: rgba(16,185,129,0.2); }
-        .quiz-option.wrong { border-color: var(--danger); background: rgba(239,68,68,0.2); }
-        .quiz-option.disabled { pointer-events: none; opacity: 0.6; }
-
-        /* FLASHCARD */
-        .flashcard { width: 100%; max-width: 400px; height: 250px; perspective: 1000px; margin: 0 auto 24px; cursor: pointer; }
-        .flashcard-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
-        .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
-        .flashcard-front, .flashcard-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center; }
-        .flashcard-front { background: var(--gradient); }
-        .flashcard-back { background: var(--bg-card); border: 2px solid var(--primary); transform: rotateY(180deg); }
-        .flashcard-word { font-size: 2rem; font-weight: 800; }
-        .flashcard-translation { font-size: 1.5rem; color: var(--text-muted); }
-        .flashcard-hint { font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-top: 16px; }
-
-        /* PROGRESS */
-        .progress-bar { width: 100%; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; margin: 8px 0; }
-        .progress-fill { height: 100%; background: var(--gradient); border-radius: 4px; transition: width 0.5s; }
-        .stat-card { text-align: center; padding: 24px; }
-        .stat-card .num { font-size: 2.5rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .stat-card .label { color: var(--text-muted); font-size: 0.85rem; }
-
-        /* NAV TABS */
-        .nav-tabs { display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; }
-        .nav-tab { padding: 10px 20px; border-radius: 10px; background: var(--bg-card); border: 2px solid var(--border); color: var(--text); font-weight: 600; cursor: pointer; transition: all 0.3s; }
-        .nav-tab.active, .nav-tab:hover { border-color: var(--primary); background: rgba(37,99,235,0.1); }
-
-        /* SKILL CARDS */
-        .skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 16px; }
-        .skill-card { padding: 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; text-align: center; transition: all 0.3s; }
-        .skill-card:hover { border-color: var(--primary); transform: translateY(-2px); }
-        .skill-card.completed { border-color: var(--success); }
-        .skill-card .icon { font-size: 2rem; margin-bottom: 8px; }
-
-        /* WORD OF DAY */
-        .wod-card { background: var(--gradient); border-radius: 20px; padding: 40px; text-align: center; margin-bottom: 32px; }
-        .wod-card .word { font-size: 3rem; font-weight: 900; margin-bottom: 8px; }
-        .wod-card .translation { font-size: 1.5rem; opacity: 0.9; margin-bottom: 16px; }
-        .wod-card .example { font-style: italic; opacity: 0.8; }
-
-        /* ACHIEVEMENT */
-        .achievement { display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; }
-        .achievement .icon { font-size: 2rem; }
-        .achievement .info { flex: 1; }
-        .achievement .name { font-weight: 700; }
-        .achievement .desc { color: var(--text-muted); font-size: 0.85rem; }
-        .achievement.unlocked { border-color: var(--success); }
-
-        /* RESPONSIVE */
-        @media (max-width: 600px) {
-            .card-grid { grid-template-columns: 1fr; }
-            .skill-grid { grid-template-columns: 1fr; }
-            .quiz-question { font-size: 1.25rem; }
-        }
-
-        /* ANIMATIONS */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .animate { animation: fadeIn 0.5s ease-out; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Zero-to-Hero | Ingliz tilini 0 dan o'rganing</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--pri:#2563eb;--acc:#f59e0b;--bg:#0f172a;--bg2:#1e293b;--tx:#f8fafc;--tx2:#94a3b8;--bd:#334155;--ok:#10b981;--err:#ef4444;--grad:linear-gradient(135deg,#2563eb,#7c3aed);--sh:0 4px 24px rgba(0,0,0,.3)}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;background-image:radial-gradient(circle at 20% 30%,rgba(37,99,235,.12) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(124,58,237,.1) 0%,transparent 50%)}
+.tp{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,23,42,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--bd);padding:10px 16px;display:flex;align-items:center;gap:14px;box-shadow:var(--sh)}.tp .br{font-weight:800;font-size:1rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.tp .sts{display:flex;gap:10px;margin-left:auto;flex-wrap:wrap}.tp .st{display:flex;align-items:center;gap:4px;font-size:.8rem;padding:3px 10px;border-radius:99px;background:rgba(255,255,255,.04);border:1px solid var(--bd)}.tp .st i{color:var(--acc)}.tp .st b{color:var(--acc)}
+.pg{display:none;padding:80px 20px 40px;max-width:920px;margin:0 auto;min-height:100vh}.pg.a{display:block;animation:fu .35s ease-out}@keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.pt{font-size:1.7rem;font-weight:800;margin-bottom:6px}.ps{color:var(--tx2);margin-bottom:22px;font-size:.92rem}.st2{font-size:1.05rem;font-weight:700;margin:26px 0 10px;color:var(--acc)}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:10px;font-weight:600;text-decoration:none;border:none;cursor:pointer;transition:.2s;font-size:.88rem;font-family:'Inter',sans-serif;white-space:nowrap}
+.bp{background:var(--grad);color:#fff}.bp:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,99,235,.45)}.bo{background:transparent;color:var(--tx);border:1.5px solid var(--bd)}.bo:hover{border-color:var(--pri)}.bs{padding:6px 11px;font-size:.8rem}
+.cd{background:linear-gradient(180deg,rgba(30,41,59,.8),rgba(15,23,42,.6));border:1px solid var(--bd);border-radius:14px;padding:18px;margin-bottom:12px;transition:.25s;box-shadow:var(--sh)}.cd:hover{border-color:rgba(37,99,235,.35)}.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.bg{display:inline-block;padding:2px 9px;border-radius:99px;font-size:.68rem;font-weight:700}.b-a0{background:rgba(37,99,235,.16);color:#60a5fa}.b-a1{background:rgba(16,185,129,.16);color:#34d399}.b-a2{background:rgba(245,158,11,.16);color:#fbbf24}.b-b1{background:rgba(236,72,153,.16);color:#f472b6}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}.tab{padding:7px 14px;border-radius:99px;background:rgba(255,255,255,.04);border:1.5px solid var(--bd);color:var(--tx);font-weight:600;font-size:.82rem;cursor:pointer;transition:.2s;font-family:'Inter',sans-serif}.tab:hover{border-color:var(--pri)}.tab.ac{background:rgba(37,99,235,.16);border-color:var(--pri);color:#fff}
+.qo{padding:12px 14px;background:rgba(255,255,255,.04);border:1.5px solid var(--bd);border-radius:10px;cursor:pointer;transition:.2s;font-size:.9rem}.qo:hover{border-color:var(--pri);background:rgba(37,99,235,.1)}.qo.ok{border-color:var(--ok);background:rgba(16,185,129,.18)}.qo.no{border-color:var(--err);background:rgba(239,68,68,.18)}.qo.ds{pointer-events:none;opacity:.5}.qos{display:grid;gap:8px;margin-top:10px}.qq{font-size:1.02rem;font-weight:700;margin:12px 0 4px}
+.fcw{display:flex;justify-content:center;margin:16px 0;perspective:1000px}.fc{width:100%;max-width:310px;height:200px;cursor:pointer;user-select:none}.fci{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}.fc.flp .fci{transform:rotateY(180deg)}.fcf,.fcb{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;text-align:center}.fcf{background:var(--grad)}.fcb{background:var(--bg2);border:1.5px solid var(--pri);transform:rotateY(180deg)}.fcw2{font-size:1.8rem;font-weight:800}.fcm{font-size:1.2rem;color:var(--tx2);margin-top:5px}.fce{font-size:.82rem;color:rgba(255,255,255,.7);margin-top:10px;font-style:italic}.fch{font-size:.78rem;color:rgba(255,255,255,.6);margin-top:12px}
+.pg2{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:18px}.pb{text-align:center;padding:16px 8px;background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:12px}.pb .n{font-size:1.9rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.pb .l{color:var(--tx2);font-size:.78rem;margin-top:3px}
+.prw{margin:6px 0 14px}.prr{width:100%;height:7px;background:rgba(255,255,255,.08);border-radius:20px;overflow:hidden}.prf{height:100%;background:var(--grad);border-radius:20px;transition:width .4s}
+.ach{display:flex;align-items:center;gap:12px;padding:10px 12px;background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:10px;margin-bottom:7px}.ach .ic{font-size:1.5rem}.ach .nm{font-weight:700}.ach .ds{color:var(--tx2);font-size:.8rem}.ach.lk .ic{opacity:.4;filter:grayscale(1)}
+.wod{background:var(--grad);border-radius:18px;padding:26px 18px;text-align:center;margin-bottom:22px;box-shadow:var(--sh)}.wod .lb{font-size:.8rem;opacity:.85;letter-spacing:1px;text-transform:uppercase}.wod .wd{font-size:2.4rem;font-weight:900;margin:6px 0 3px}.wod .mn{font-size:1rem;opacity:.9}.wod .ex{font-style:italic;opacity:.75;margin-top:6px;display:block}
+.inp{width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid var(--bd);background:rgba(255,255,255,.04);color:var(--tx);font-family:'Inter',sans-serif;font-size:.9rem;outline:none}.inp:focus{border-color:var(--pri)}textarea.inp{resize:vertical;min-height:60px}
+.fab{position:fixed;right:16px;bottom:18px;z-index:200;width:52px;height:52px;border-radius:50%;background:var(--grad);color:#fff;border:none;box-shadow:0 6px 22px rgba(37,99,235,.55);cursor:pointer;font-size:1.4rem;display:flex;align-items:center;justify-content:center;transition:.2s}.fab:hover{transform:scale(1.08)}.fab.ac{background:linear-gradient(135deg,#ec4899,#a855f7)}
+.cb{position:fixed;right:16px;bottom:76px;width:330px;max-width:calc(100% - 36px);height:440px;background:var(--bg2);border:1px solid var(--bd);border-radius:16px;box-shadow:0 10px 36px rgba(0,0,0,.5);display:none;flex-direction:column;z-index:300;overflow:hidden}.cb.op{display:flex;animation:fu .22s ease-out}.cbh{padding:12px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.02)}.cbh .nm{font-weight:700;display:flex;align-items:center;gap:7px}.cbh .nm i{color:var(--acc)}.cbh .cls{background:none;border:none;color:var(--tx2);cursor:pointer;font-size:1.1rem;padding:3px 6px}
+.cbb{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}.cbb::-webkit-scrollbar{width:4px}.cbb::-webkit-scrollbar-thumb{background:var(--bd);border-radius:10px}
+.msg{padding:8px 12px;border-radius:12px;max-width:88%;font-size:.87rem;line-height:1.4;animation:mi .18s ease-out}@keyframes mi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}.msg.b{align-self:flex-start;background:rgba(255,255,255,.04);border:1px solid var(--bd);border-top-left-radius:3px}.msg.u{align-self:flex-end;background:var(--pri);color:#fff;border-top-right-radius:3px}
+.cbf{padding:8px 10px;border-top:1px solid var(--bd);display:flex;gap:7px;background:rgba(15,23,42,.5)}.cbf input{flex:1;padding:9px 11px;border-radius:9px;border:1px solid var(--bd);background:rgba(255,255,255,.05);color:var(--tx);font-family:'Inter',sans-serif;font-size:.87rem;outline:none}.cbf input:focus{border-color:var(--pri)}.cbf button{padding:9px 11px;border-radius:9px;background:var(--grad);color:#fff;border:none;cursor:pointer;font-weight:700}
+.vl{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px;margin:8px 0}.vi{padding:7px 10px;background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:8px;font-size:.82rem;transition:.2s}.vi:hover{border-color:var(--pri)}.vi b{color:var(--acc);display:block;margin-bottom:2px}
+.sg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}.sc{padding:14px;background:var(--bg2);border:1px solid var(--bd);border-radius:11px;cursor:pointer;text-align:center;transition:.25s}.sc:hover{border-color:var(--pri);transform:translateY(-2px)}.sc.dn{border-color:var(--ok)}.sc .si{font-size:1.8rem;margin-bottom:6px}
+.gt{background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.2);border-radius:10px;padding:12px 14px;margin:10px 0;font-size:.87rem;line-height:1.5}.gt b{color:var(--acc)}
+@media(max-width:640px){.tp .sts{gap:6px}.tp .st{font-size:.7rem;padding:2px 7px}.cb{width:290px;height:370px}.wod .wd{font-size:1.9rem}.sg{grid-template-columns:1fr}.cg{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
+<div class="tp"><div class="br"><i class="fa-solid fa-language" style="color:var(--acc);-webkit-text-fill-color:var(--acc)"></i> English Zero-to-Hero</div><div class="sts"><div class="st"><i class="fa-solid fa-star"></i> <b id="sxp">0</b> XP</div><div class="st"><i class="fa-solid fa-fire"></i> <b id="ssk">0</b> 🔥</div><div class="st"><i class="fa-solid fa-book-open"></i> <b id="sdn">0</b>/34</div><div class="st"><span class="bg b-a0" id="slv">A0</span></div></div></div>
+<button class="fab" id="cfab" onclick="tChat()"><i class="fa-solid fa-comment-dots"></i></button>
+<div class="cb" id="cbox"><div class="cbh"><div class="nm"><i class="fa-solid fa-robot"></i> AI O'qituvchi</div><button class="cls" onclick="tChat()"><i class="fa-solid fa-xmark"></i></button></div><div class="cbb" id="cbody"><div class="msg b">Salom! 👋 Menga inglizcha yozing — grammatikani tekshiraman. O'zbekcha yozsangiz — tarjima beraman. Har javobda yangi so'z o'rgataman!</div></div><div class="cbf"><input type="text" id="cinp" placeholder="Xabaringizni yozing..." onkeydown="if(event.key==='Enter')sMsg()"><button onclick="sMsg()"><i class="fa-solid fa-paper-plane"></i></button></div></div>
 
-<!-- TOP NAV -->
-<div class="topnav">
-    <div class="logo">🇺🇸 English Zero-to-Hero</div>
-    <div class="stats">
-        <div class="stat">⭐ <span class="stat-num" id="total-xp">0</span> XP</div>
-        <div class="stat">🔥 <span class="stat-num" id="streak">0</span> kun</div>
-        <div class="stat">📖 <span class="stat-num" id="lessons-done">0</span>/34</div>
-    </div>
-</div>
+<div class="pg a" id="p0">
+<div class="wod"><span class="lb">📖 Bugungi so'z</span><div class="wd" id="ww">...</div><div class="mn" id="wt"></div><span class="ex" id="we"></span></div>
+<h2 class="pt">🇺🇸 Ingliz tilini 0 dan o'rganing</h2><p class="ps">34 dars · 4 ko'nikma · AI yordamida · A0 dan B1 gacha</p>
+<div class="st2">Tezkor boshlash</div>
+<div class="cg"><div class="cd" onclick="go('p1')" style="cursor:pointer"><div style="font-size:1.8rem;margin-bottom:5px">📚</div><h3 style="margin-bottom:3px">Darslar</h3><p style="color:var(--tx2);font-size:.83rem;margin-bottom:8px">34 dars. Har biri: so'zlar, matn, test, audio, yozish.</p><span class="btn bs bo" style="width:100%;justify-content:center">Darslar <i class="fa-solid fa-arrow-right"></i></span></div>
+<div class="cd" onclick="go('p2')" style="cursor:pointer"><div style="font-size:1.8rem;margin-bottom:5px">📝</div><h3 style="margin-bottom:3px">Daraja testi</h3><p style="color:var(--tx2);font-size:.83rem;margin-bottom:8px">20 ta savol → A0/A1/A2/B1.</p><span class="btn bs bo" style="width:100%;justify-content:center">O'tkazing <i class="fa-solid fa-arrow-right"></i></span></div>
+<div class="cd" onclick="go('p3')" style="cursor:pointer"><div style="font-size:1.8rem;margin-bottom:5px">🃏</div><h3 style="margin-bottom:3px">Flashcards</h3><p style="color:var(--tx2);font-size:.83rem;margin-bottom:8px">Kartochkalar bilan so'zlar.</p><span class="btn bs bo" style="width:100%;justify-content:center">O'rganish <i class="fa-solid fa-arrow-right"></i></span></div>
+<div class="cd" onclick="go('p4')" style="cursor:pointer"><div style="font-size:1.8rem;margin-bottom:5px">📊</div><h3 style="margin-bottom:3px">Rivojlanish</h3><p style="color:var(--tx2);font-size:.83rem;margin-bottom:8px">XP, streak, yutuqlar.</p><span class="btn bs bo" style="width:100%;justify-content:center">Ko'rish <i class="fa-solid fa-arrow-right"></i></span></div></div>
+<div class="st2" style="margin-top:26px">💬 AI bilan suhbat</div>
+<div class="cd" style="text-align:center;padding:20px"><div style="font-size:1.8rem;margin-bottom:6px">🤖</div><p style="color:var(--tx2);margin-bottom:10px">Saytda AI o'qituvchi bilan yozib qoling. Inglizcha yozsangiz — grammatikani tekshiradi. O'zbekcha yozsangiz — tarjima beradi.</p><button class="btn bp" onclick="tChat();document.getElementById('cinp').focus()"><i class="fa-solid fa-comment"></i> AI bilan gaplashish</button></div>
+<div class="st2" style="margin-top:26px">Qanday ishlaydi</div>
+<div class="cg"><div class="cd"><div style="font-size:1.3rem;margin-bottom:5px">📖</div><h3>Reading</h3><p style="color:var(--tx2);font-size:.83rem">Matn + test.</p></div><div class="cd"><div style="font-size:1.3rem;margin-bottom:5px">🎧</div><h3>Listening</h3><p style="color:var(--tx2);font-size:.83rem">Audio diktant.</p></div><div class="cd"><div style="font-size:1.3rem;margin-bottom:5px">✍️</div><h3>Writing</h3><p style="color:var(--tx2);font-size:.83rem">AI tekshiradi.</p></div><div class="cd"><div style="font-size:1.3rem;margin-bottom:5px">🗣</div><h3>Speaking</h3><p style="color:var(--tx2);font-size:.83rem">Ovozli xabar.</p></div></div>
+<div class="st2" style="margin-top:26px">Telegram bot</div>
+<div class="cd" style="text-align:center;padding:18px"><p style="color:var(--tx2);margin-bottom:10px">Telegramda ham o'rganing</p><a href="https://t.me/" class="btn bp" target="_blank" style="width:100%;justify-content:center"><i class="fa-brands fa-telegram"></i> Telegramda davom etish</a></div></div>
 
-<!-- HOME PAGE -->
-<div class="page active" id="page-home">
-    <div class="wod-card animate">
-        <div style="font-size: 3rem; margin-bottom: 16px;">📖</div>
-        <div class="word" id="wod-word">Loading...</div>
-        <div class="translation" id="wod-translation"></div>
-        <div class="example" id="wod-example"></div>
-    </div>
+<div class="pg" id="p1"><div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap"><button class="btn bo bs" onclick="go('p0')"><i class="fa-solid fa-arrow-left"></i> Bosh</button><div class="tabs" id="lt"><button class="tab ac" onclick="fL('all',this)">Barchasi</button><button class="tab" onclick="fL('A0',this)">A0</button><button class="tab" onclick="fL('A1',this)">A1</button><button class="tab" onclick="fL('A2',this)">A2</button><button class="tab" onclick="fL('B1',this)">B1</button></div></div>
+<h2 class="pt">📚 Darslar</h2><p class="ps">Har bir darsda: so'zlar, matn, test, audio, yozish.</p><div id="ll" class="cg"></div></div>
 
-    <h2 class="page-title">O'rganishni boshlang</h2>
-    <p class="page-subtitle">34 dars, 4 ta ko'nikma, AI yordamida</p>
+<div class="pg" id="p5"><div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap"><button class="btn bo bs" onclick="go('p1')"><i class="fa-solid fa-arrow-left"></i> Darslar</button><button class="btn bs bo" onclick="go('p3')"><i class="fa-solid fa-clone"></i> Dars so'zlari</button></div><div id="lc"></div></div>
 
-    <div class="card-grid">
-        <div class="card" onclick="showPage('page-lessons')" style="cursor:pointer">
-            <div style="font-size: 2rem; margin-bottom: 12px;">📚</div>
-            <h3>Darslar</h3>
-            <p style="color:var(--text-muted)">34 ta dars — A0 dan B1 gacha</p>
-        </div>
-        <div class="card" onclick="showPage('page-test')" style="cursor:pointer">
-            <div style="font-size: 2rem; margin-bottom: 12px;">📝</div>
-            <h3>Daraja Testi</h3>
-            <p style="color:var(--text-muted)">20 ta savol bilan darajangizni aniqlang</p>
-        </div>
-        <div class="card" onclick="showPage('page-flashcards')" style="cursor:pointer">
-            <div style="font-size: 2rem; margin-bottom: 12px;">🃏</div>
-            <h3>Flashcards</h3>
-            <p style="color:var(--text-muted)">So'zlarni takrorlang</p>
-        </div>
-        <div class="card" onclick="showPage('page-progress')" style="cursor:pointer">
-            <div style="font-size: 2rem; margin-bottom: 12px;">📊</div>
-            <h3>Rivojlanish</h3>
-            <p style="color:var(--text-muted)">Statistika va yutuqlar</p>
-        </div>
-    </div>
+<div class="pg" id="p2"><div style="display:flex;align-items:center;gap:8px;margin-bottom:16px"><button class="btn bo bs" onclick="go('p0')"><i class="fa-solid fa-arrow-left"></i> Bosh</button></div><h2 class="pt">📝 Daraja testi</h2><p class="ps">20 ta savol. Har bir to'g'ri javob +5 XP.</p><div id="tc"><div class="cd" style="text-align:center;padding:20px"><div style="font-size:2rem;margin-bottom:8px">📝</div><h3 style="margin-bottom:5px">Testni boshlash</h3><p style="color:var(--tx2);margin-bottom:14px">20 ta savolga javob bering.</p><button class="btn bp" onclick="sT()"><i class="fa-solid fa-play"></i> Boshlash</button></div></div></div>
 
-    <div style="margin-top: 32px;">
-        <a href="https://t.me/" class="btn btn-primary" target="_blank" style="width:100%; justify-content:center;">
-            🤖 Telegram botda davom etish
-        </a>
-    </div>
-</div>
+<div class="pg" id="p3"><div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap"><button class="btn bo bs" onclick="go('p0')"><i class="fa-solid fa-arrow-left"></i> Bosh</button></div><h2 class="pt">🃏 Flashcards</h2><p class="ps">Kartochkani bosing — tarjimani ko'ring.</p>
+<div class="tabs" id="ft"><button class="tab ac" onclick="setFS('a',this)">Umumiy</button><button class="tab" onclick="setFS('l',this)">Dars so'zlaridan</button></div>
+<div id="fsl" style="display:none;margin-bottom:12px"><select id="fli" class="inp" style="max-width:300px" onchange="setFL(this.value)"><option value="0">Darsni tanlang...</option></select></div>
+<div class="fcw"><div class="fc" onclick="this.classList.toggle('flp')"><div class="fci"><div class="fcf"><div class="fcw2" id="fw">...</div><div class="fch"><i class="fa-solid fa-hand-pointer"></i> Bosing</div></div><div class="fcb"><div class="fcm" id="fm"></div><div class="fce" id="fe"></div></div></div></div></div>
+<div style="display:flex;justify-content:center;gap:10px;align-items:center;margin:4px 0 12px"><button class="btn bo bs" onclick="mFc(-1)"><i class="fa-solid fa-chevron-left"></i></button><span style="color:var(--tx2);font-size:.85rem" id="fp">1/1</span><button class="btn bp bs" onclick="mFc(1)"><i class="fa-solid fa-chevron-right"></i></button></div>
+<div class="st2">Qidirish</div><div class="cd"><input class="inp" id="si" placeholder="So'z yoki tarjima qidirish..." onkeydown="if(event.key==='Enter')doS()"><div style="margin-top:8px"><button class="btn bs bp" onclick="doS()"><i class="fa-solid fa-magnifying-glass"></i> Qidirish</button> <button class="btn bs bo" onclick="clS()">Tozalash</button></div><div id="sr" style="margin-top:10px"></div></div></div>
 
-<!-- LESSONS PAGE -->
-<div class="page" id="page-lessons">
-    <button class="btn btn-outline btn-sm" onclick="showPage('page-home')" style="margin-bottom:24px">← Orqaga</button>
-    <h2 class="page-title">📚 Darslar</h2>
-    <p class="page-subtitle">34 ta dars — A0 dan B1 gacha</p>
-
-    <div class="nav-tabs" id="level-tabs">
-        <button class="nav-tab active" onclick="filterLessons('all')">Barchasi</button>
-        <button class="nav-tab" onclick="filterLessons('A0')">A0</button>
-        <button class="nav-tab" onclick="filterLessons('A1')">A1</button>
-        <button class="nav-tab" onclick="filterLessons('A2')">A2</button>
-        <button class="nav-tab" onclick="filterLessons('B1')">B1</button>
-    </div>
-
-    <div id="lessons-list" class="card-grid"></div>
-</div>
-
-<!-- LESSON DETAIL PAGE -->
-<div class="page" id="page-lesson-detail">
-    <button class="btn btn-outline btn-sm" onclick="showPage('page-lessons')" style="margin-bottom:24px">← Darslar ro'yxatiga</button>
-    <div id="lesson-content"></div>
-</div>
-
-<!-- QUIZ PAGE -->
-<div class="page" id="page-quiz">
-    <div id="quiz-content"></div>
-</div>
-
-<!-- TEST PAGE -->
-<div class="page" id="page-test">
-    <button class="btn btn-outline btn-sm" onclick="showPage('page-home')" style="margin-bottom:24px">← Orqaga</button>
-    <h2 class="page-title">📝 Daraja Testi</h2>
-    <p class="page-subtitle">20 ta savol — A0 dan B1 gacha</p>
-    <div id="test-content">
-        <p style="margin-bottom: 24px;">Test sizning ingliz tili darajangizni aniqlaydi. Har bir to'g'ri javob uchun ball olinadi.</p>
-        <button class="btn btn-primary" onclick="startTest()">🚀 Testni boshlash</button>
-    </div>
-</div>
-
-<!-- FLASHCARDS PAGE -->
-<div class="page" id="page-flashcards">
-    <button class="btn btn-outline btn-sm" onclick="showPage('page-home')" style="margin-bottom:24px">← Orqaga</button>
-    <h2 class="page-title">🃏 Flashcards</h2>
-    <p class="page-subtitle">So'zlarni takrorlang — kartochkani bosing</p>
-    <div id="flashcard-area">
-        <div class="flashcard" onclick="this.classList.toggle('flipped')">
-            <div class="flashcard-inner">
-                <div class="flashcard-front">
-                    <div class="flashcard-word" id="fc-word">Loading...</div>
-                    <div class="flashcard-hint">Bosing — tarjimani ko'ring</div>
-                </div>
-                <div class="flashcard-back">
-                    <div class="flashcard-translation" id="fc-translation">...</div>
-                    <div style="margin-top: 8px; color: var(--text-muted); font-size: 0.85rem;" id="fc-example"></div>
-                </div>
-            </div>
-        </div>
-        <div style="display: flex; gap: 12px; justify-content: center; margin-top: 16px;">
-            <button class="btn btn-danger btn-sm" onclick="prevFlashcard()">← Oldingi</button>
-            <button class="btn btn-success btn-sm" onclick="nextFlashcard()">Keyingi →</button>
-        </div>
-    </div>
-</div>
-
-<!-- PROGRESS PAGE -->
-<div class="page" id="page-progress">
-    <button class="btn btn-outline btn-sm" onclick="showPage('page-home')" style="margin-bottom:24px">← Orqaga</button>
-    <h2 class="page-title">📊 Rivojlanish</h2>
-
-    <div class="card-grid" style="margin-bottom: 32px;">
-        <div class="card stat-card"><div class="num" id="p-xp">0</div><div class="label">XP ballar</div></div>
-        <div class="card stat-card"><div class="num" id="p-streak">0</div><div class="label">Kunlik streak</div></div>
-        <div class="card stat-card"><div class="num" id="p-lessons">0</div><div class="label">Yakunlangan darslar</div></div>
-        <div class="card stat-card"><div class="num" id="p-level">A0</div><div class="label">Daraja</div></div>
-    </div>
-
-    <h3 style="margin-bottom: 16px;">🏆 Yutuqlar</h3>
-    <div id="achievements-list"></div>
-</div>
+<div class="pg" id="p4"><div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap"><button class="btn bo bs" onclick="go('p0')"><i class="fa-solid fa-arrow-left"></i> Bosh</button><button class="btn bs bo" onclick="go('p1')"><i class="fa-solid fa-book-open"></i> Darslar</button><button class="btn bs bo" onclick="go('p2')"><i class="fa-solid fa-file-pen"></i> Test</button></div>
+<h2 class="pt">📊 Rivojlanish</h2><p class="ps">Ma'lumotlar brauzer local storage'ida.</p>
+<div class="pg2"><div class="pb"><div class="n" id="pxp">0</div><div class="l">⭐ XP</div></div><div class="pb"><div class="n" id="pdn">0</div><div class="l">✅ Darslar</div></div><div class="pb"><div class="n" id="plv">A0</div><div class="l">🎯 Daraja</div></div><div class="pb"><div class="n" id="psk">0</div><div class="l">🔥 Streak</div></div></div>
+<div class="cd"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-weight:700">Bugungi maqsad (30 XP)</span><span style="font-weight:700" id="pxt">0/30</span></div><div class="prr"><div class="prf" id="pxf" style="width:0%"></div></div></div>
+<div class="st2">🏆 Yutuqlar</div><div id="al"></div></div>
 
 <script>
-// ==================== DATA ====================
-const LESSONS = [
-    {id:1,level:'A0',title:'Salomlashish va Tanishuv',vocab:[{w:'Hello',t:'Salom'},{w:'Name',t:'Ism'},{w:'Nice to meet you',t:'Tanishganimdan xursandman'},{w:'I am',t:'Men ... man'},{w:'Goodbye',t:'Xayr'}],reading:{text:'Alex: Hello! My name is Alex.\nSarah: Hi Alex! I am Sarah. Nice to meet you.',q:'Sarah kim bilan tanishdi?',opts:['Alex','John','David','Tom'],correct:0},listening:'Hello, my name is Alex. Nice to meet you.',writing:'Salom! Mening ismim ... Tanishganimdan xursandman.',writingSample:'Hello! My name is ... Nice to meet you.'},
-    {id:2,level:'A0',title:'Raqamlar va Yosh',vocab:[{w:'One',t:'Bir'},{w:'Ten',t:"O'n"},{w:'Years old',t:'Yoshda'},{w:'Student',t:'Talaba'}],reading:{text:'This is David. He is twenty years old. David is a student.',q:'David necha yoshda?',opts:['15','20','25','10'],correct:1},listening:'I am twenty years old and I am a student.',writing:'Men 18 yoshdaman va men talabaman.',writingSample:'I am 18 years old and I am a student.'},
-    {id:3,level:'A0',title:'Oila va Qarindoshlar',vocab:[{w:'Father',t:'Ota'},{w:'Mother',t:'Ona'},{w:'Family',t:'Oila'},{w:'Love',t:'Sevmoq'}],reading:{text:'I have a small family. My father is a doctor. My mother is a teacher.',q:'Onasi kim?',opts:['Doctor','Driver','Teacher','Engineer'],correct:2},listening:'My father is a doctor and my mother is a teacher.',writing:'Mening otam shifokor.',writingSample:'My father is a doctor.'},
-    {id:4,level:'A1',title:'Kundalik Harakatlar',vocab:[{w:'Wake up',t:"Uyg'onmoq"},{w:'Every day',t:'Har kuni'},{w:'Go to work',t:'Ishga bormoq'}],reading:{text:'Every day, I wake up at 7 AM. I drink coffee. Then I go to work.',q:'U ertalab nima ichadi?',opts:['Tea','Juice','Milk','Coffee'],correct:3},listening:'Every day I wake up at seven and drink coffee.',writing:'Men har kuni ertalab soat 7 da uyg’onaman.',writingSample:'I wake up at 7 every morning.'},
-    {id:5,level:'A1',title:'Taom va Ichimlik',vocab:[{w:'Water',t:'Suv'},{w:'Bread',t:'Non'},{w:'Apple',t:'Olma'}],reading:{text:'Waiter: What would you like?\nTom: I would like water and bread.',q:'Tom nima buyurtma berdi?',opts:['Juice','Water and bread','Coffee','Milk'],correct:1},listening:'I would like water and bread, please.',writing:'Men suv va non istayman.',writingSample:'I would like water and bread, please.'},
-    {id:6,level:'A1',title:'Ranglar va Buyumlar',vocab:[{w:'Red',t:'Qizil'},{w:'Blue',t:"Ko'k"},{w:'Green',t:'Yashil'},{w:'Beautiful',t:'Chiroyli'}],reading:{text:'Lisa: Look! This is a beautiful red dress.',q:'Lisa nima yoqtiradi?',opts:['Green bag','Red dress','Blue shirt','Yellow hat'],correct:1},listening:'This is a beautiful blue car.',writing:'Bu chiroyli yashil daftar.',writingSample:'This is a beautiful green notebook.'},
-    {id:7,level:'A1',title:'Vaqt va Kun',vocab:[{w:'Monday',t:'Dushanba'},{w:'Weekend',t:'Dam olish kuni'},{w:'Breakfast',t:'Nonushta'}],reading:{text:'It is Monday morning. The time is 8 AM.',q:'Sarah qachon maktabga boradi?',opts:['Weekends','Monday morning','Sunday','Night'],correct:1},listening:'What time is it? It is eight o\'clock.',writing:'Hozir soat ertalab 9.',writingSample:'It is 9 AM.'},
-    {id:8,level:'A1',title:'Sayohat va Joylar',vocab:[{w:'Airport',t:'Aeroport'},{w:'Hotel',t:'Mehmonxona'},{w:'Ticket',t:'Chipta'}],reading:{text:'Ali is going to Istanbul. He buys a ticket.',q:'Ali qayerga ketyapti?',opts:['London','Istanbul','Paris','Dubai'],correct:1},listening:'Where is the hotel? It is near the beach.',writing:'Mehmonxona plyaj yaqinida.',writingSample:'The hotel is near the beach.'},
-    {id:9,level:'A1',title:"Do'kon va Xarid",vocab:[{w:'Shop',t:"Do'kon"},{w:'How much?',t:'Nechada?'},{w:'Cheap',t:'Arzon'},{w:'Expensive',t:'Qimmat'}],reading:{text:'Mum: How much is this shirt?\nSeller: It is 50,000 so\'m.',q:'Ko\'ylak qancha turadi?',opts:['30,000','50,000','20,000','100,000'],correct:1},listening:'How much is this book? It costs ten dollars.',writing:'Bu ko\'ylak qancha turadi?',writingSample:'How much is this shirt?'},
-    {id:10,level:'A1',title:'Ob-havo va Fasllar',vocab:[{w:'Hot',t:'Issiq'},{w:'Cold',t:'Sovuq'},{w:'Rain',t:"Yomg'ir"},{w:'Summer',t:'Yoz'}],reading:{text:'Today is very hot. The sun is shining.',q:'Bugun qanday ob-havo?',opts:['Sovuq','Issiq',"Yomg'irli",'Bulutli'],correct:1},listening:'It is raining today. I need an umbrella.',writing:'Bugun juda issiq.',writingSample:'Today is very hot.'},
-    {id:11,level:'A1',title:'Kasblar va Ish',vocab:[{w:'Doctor',t:'Shifokor'},{w:'Teacher',t:"O'qituvchi"},{w:'Engineer',t:'Muhandis'}],reading:{text:'My father is a doctor. He works at a hospital.',q:'Onasi qayerda ishlaydi?',opts:['Hospital','School','Bank','Office'],correct:1},listening:'My father is a doctor.',writing:'Mening otam shifokor.',writingSample:'My father is a doctor.'},
-    {id:12,level:'A1',title:'Hobbi va Qiziqishlar',vocab:[{w:'Football',t:'Futbol'},{w:'Music',t:'Musiqa'},{w:'Reading',t:"O'qish"},{w:'Favorite',t:'Sevimli'}],reading:{text:'I like playing football. My favorite team is Barcelona.',q:'Uning sevimli jamoasi?',opts:['Real Madrid','Barcelona','Liverpool','Chelsea'],correct:1},listening:'My favorite hobby is reading books.',writing:'Mening sevimlim futbol.',writingSample:'My favorite hobby is playing football.'},
-    {id:13,level:'A1',title:'Transport va Sayohat',vocab:[{w:'Bus',t:'Avtobus'},{w:'Train',t:'Poyezd'},{w:'Car',t:'Mashina'}],reading:{text:'I go to the train station every morning.',q:'U qayerga boradi?',opts:['Maktabga',"Do'konga",'Stansiyaga','Kasalxonaga'],correct:2},listening:'I take the bus to school every day.',writing:'Men avtobusda ishga boraman.',writingSample:'I go to work by bus.'},
-    {id:14,level:'A1',title:"Do'stlar va Ijtimoiy Hayot",vocab:[{w:'Friend',t:"Do'st"},{w:'Party',t:'Ziyofat'},{w:'Together',t:'Birga'}],reading:{text:'I have many friends. We play together.',q:'Juma kuni nima qilishadi?',opts:['Maktabga','Ziyofat','Uyqqa','Ish'],correct:1},listening:'My best friend is Ali.',writing:"Mening do'stim bilan futbol o'ynaymiz.",writingSample:'My friend and I play football together.'},
-    {id:15,level:'A2',title:'Past Simple',vocab:[{w:'Yesterday',t:'Kecha'},{w:'Went',t:'Bordi'},{w:'Ate',t:'Yedi'},{w:'Played',t:"O'ynadi"}],reading:{text:'Yesterday I went to the park. We played football.',q:'Ular nima qilishdi?',opts:['Swimming','Football','Kitob','Film'],correct:1},listening:'Yesterday I went to the park and played football.',writing:'Kecha men kinoga bordim.',writingSample:'Yesterday I went to the cinema.'},
-    {id:16,level:'A2',title:'Kelajak Rejalari',vocab:[{w:'Tomorrow',t:'Ertaga'},{w:'Will',t:'-man'},{w:'Going to',t:'Rejalanyapti'}],reading:{text:'Next week, I am going to visit my grandmother.',q:'U qayerga boradi?',opts:['Tashkent','Bukhara','Samarkand','Khiva'],correct:2},listening:'I am going to visit my grandmother tomorrow.',writing:'Ertaga men kinoga boraman.',writingSample:'Tomorrow I am going to the cinema.'},
-    {id:17,level:'A2',title:'Taqqoslash',vocab:[{w:'Bigger',t:'Kattaroq'},{w:'Better',t:'Yaxshiroq'},{w:'Than',t:'Dan'}],reading:{text:'Tashkent is bigger than Samarkand.',q:'Qaysi shahar kattaroq?',opts:['Samarkand','Bukhara','Tashkent','Khiva'],correct:2},listening:'Samarkand is more beautiful than Tashkent.',writing:'Mening akam mendan kattaroq.',writingSample:'My brother is bigger than me.'},
-    {id:18,level:'A2',title:"So'rov va Ruxsat",vocab:[{w:'Can I?',t:'Mumkinmi?'},{w:'Could you?',t:'Olasizmi?'},{w:'Please',t:'Iltimos'}],reading:{text:'Student: Excuse me, can I borrow this book?',q:'Talaba nima so\'rayapti?',opts:['Pul','Kitob','Yordam','Ruxsat'],correct:1},listening:'Could you please help me?',writing:'Kechirasiz, yordam bera olasizmi?',writingSample:'Excuse me, could you help me?'},
-    {id:19,level:'A2',title:'Sarflar va Byudjet',vocab:[{w:'Price',t:'Narx'},{w:'Discount',t:'Chegirma'},{w:'Pay',t:"To'lash"}],reading:{text:'I bought a new phone for 500 dollars.',q:'Telefon qancha turdi?',opts:['600','500','400','700'],correct:1},listening:'The phone costs five hundred dollars.',writing:'Men telefon sotib oldim.',writingSample:'I bought a new phone.'},
-    {id:20,level:'A2',title:"Sog'liq va Tibbiyot",vocab:[{w:'Headache',t:'Bosh og\'rig\'i'},{w:'Fever',t:'Isitma'},{w:'Medicine',t:'Dori'}],reading:{text:'I feel sick today. I have a headache.',q:'U nima sezmoqda?',opts:['Ochlik','Charchash','Kasallik','Uyqu'],correct:2},listening:'I have a headache and I need medicine.',writing:'Mening boshim og\'riyapti.',writingSample:'I have a headache.'},
-    {id:21,level:'A2',title:'Texnologiya',vocab:[{w:'Phone',t:'Telefon'},{w:'Computer',t:'Kompyuter'},{w:'Internet',t:'Internet'}],reading:{text:'I use my phone every day. I use social media.',q:'U nima ishlatadi?',opts:['Telefon','Kompyuter','Internet','Hammasi'],correct:3},listening:'I use social media every day.',writing:'Men internetdan foydalanaman.',writingSample:'I use the internet every day.'},
-    {id:22,level:'B1',title:'Past Perfect',vocab:[{w:'Had',t:'...gan edi'},{w:'Before',t:'Oldin'},{w:'Already',t:'Allaqachon'}],reading:{text:'When I arrived, the plane had already left.',q:'Samolyot qachon ketgan edi?',opts:['Keyin','Oldin','Bir vaqtda','Ertaga'],correct:1},listening:'I had already finished before she came.',writing:'Men kelganimda u ketgan edi.',writingSample:'When I came, he had already left.'},
-    {id:23,level:'B1',title:'Passive Voice',vocab:[{w:'Was',t:'Edi (passiv)'},{w:'Built',t:'Qurilgan'},{w:'Written',t:'Yozilgan'}],reading:{text:'The Registan was built in the 15th century.',q:'Registan qachon qurilgan?',opts:['14-asrda','15-asrda','16-asrda','20-asrda'],correct:1},listening:'The book was written by a famous author.',writing:'Bu uy 2020-yilda qurilgan.',writingSample:'This house was built in 2020.'},
-    {id:24,level:'B1',title:'Reported Speech',vocab:[{w:'Said',t:'Dedi'},{w:'Told',t:'Aytdi'},{w:'That',t:' deb'}],reading:{text:'Tom said that he was tired.',q:'Tom nima dedi?',opts:['Charchaganini','Och','Uyqu','Xursand'],correct:0},listening:'She said that she was coming tomorrow.',writing:'U dedi: Men ertaga kelaman.',writingSample:'He said that he was coming tomorrow.'},
-    {id:25,level:'B1',title:'Conditionals',vocab:[{w:'If',t:'Agar'},{w:'Will',t:'-man'},{w:'Would',t:'-ardim'}],reading:{text:'If it rains, I will stay home.',q:'U nima qiladi?',opts:['Uy','Sayohat','Maktab','Ish'],correct:0},listening:'If it rains, I will take an umbrella.',writing:'Agar men boy bo\'lsam, uy olaman.',writingSample:'If I am rich, I will buy a house.'},
-    {id:26,level:'B1',title:'Phrasal Verbs',vocab:[{w:'Get up',t:"Uyg'onmoq"},{w:'Give up',t:'Vaz kechmoq'},{w:'Turn on',t:'Yoqmoq'}],reading:{text:'Every morning I get up at 7. I never give up.',q:'U ertalab nima qiladi?',opts:["O'chiradi",'Yoqadi','Kitob','Sport'],correct:1},listening:'I need to look after my brother.',writing:'Men ertalab uyg’onaman.',writingSample:'I get up at 7 AM.'},
-    {id:27,level:'B1',title:'Idioms',vocab:[{w:'Piece of cake',t:'Juda oson'},{w:'Break a leg',t:'Omad!'},{w:'Under the weather',t:'Kasal'}],reading:{text:"Tom's exam was a piece of cake.",q:'Imtihon qanday o\'tadi?',opts:['Qiyin','Oson','Uzoq','Noto\'g\'ri'],correct:1},listening:'The new phone costs an arm and a leg.',writing:'Mening imtihonim oson edi.',writingSample:'My exam was a piece of cake.'},
-    {id:28,level:'A2',title:'Ish va Kasbiy Hayot',vocab:[{w:'Salary',t:'Oylik'},{w:'Meeting',t:"Yig'ilish"},{w:'Boss',t:'Rahbar'}],reading:{text:'I have a meeting at 10 AM.',q:'Qachon yig\'ilish?',opts:['Dushanba','Chorshanba','Juma','Shanba'],correct:2},listening:'I have a meeting with my boss at ten.',writing:'Mening rahbarim bilan yig\'ilish bor.',writingSample:'I have a meeting with my boss.'},
-    {id:29,level:'B1',title:'Sayohat Rejalari',vocab:[{w:'Passport',t:'Pasport'},{w:'Luggage',t:'Yuk'},{w:'Departure',t:"Jo'nash"}],reading:{text:'I arrived two hours before departure.',q:'Qachon keldi?',opts:['1 soat','2 soat','3 soat','4 soat'],correct:1},listening:'Please show your passport.',writing:'Mening pasportim bor.',writingSample:'I have my passport.'},
-    {id:30,level:'B1',title:'Madaniyat va Bayramlar',vocab:[{w:'Tradition',t:"An'ana"},{w:'Celebration',t:'Bayram'},{w:'Festival',t:'Bayram'}],reading:{text:"Navro'z is a traditional Uzbek festival.",q:'Navro\'z qachon?',opts:['Yozda','Bahorda','Kuzda','Qishda'],correct:1},listening:'We celebrate Navroz every year.',writing:'Navroz o\'zbek an\'anasi.',writingSample:'Navroz is a Uzbek tradition.'},
-    {id:31,level:'A1',title:'Present Simple vs Continuous',vocab:[{w:'Always',t:'Doimo'},{w:'Now',t:'Hozir'},{w:'Sometimes',t:"Ba'zan"}],reading:{text:'I play football every day. I am playing now.',q:'Qaysi gap hozirgi?',opts:['I play','I am playing','I played','I will play'],correct:1},listening:'I am reading a book right now.',writing:'Men har kuni sport bilan shug\'ullanaman.',writingSample:'I do sports every day.'},
-    {id:32,level:'A1',title:'Articles (A, An, The)',vocab:[{w:'A',t:'Bitta'},{w:'An',t:'Bitta (unli)'},{w:'The',t:'Aniqlik'}],reading:{text:'I have a cat. The cat is black.',q:'Qaysi artikeldan keyin unli?',opts:['A','An','The','None'],correct:1},listening:'I saw an apple on the table.',writing:'Men kitob oldim.',writingSample:'I bought a book.'},
-    {id:33,level:'A1',title:'Prepositions of Place',vocab:[{w:'In',t:'Ichida'},{w:'On',t:'Ustida'},{w:'Under',t:'Pastida'},{w:'Next to',t:'Yonida'}],reading:{text:'The book is on the table.',q:'Kitob qayerda?',opts:['Under','On','Behind','In'],correct:1},listening:'The keys are in my pocket.',writing:'Mashina uyning ortida.',writingSample:'The car is behind the house.'},
-    {id:34,level:'A2',title:'Past Simple vs Continuous',vocab:[{w:'While',t:'Ayni paytda'},{w:'When',t:'Ganda'},{w:'Was',t:'Edi'}],reading:{text:'I was reading when the phone rang.',q:'Telefon qo\'ng\'iroq qilganda?',opts:['Kitob o\'qiyapti','Ovqat','Telefon','Uxlayapti'],correct:0},listening:'I was sleeping when the alarm went off.',writing:'Men TV ko\'rayotganda eshik ochildi.',writingSample:'The door opened while I was watching TV.'}
-];
+var L=[{id:1,lv:'A0',t:'Salomlashish va Tanishuv',v:[['Hello','Salom'],['Good morning','Erta tong'],['Goodbye','Xayr'],['Name','Ism'],['My name is','Mening ismim'],['I am','Men'],['You are','Siz'],['Nice to meet you','Tanishganimdan xursandman'],['What is your name?','Ismingiz nima?'],['How are you?','Qandaysiniz?'],['I\'m fine','Yaxshiman'],['Thank you','Rahmat'],['Please','Iltimos'],['Sorry','Kechirasiz'],['Yes','Ha'],['No','Yo\'q'],['From','...dan'],['This is','Bu'],['My friend','Mening do\'stim'],['Teacher','O\'qituvchi'],['Student','Talaba'],['Learn','O\'rganmoq'],['Speak','Gapirmoq'],['Help','Yordam'],['Welcome','Xush kelibsiz']],r:{t:'Alex: Hello! My name is Alex.\nSarah: Hi! I am Sarah. Nice to meet you.\nAlex: Nice to meet you too! Are you from Tashkent?\nSarah: Yes, I am. And you?',q:'Sarahlardan kim Toshkentdan?',o:['Alex','Sarah','Tom','David'],c:1},ls:'Hello, my name is Alex. Nice to meet you.',w:'Salom! Mening ismim ...',ws:'Hello! My name is ...',sp:'Introduce yourself.',g:'Ism - Name | Salomlashish - Greetings | Rahmat - Thank you'},
+{id:2,lv:'A0',t:'Raqamlar va Yosh',v:[['One','Bir'],['Two','Ikki'],['Three','Uch'],['Four','To\'rt'],['Five','Besh'],['Six','Olti'],['Seven','Yetti'],['Eight','Sakkiz'],['Nine','To\'qqiz'],['Ten','O\'n'],['Twenty','Yigirma'],['Thirty','O\'ttiz'],['Hundred','Yuz'],['Years old','Yoshda'],['Student','Talaba'],['Teacher','O\'qituvchi'],['Doctor','Shifokor'],['Old','Katta'],['Young','Yosh'],['First','Birinchi'],['Second','Ikkinchi'],['Third','Uchinchi'],['Number','Raqam'],['Age','Yosh'],['Birthday','Tug\'ilgan kun']],r:{t:'Anna is twenty-five. She is a teacher.\nMark is thirty. He is an engineer.',q:'Anna necha yoshda?',o:['5','20','25','30'],c:2},ls:'I am twenty-five years old.',w:'Men 18 yoshdaman.',ws:'I am 18 years old.',sp:'Say your age and job.',g:'Raqamlar - Numbers | Yosh - Age'},
+{id:3,lv:'A0',t:'Oila va Qarindoshlar',v:[['Father','Ota'],['Mother','Ona'],['Brother','Aka'],['Sister','Opa'],['Family','Oila'],['Grandfather','Katta ota'],['Grandmother','Katta ona'],['Son','O\'g\'il'],['Daughter','Qiz'],['Husband','Er'],['Wife','Xotin'],['Uncle','Amaki'],['Aunt','Tegishli'],['Cousin','Jiyana'],['Love','Sevmoq'],['Big','Katta'],['Small','Kichik'],['I have','Mening bor'],['Parents','Ota-onalar'],['Baby','Chaqaloq'],['Young','Yosh'],['Old','Katta'],['Together','Birga'],['Home','Uy'],['Happy','Baxtli']],r:{t:'I have a big family. My father is a doctor. My mother is a teacher.',q:'Onasi nima qiladi?',o:['Doctor','Driver','Teacher','Engineer'],c:2},ls:'My father is a doctor.',w:'Mening otam shifokor.',ws:'My father is a doctor.',sp:'Talk about your family.',g:'Oila - Family | Ota - Father | Ona - Mother'},
+{id:4,lv:'A1',t:'Kundalik Harakatlar',v:[['Wake up','Uyg\'onmoq'],['Get up','Turmoq'],['Drink','Ichmoq'],['Eat','Yemoq'],['Go to work','Ishga bormoq'],['Sleep','Uxlamoq'],['Rest','Dam olmoq'],['Morning','Ertalab'],['Evening','Kechqurun'],['Night','Kechasi'],['Every day','Har kuni'],['Always','Doimo'],['Never','Hech qachon'],['Breakfast','Nonushta'],['Lunch','Tushlik'],['Dinner','Kechki ovqat'],['Coffee','Kofe'],['Tea','Choy'],['Shower','Dush'],['Brush teeth','Tish cho\'tqamoq'],['Read','O\'qimoq'],['Write','Yozmoq'],['Study','O\'qish'],['Work','Ish'],['Start','Boshlamoq']],r:{t:'Every day, I wake up at 7. I drink coffee. I go to work.',q:'U ertalab nima ichadi?',o:['Tea','Juice','Milk','Coffee'],c:3},ls:'Every day I wake up at seven.',w:'Men har kuni ertalab uyg\'onaman.',ws:'I wake up at 7 every morning.',sp:'Describe your morning.',g:'Uyg\'onmoq - Wake up | Ichmoq - To drink'},
+{id:5,lv:'A1',t:'Taom va Ichimlik',v:[['Water','Suv'],['Bread','Non'],['Apple','Olma'],['Rice','Guruch'],['Meat','Go\'sht'],['Milk','Sut'],['Eggs','Tuxum'],['Fish','Baliq'],['Chicken','Tovuq'],['Vegetables','Sabzavot'],['Fruit','Meva'],['Sugar','Shakar'],['Salt','Tuz'],['I would like','...istayman'],['Waiter','Ofitsiant'],['Delicious','Mazzali'],['Hungry','Och'],['Thirsty','Chanqagan'],['Menu','Menyu'],['Order','Buyurtma'],['Plate','Taroq'],['Fork','Sanchq'],['Knife','Pichoq'],['Spoon','Qoshiq'],['Cup','Kupa']],r:{t:'Waiter: What would you like?\nTom: Rice and chicken, please.',q:'Tom nima oldi?',o:['Juice','Rice and chicken','Coffee','Milk'],c:1},ls:'I would like water and bread, please.',w:'Men suv va non istayman.',ws:'I would like water and bread, please.',sp:'Order food.',g:'I would like - Men istayman | Mazzali - Delicious'},
+{id:6,lv:'A1',t:'Ranglar va Buyumlar',v:[['Red','Qizil'],['Blue','Ko\'k'],['Green','Yashil'],['Yellow','Sariq'],['White','O\'q'],['Black','Qora'],['Orange','Piyo\'z'],['Purple','Binafsha'],['Pink','Rangli'],['Brown','Jigarrang'],['Beautiful','Chiroyli'],['Big','Katta'],['Small','Kichik'],['New','Yangi'],['Old','Eski'],['Cheap','Arzon'],['Expensive','Qimmat'],['This is','Bu'],['My','Mening'],['Shirt','Ko\'ylak'],['Pants','Shalvar'],['Shoes','Poyabzal'],['Bag','Sumka'],['Hat','Kepka'],['Dress','Kiyim']],r:{t:'Lisa: Look! This is a beautiful red dress.\nAnna: I like green more.',q:'Lisa nima yoqtiradi?',o:['Green bag','Red dress','Blue shirt','Yellow hat'],c:1},ls:'This is a beautiful blue car.',w:'Bu chiroyli yashil daftar.',ws:'This is a beautiful green notebook.',sp:'Describe a colorful object.',g:'Ranglar - Colors | Chiroyli - Beautiful'},
+{id:7,lv:'A1',t:'Vaqt va Kun',v:[['Monday','Dushanba'],['Tuesday','Seshanba'],['Wednesday','Chorshanba'],['Thursday','Payshanba'],['Friday','Juma'],['Saturday','Shanba'],['Sunday','Yakshanba'],['Morning','Ertalab'],['Afternoon','Kechki'],['Evening','Kechqurun'],['Weekend','Dam olish'],['Today','Bugun'],['Tomorrow','Ertaga'],['Yesterday','Kecha'],['Now','Hozir'],['Time','Vaqt'],['Clock','Soat'],['Breakfast','Nonushta'],['Lunch','Tushlik'],['Dinner','Kechki'],['Hour','Soat'],['Minute','Daqiqa'],['Second','Soniya'],['Early','Erta'],['Late','Kech']],r:{t:'It is Monday morning. The time is 8 AM.',q:'Sarah qachon boradi?',o:['Weekends','Monday morning','Sunday','Night'],c:1},ls:'What time is it? It is eight o\'clock.',w:'Hozir soat 9.',ws:'It is 9 AM.',sp:'Tell the time.',g:'Kunlar - Days | Vaqt - Time'},
+{id:8,lv:'A1',t:'Sayohat va Joylar',v:[['Airport','Aeroport'],['Hotel','Mehmonxona'],['Beach','Plyaj'],['Station','Stansiya'],['Ticket','Chipta'],['Taxi','Taksi'],['Bus','Avtobus'],['Train','Poyezd'],['Where is?','Qayerda?'],['Near','Yaqinda'],['Far','Uzoqda'],['Here','Bu yerda'],['There','U yerda'],['Left','Chap'],['Right','O\'ng'],['Straight','To\'g\'ri'],['Turn','Burilmoq'],['Excuse me','Kechirasiz'],['Map','Xarita'],['Passport','Pasport'],['Luggage','Yuk'],['Room','Xona'],['Beach','Plyaj'],['Travel','Sayohat'],['Visit','Tashrif']],r:{t:'Where is the hotel? It is near the beach.',q:'Mehmonxona qayerda?',o:['Airport','Beach','Station','City'],c:1},ls:'Where is the hotel?',w:'Mehmonxona plyaj yaqinida.',ws:'The hotel is near the beach.',sp:'Ask directions.',g:'Qayerda? - Where? | Yaqinda - Near'},
+{id:9,lv:'A1',t:'Do\'kon va Xarid',v:[['Shop','Do\'kon'],['How much?','Nechada?'],['Cheap','Arzon'],['Expensive','Qimmat'],['Money','Pul'],['Buy','Sotib olmoq'],['Price','Narx'],['Discount','Chegirma'],['Cash','Naqd'],['Card','Karta'],['Size','O\'lcham'],['Color','Rang'],['Shirt','Ko\'ylak'],['Phone','Telefon'],['Bag','Sumka'],['Cheap','Arzon'],['Sale','Chegirma'],['Receipt','Check'],['Expensive','Qimmat'],['Want','Xohlamoq'],['Need','Kerak'],['Show','Ko\'rsatmoq'],['Try','Sinamoq'],['Change','Almashtirmoq'],['Return','Qaytarmoq']],r:{t:'How much is this shirt? It is 50,000 so\'m.',q:'Ko\'ylak qancha turadi?',o:['30,000','50,000','20,000','100,000'],c:1},ls:'How much is this book?',w:'Bu kitob qancha turadi?',ws:'How much is this book?',sp:'Ask about prices.',g:'Nechada? - How much? | Narx - Price'},
+{id:10,lv:'A1',t:'Ob-havo va Fasllar',v:[['Hot','Issiq'],['Cold','Sovuq'],['Rain','Yomg\'ir'],['Snow','Qor'],['Wind','Shamol'],['Sun','Quyosh'],['Cloud','Bulut'],['Summer','Yoz'],['Winter','Qish'],['Spring','Bahor'],['Autumn','Kuz'],['Warm','Iliq'],['Cool','Salqin'],['Umbrella','Soyanchqa'],['Jacket','Kurtka'],['Sunny','Quyoshli'],['Cloudy','Bulutli'],['Windy','Shamolli'],['Weather','Ob-havo'],['Temperature','Harorat'],['Today','Bugun'],['Tomorrow','Ertaga'],['Nice','Chiroyli'],['Cold','Sovuq'],['Ice','Muz']],r:{t:'Today is very hot. The sun is shining.',q:'Bugun qanday?',o:['Sovuq','Issiq','Yomg\'ir','Bulutli'],c:1},ls:'It is raining today.',w:'Bugun juda issiq.',ws:'Today is very hot.',sp:'Describe weather.',g:'Issiq - Hot | Sovuq - Cold | Yomg\'ir - Rain'},
+{id:11,lv:'A1',t:'Kasblar va Ish',v:[['Doctor','Shifokor'],['Teacher','O\'qituvchi'],['Engineer','Muhandis'],['Nurse','Hamshira'],['Driver','Haydovchi'],['Cook','Oshpaz'],['Farmer','Dehqon'],['Worker','Ishchi'],['Boss','Rahbar'],['Hospital','Kasalxona'],['School','Maktab'],['Office','Idora'],['Work','Ish'],['Job','Kasb'],['I work at','Men ishlayman'],['I am a','Men ...man'],['Want to be','Bo\'lmoqchi'],['Hospital','Kasalxona'],['Bank','Bank'],['Factory','Zavod'],['Shop','Do\'kon'],['Money','Pul'],['Team','Jamoah'],['Help','Yordam'],['Good','Yaxshi']],r:{t:'My father is a doctor. He works at a hospital.',q:'Onasi qayerda?',o:['Hospital','School','Bank','Office'],c:0},ls:'My father is a doctor.',w:'Mening otam shifokor.',ws:'My father is a doctor.',sp:'Talk about your job.',g:'Shifokor - Doctor | Kasalxona - Hospital'},
+{id:12,lv:'A1',t:'Hobbi va Qiziqishlar',v:[['Football','Futbol'],['Music','Musiqa'],['Reading','O\'qish'],['Swimming','Suzish'],['Running','Yugurish'],['Cooking','Pishirish'],['Dancing','Raqs'],['Film','Film'],['Game','O\'yin'],['Hobby','Shug\'lanish'],['Favorite','Sevimli'],['I like','Yoqtiraman'],['I love','Sevaman'],['Play','O\'ynamoq'],['Watch','Ko\'ramoq'],['Listen','Tinglamoq'],['Read','O\'qimoq'],['Team','Jamoah'],['Book','Kitob'],['Song','Qo\'shiq'],['Band','Guruh'],['Movie','Film'],['Sport','Sport'],['Fun','Ko\'ngil'],['Cool','Zo\'r']],r:{t:'I like football. My favorite team is Barcelona.',q:'Sevimli jamoasi?',o:['Real Madrid','Barcelona','Liverpool','Chelsea'],c:1},ls:'My favorite hobby is reading.',w:'Mening sevimlim futbol.',ws:'My favorite hobby is playing football.',sp:'Talk about hobbies.',g:'Sevimli - Favorite | Shug\'lanish - Hobby'},
+{id:13,lv:'A1',t:'Transport va Sayohat',v:[['Bus','Avtobus'],['Train','Poyezd'],['Car','Mashina'],['Taxi','Taksi'],['Plane','Samolyot'],['Bicycle','Velosiped'],['Boat','Kema'],['Station','Stansiya'],['Airport','Aeroport'],['Ticket','Chipta'],['Drive','Boshqarmoq'],['Ride','Minmoq'],['Walk','Yurmoq'],['Stop','To\'xtamoq'],['Go','Bormoq'],['Come','Kelmoq'],['Leave','Ketmoq'],['Arrive','Yetmoq'],['I go to','Men boraman'],['By bus','Avtobusda'],['By car','Mashinada'],['Every morning','Har ertalab'],['Fast','Tez'],['Slow','Sekin'],['Road','Yo\'l']],r:{t:'I go to the station every morning.',q:'U qayerga boradi?',o:['Maktabga','Do\'konga','Stansiyaga','Kasalxonaga'],c:2},ls:'I take the bus to school.',w:'Men avtobusda ishga boraman.',ws:'I go to work by bus.',sp:'Talk about travel.',g:'Avtobus - Bus | Poyezd - Train | Mashina - Car'},
+{id:14,lv:'A1',t:'Do\'stlar va Ijtimoiy',v:[['Friend','Do\'st'],['Best friend','Eng yaxshi do\'st'],['Party','Ziyofat'],['Together','Birga'],['Alone','Yolg\'iz'],['Phone call','Qo\'ng\'iroq'],['Message','Xabar'],['Visit','Tashrif'],['Help','Yordam'],['Talk','Gaplamoq'],['Listen','Tinglamoq'],['Laugh','Kulmoq'],['Smile','Tabassum'],['Happy','Baxtli'],['Sad','Achchiq'],['Angry','G\'azab'],['Surprise','Kutilmagan'],['Birthday','Tug\'ilgan kun'],['Gift','Sovg\'a'],['Cake','Tort'],['Fun','Ko\'ngil'],['Play','O\'ynamoq'],['Share','Bo\'lishmoq'],['Care','G\'amxo\'rlik'],['Trust','Ishonch']],r:{t:'I have many friends. We play together. My best friend is Ali.',q:'Eng yaxshi do\'sti kim?',o:['Ali','Tom','David','John'],c:0},ls:'My best friend is Ali.',w:'Mening do\'stim Ali.',ws:'My best friend is Ali.',sp:'Talk about friends.',g:'Do\'st - Friend | Birga - Together'},
+{id:15,lv:'A2',t:'Past Simple',v:[['Yesterday','Kecha'],['Went','Bordi'],['Ate','Yedi'],['Saw','Ko\'rdi'],['Played','O\'ynadi'],['Worked','Ishladi'],['Studied','O\'qidi'],['Bought','Sotib oldi'],['Read','O\'qidi'],['Wrote','Yozdi'],['Made','Qildi'],['Took','Oldi'],['Last week','O\'tgan hafta'],['Last month','O\'tgan oy'],['Last year','O\'tgan yil'],['Did not','Qilmadi'],['Was','Edi'],['Were','Edilar'],['Had','Bor edi'],['Came','Keldi'],['Gave','Berdi'],['Took','Oldi'],['Found','Topdi'],['Lost','Yo\'qotdi'],['Told','Aytdi']],r:{t:'Yesterday I went to the park. We played football.',q:'Nima qilishdi?',o:['Swimming','Football','Kitob','Film'],c:1},ls:'Yesterday I went to the park.',w:'Kecha men kinoga bordim.',ws:'Yesterday I went to the cinema.',sp:'Talk about yesterday.',g:'Went - bordi | Saw - ko\'rdi | Yesterday - Kecha'},
+{id:16,lv:'A2',t:'Kelajak Rejalari',v:[['Tomorrow','Ertaga'],['Will','...moqchi'],['Going to','Rejalanyapti'],['Plan','Reja'],['Next week','Keyingi hafta'],['Next year','Keyingi yil'],['Visit','Tashrif'],['Travel','Sayohat'],['Study','O\'qish'],['Start','Boshlamoq'],['Finish','Tugatmoq'],['Buy','Sotib olmoq'],['Sell','Sotmoq'],['Move','Ko\'chmoq'],['Hope','Umid'],['Want','Xohlamoq'],['Need','Kerak'],['Maybe','Ehtimol'],['Definitely','Albatta'],['Soon','Tez orada'],['In the future','Kelajakda'],['I plan to','Rejalashtiraman'],['I will','Men ...moqchi'],['I am going to','Men rejalayapman'],['Dream','Orzu']],r:{t:'Next week I am going to visit my grandmother in Samarkand.',q:'Qayerga boradi?',o:['Tashkent','Bukhara','Samarkand','Khiva'],c:2},ls:'I am going to visit my grandmother.',w:'Ertaga men kinoga boraman.',ws:'Tomorrow I am going to the cinema.',sp:'Talk about plans.',g:'Will - kelajak | Going to - reja'},
+{id:17,lv:'A2',t:'Taqqoslash',v:[['Bigger','Kattaroq'],['Smaller','Kichikroq'],['Better','Yaxshiroq'],['Worse','Yomonroq'],['Faster','Tezroq'],['Taller','Bo\'yliroq'],['More beautiful','Chiroyliroq'],['Most beautiful','Eng chiroyli'],['Than','Dan'],['The most','Eng'],['Both','Ikkalasi'],['Very','Juda'],['Quite','Ancha'],['A little','Bir oz'],['Much','Ko\'p'],['Little','Kam'],['More','Ko\'proq'],['Less','Kamroq'],['Best','Eng yaxshi'],['Worst','Eng yomon'],['As ... as','...dek'],['Far','Ancha'],['By far','Eng'],['Equal','Teng'],['Different','Boshqacha']],r:{t:'Tashkent is bigger than Samarkand.',q:'Qaysi kattaroq?',o:['Samarkand','Bukhara','Tashkent','Khiva'],c:2},ls:'Samarkand is more beautiful.',w:'Mening akam mendan kattaroq.',ws:'My brother is bigger than me.',sp:'Compare two things.',g:'Kattaroq - Bigger | Dan - Than | Eng - Most'},
+{id:18,lv:'A2',t:'So\'rov va Ruxsat',v:[['Can I?','Mumkinmi?'],['Could you?','Olasizmi?'],['May I?','Ruxsat?'],['Please','Iltimos'],['Excuse me','Kechirasiz'],['Help','Yordam'],['Borrow','Olish'],['Return','Qaytarish'],['Thank you','Rahmat'],['You\'re welcome','Arzimaydi'],['Of course','Albatta'],['No problem','Muammo yo\'q'],['Sorry','Kechirasiz'],['OK','Xo\'p'],['Agree','Roziman'],['Busy','Band'],['Free','Erkin'],['Try','Harakat'],['Later','Keyin'],['Now','Hozir'],['Can','Mumkin'],['Could','Ola'],['May','Ruxsat'],['Should','Kerak'],['Would','Qilardi']],r:{t:'Excuse me, can I borrow this book?',q:'Nima so\'rayapti?',o:['Pul','Kitob','Yordam','Ruxsat'],c:1},ls:'Could you help me?',w:'Yordam bera olasizmi?',ws:'Could you help me?',sp:'Ask permission.',g:'Mumkinmi? - Can I? | Iltimos - Please'},
+{id:19,lv:'A2',t:'Sarflar va Byudjet',v:[['Price','Narx'],['Discount','Chegirma'],['Expensive','Qimmat'],['Cheap','Arzon'],['Pay','To\'lash'],['Cost','Turmoq'],['Save','Saqlamoq'],['Spend','Sarflamoq'],['Earn','Topmoq'],['Cash','Naqd'],['Card','Karta'],['Money','Pul'],['Bank','Bank'],['Worth','Qiymat'],['Budget','Byudjet'],['Free','Bepul'],['Bought','Sotib oldim'],['Sale','Chegirma'],['Receipt','Check'],['Change','Qaytim'],['Total','Jami'],['Half','Yarmi'],['Quarter','Chorak'],['Profit','foyda'],['Loss','Zarar']],r:{t:'I bought a phone for 500 dollars.',q:'Qancha turdi?',o:['600','500','400','700'],c:1},ls:'The phone costs five hundred.',w:'Telefon 500 dollar turadi.',ws:'It costs 500 dollars.',sp:'Talk about shopping.',g:'Narx - Price | Sotib olmoq - To buy'},
+{id:20,lv:'A2',t:'Sog\'liq va Tibbiyot',v:[['Headache','Bosh og\'rig\'i'],['Fever','Isitma'],['Medicine','Dori'],['Hospital','Kasalxona'],['Doctor','Shifokor'],['Sick','Kasal'],['Pain','O\'riq'],['Cough','Yo\'tal'],['Cold','Grip'],['Stomachache','Qorin og\'rig\'i'],['Toothache','Tish og\'rig\'i'],['Healthy','Sog\'lom'],['Rest','Dam olmoq'],['Feel','Sezmoq'],['Prescription','Retsept'],['Pharmacy','Dorixona'],['Bandage','Bandaj'],['Injury','Jarohat'],['Ambulance','Tez yordam'],['Blood','Qon'],['Heart','Yurak'],['Eye','Ko\'z'],['Ear','Quloq'],['Hand','Qo\'l'],['Foot','Oyoq']],r:{t:'I feel sick. I have a headache and fever.',q:'Nima sezmoqda?',o:['Ochlik','Charchash','Kasallik','Uyqu'],c:2},ls:'I have a headache.',w:'Boshim og\'riyapti.',ws:'I have a headache.',sp:'Talk about health.',g:'Kasal - Sick | Bosh og\'rig\'i - Headache | Dori - Medicine'},
+{id:21,lv:'A2',t:'Texnologiya',v:[['Phone','Telefon'],['Computer','Kompyuter'],['Internet','Internet'],['Laptop','Noutbuk'],['App','Ilova'],['Website','Sayt'],['Download','Yuklab olmoq'],['Upload','Yuklamoq'],['Email','Xat'],['Password','Parol'],['Social media','Tarmoq'],['Camera','Kamera'],['Screen','Ekran'],['Battery','Batareya'],['WiFi','WiFi'],['Connect','Ulanmoq'],['Search','Qidirmoq'],['Type','Yozmoq'],['Click','Bosmoq'],['Open','Ochmoq'],['Close','Yopmoq'],['Update','Yangilamoq'],['Video','Video'],['Photo','Surat'],['Chat','Chat']],r:{t:'I use my phone every day. I download apps.',q:'Nima ishlatadi?',o:['Phone','Computer','Internet','Hammasi'],c:3},ls:'I use social media every day.',w:'Men internetdan foydalanaman.',ws:'I use the internet every day.',sp:'Talk about tech.',g:'Internet - Internet | Ilova - App'},
+{id:22,lv:'B1',t:'Past Perfect',v:[['Had + V3','O\'tganning o\'tgani'],['Before','Oldin'],['Already','Allaqachon'],['Yet','Hali'],['Since','Dan beri'],['After','Keyin'],['Just','Hozirgina'],['When','...ganda'],['Arrive','Kelmoq'],['Leave','Ketmoq'],['Finish','Tugatmoq'],['Start','Boshlamoq'],['Miss','O\'tkazmoq'],['Catch','Yetmoq'],['Forget','Unutmoq'],['Remember','Eslamoq'],['Happen','Yuz berdi'],['Decide','Qaror qildi'],['Return','Qaytdi'],['Wait','Kutmoq'],['Know','Bilmoq'],['See','Ko\'rmoq'],['Tell','Aytmq'],['Say','Demq'],['Ask','So\'ramq']],r:{t:'When I arrived, the plane had already left.',q:'Samolyot qachon ketdi?',o:['Keyin','Oldin','Bir vaqtda','Ertaga'],c:1},ls:'I had already finished.',w:'U allaqachon ketgan edi.',ws:'He had already left.',sp:'Use Past Perfect.',g:'Had + V3 | Before - Oldin | Allaqachon - Already'},
+{id:23,lv:'B1',t:'Passive Voice',v:[['Was/Were + V3','Passiv o\'tgan'],['Is/Am/Are + V3','Passiv hozirgi'],['By','Tomonidan'],['Built','Qurilgan'],['Written','Yozilgan'],['Spoken','Gapirilgan'],['Seen','Ko\'rilgan'],['Made','Qilingan'],['Given','Berilgan'],['Taken','Olingan'],['Known','BilinGAN'],['Found','Topilgan'],['Used','IshlatilGAN'],['Sold','SotilGAN'],['Opened','OchilGAN'],['Closed','YopilGAN'],['Broken','SinGAN'],['Chosen','Tanlangan'],['Sent','YuborGAN'],['Paid','To\'langan'],['Caught','TutilGAN'],['Held','UsGALGAN'],['Thrown','Tashlangan'],['Read','O\'qilGAN'],['Drawn','ChizilGAN']],r:{t:'The Registan was built in the 15th century.',q:'Qachon qurilgan?',o:['14-asrda','15-asrda','16-asrda','20-asrda'],c:1},ls:'The book was written by a famous author.',w:'Bu uy 2020-yilda qurilgan.',ws:'This house was built in 2020.',sp:'Make passive sentence.',g:'Passiv - Passive Voice | Tomonidan - By'},
+{id:24,lv:'B1',t:'Reported Speech',v:[['Said','Dedi'],['Told','Aytdi'],['Asked','So\'radi'],['That',' deb'],['If/whether','...mi'],['What','Nima'],['Where','Qayer'],['When','Qachon'],['Why','Nega'],['How','Qanday'],['Could','Ola'],['Would','Qilardi'],['Should','Kerak'],['Can','Mumkin'],['Will','...moqchi'],['Think','O\'yladi'],['Believe','Ishonadi'],['Know','Biladi'],['Want','Xohlaydi'],['Need','Kerak'],['Like','Yoqtiradi'],['Love','Sevadi'],['Hope','Umid'],['Tell','Aytdi'],['Ask','So\'radi']],r:{t:'Tom said he was tired.',q:'Tom nima dedi?',o:['Charchaganini','Och','Uyqu','Xursand'],c:0},ls:'She said she was coming tomorrow.',w:'U dedi: Men ertaga kelaman.',ws:'He said he was coming tomorrow.',sp:'Report speech.',g:'Dedi - Said | deb - that'},
+{id:25,lv:'B1',t:'Conditionals',v:[['If','Agar'],['Will','...moqchi'],['Would','...qilardi'],['Unless','Agar...masa'],['Might','Mumkin'],['Could','Mumkin'],['Should','Kerak'],['Probably','Ehtimol'],['Definitely','Albatta'],['Rain','Yomg\'ir'],['Stay','Qolmoq'],['Travel','Sayohat'],['Win','Yutmoq'],['Study','O\'qish'],['Help','Yordam'],['Call','Qo\'ng\'iroq'],['Come','Kelmoq'],['Meet','Uchrashmoq'],['Happen','Yuz beradi'],['If I had','Agar menga bor edi'],['I would','Men qilardim'],['I will','Men qilaman'],['Maybe','Ehtimol'],['Never','Hech qachon'],['Always','Doimo']],r:{t:'If it rains, I will stay home.',q:'Nima qiladi?',o:['Uy','Sayohat','Maktab','Ish'],c:0},ls:'If it rains, I will take an umbrella.',w:'Agar boy bo\'lsam, uy olaman.',ws:'If I am rich, I will buy a house.',sp:'Make "if" sentence.',g:'Agar - If | Will - kelajak | Would - virtual'},
+{id:26,lv:'B1',t:'Phrasal Verbs',v:[['Get up','Turmoq'],['Give up','Vaz kechmoq'],['Turn on','Yoqmoq'],['Turn off','O\'chirmoq'],['Put on','Kiyimoq'],['Take off','Yechmoq'],['Look after','G\'amxo\'rlik'],['Look for','Qidirmoq'],['Pick up','Olmoq'],['Carry on','Davom etmoq'],['Find out','Bilmoq'],['Run out','Tugamoq'],['Break down','Buzilmoq'],['Set up','O\'rnatmoq'],['Show up','Paydo bo\'lmoq'],['Hang out','Sarguzish'],['Work out','Hal qilmoq'],['Check out','Tekshirmoq'],['Fill in','To\'ldirmoq'],['Bring up','Tarbiyalamoq'],['Point out','Ko\'rsatmoq'],['Figure out','Tushunmoq'],['Carry out','Bajarmoq'],['Come up','Paydo bo\'lmoq'],['Go through','O\'tmoq']],r:{t:'I get up at 7. I never give up.',q:'Nima qiladi?',o:['O\'chiradi','Yoqadi','Kitob','Sport'],c:1},ls:'I need to look after my brother.',w:'Men ertalab uyg\'onaman.',ws:'I get up at 7 AM.',sp:'Use phrasal verbs.',g:'Get up - turmoq | Give up - vaz kechmoq | Turn on - yoqmoq'},
+{id:27,lv:'B1',t:'Idioms',v:[['Break a leg','Omad!'],['Piece of cake','Juda oson'],['Hit the books','Dars qilmoq'],['Under the weather','Kasal'],['Cost an arm and a leg','Juda qimmat'],['Once in a blue moon','Juda kam'],['Break the ice','Muzni sindirmoq'],['Bite the bullet','Qat\'iyat'],['Burn the midnight oil','Tungi ish'],['Catch eye','Diqqat tortmoq'],['Get out of hand','Nazoratdan chiqmoq'],['Go the extra mile','Ko\'proq harakat'],['In hot water','Mushkul'],['Keep an eye on','Kuzatmoq'],['Kill two birds','Ikkilashma'],['Let cat out','Sir ochmoq'],['Paint town red','Zavqlanmoq'],['Pull leg','Masxara'],['Spill beans','Sir aytmoq'],['Take it easy','Tinchlan'],['Time flies','Vaqt o\'tadi'],['Under the table','Maxfiy'],['Water under bridge','O\'tgan'],['When pigs fly','Hech qachon'],['Your guess','Taxmin']],r:{t:'Tom\'s exam was a piece of cake.',q:'Imtihon qanday?',o:['Qiyin','Oson','Uzoq','Noto\'g\'ri'],c:1},ls:'Costs an arm and a leg.',w:'Imtihonim oson edi.',ws:'My exam was a piece of cake.',sp:'Use an idiom.',g:'Piece of cake - oson | Break a leg - omad'},
+{id:28,lv:'A2',t:'Ish va Kasbiy Hayot',v:[['Salary','Oylik'],['Meeting','Yig\'ilish'],['Boss','Rahbar'],['Colleague','Hamkasb'],['Deadline','Muddat'],['Interview','Suhbat'],['Resume','Rezyume'],['Hire','Ishga olish'],['Promote','Ko\'tarish'],['Project','Loyiha'],['Team','Jamoah'],['Goal','Maqsad'],['Task','Vazifa'],['Report','Hisobot'],['Office','Idora'],['Schedule','Jadval'],['Vacation','Ta\'til'],['Work from home','Uydan ishlash'],['Bonus','Mukofot'],['Contract','Shartnoma'],['Boss','Rahbar'],['Salary','Oylik'],['Manager','Menejer'],['Company','Kompaniya'],['Employee','Xodim']],r:{t:'I have a meeting at 10 AM. My boss wants the report.',q:'Qachon yig\'ilish?',o:['Dushanba','Chorshanba','Juma','Shanba'],c:2},ls:'I have a meeting with my boss.',w:'Rahbarim bilan yig\'ilish bor.',ws:'I have a meeting with my boss.',sp:'Talk about work.',g:'Rahbar - Boss | Yig\'ilish - Meeting | Muddat - Deadline'},
+{id:29,lv:'B1',t:'Sayohat Rejalari',v:[['Passport','Pasport'],['Reservation','Bron'],['Luggage','Yuk'],['Return ticket','Qaytish chiptasi'],['Departure','Jo\'nash'],['Arrival','Kelish'],['Customs','Bojxona'],['Gate','Darvoza'],['Seat','O\'rin'],['Flight','Reys'],['Delay','Kechikish'],['Destination','Manzil'],['Hotel','Mehmonxona'],['Room','Xona'],['Tour','Ekskursiya'],['Guide','Yo\'lboshchi'],['Tourist','Sayyoh'],['Local','Mahalliy'],['Currency','Valyuta'],['Exchange','Almashtirmoq'],['Map','Xarita'],['Taxi','Taksi'],['Drive','Haydash'],['Fly','Uchmoq'],['Sail','Kema bilan ketmoq']],r:{t:'I arrived two hours before departure.',q:'Qachon keldi?',o:['1 soat','2 soat','3 soat','4 soat'],c:1},ls:'Please show your passport.',w:'Pasportim va chiptam bor.',ws:'I have my passport.',sp:'Talk about travel.',g:'Pasport - Passport | Bron - Reservation | Yuk - Luggage'},
+{id:30,lv:'B1',t:'Madaniyat va Bayramlar',v:[['Tradition','An\'ana'],['Celebration','Bayram'],['Festival','Bayram'],['Heritage','Meros'],['Culture','Madaniyat'],['National','Milliy'],['Traditional','An\'anaviy'],['Ancient','Qadimiy'],['Ceremony','Marosim'],['Fireworks','Salut'],['Decorations','Bezatish'],['Gift','Sovg\'a'],['Feast','Ziyofat'],['Prayer','Duo'],['Harvest','Hosil'],['Spring','Bahor'],['New Year','Yangi yil'],['Navroz','Navroz'],['Independence','Mustaqillik'],['Republic','Respublika'],['Music','Musiqa'],['Dance','Raqs'],['Food','Ovqat'],['Clothes','Kiyim'],['People','Odamlar']],r:{t:'Navro\'z is a traditional festival in spring.',q:'Navro\'z qachon?',o:['Yozda','Bahorda','Kuzda','Qishda'],c:1},ls:'We celebrate Navroz every year.',w:'Navroz o\'zbek an\'anasi.',ws:'Navroz is a Uzbek tradition.',sp:'Talk about culture.',g:'An\'ana - Tradition | Bayram - Festival'},
+{id:31,lv:'A1',t:'Present Simple vs Continuous',v:[['Always','Doimo'],['Sometimes','Ba\'zan'],['Never','Hech qachon'],['Usually','Odatda'],['Often','Ko\'p'],['Now','Hozir'],['Right now','Hozirgina'],['At the moment','Hozir'],['Every day','Har kuni'],['I play','O\'ynayman'],['I am playing','O\'ynayapman'],['I work','Ishlayman'],['I am working','Ishlayapman'],['I study','O\'qiyman'],['I am studying','O\'qiyapman'],['I eat','Yeyman'],['I am eating','Yeyapman'],['I read','O\'qiyman'],['I am reading','O\'qiyapman'],['This week','Bu hafta'],['Today','Bugun'],['Happens','Yuz beradi'],['Is happening','Yuz bermoqda'],['Rains','Yomg\'ir yog\'adi'],['Is raining','Yomg\'ir yog\'moqda']],r:{t:'I play football every day. I am playing now.',q:'Qaysi hozirgi?',o:['I play','I am playing','I played','I will play'],c:1},ls:'I am reading a book right now.',w:'Har kuni sport bilan shug\'ullanaman.',ws:'I do sports every day.',sp:'Use Present Continuous.',g:'Doimo - Always | Hozir - Now | ...yapman - I am ...ing'},
+{id:32,lv:'A1',t:'Articles (A, An, The)',v:[['A','Bitta (unli emas)'],['An','Bitta (unli)'],['The','Aniqlik'],['Cat','Mushuk'],['Apple','Olma'],['Book','Kitob'],['Table','Stol'],['Dog','It'],['Water','Suv'],['University','Universitet'],['Hour','Soat'],['Umbrella','Soyanchqa'],['City','Shahar'],['Country','Mamlakat'],['Sun','Quyosh'],['Moon','Oy'],['History','Tarix'],['Music','Musiqa'],['Love','Sevga'],['Life','Hayot'],['Zero article','Artikelsiz'],['Plural','Ko\'plik'],['Specific','Aniq'],['General','Umumiy'],['Unique','Noyob']],r:{t:'I have a cat. The cat is black.',q:'Qaysi artikelda unli?',o:['A','An','The','None'],c:1},ls:'I saw an apple on the table.',w:'Bitta kitob oldim. Kitob qizil.',ws:'I bought a book. The book is red.',sp:'Use articles.',g:'A - bitta (unli emas) | An - bitta (unli) | The - aniqlik'},
+{id:33,lv:'A1',t:'Prepositions of Place',v:[['In','Ichida'],['On','Ustida'],['Under','Pastida'],['Next to','Yonida'],['Behind','Ortida'],['In front of','Oldida'],['Between','Orasida'],['Above','Yuqorida'],['Near','Yaqinda'],['Far','Uzoqda'],['Inside','Ichkarida'],['Outside','Tashqarida'],['Opposite','Qarama-qarshi'],['Across','Qarshisida'],['Through','Orqali'],['Around','Atrofida'],['Along','Bo\'ylab'],['Toward','Tomon'],['Into','Ichiga'],['Onto','Ustiga'],['From','Dan'],['To','Ga'],['Left','Chap'],['Right','O\'ng'],['Straight','To\'g\'ri']],r:{t:'The book is on the table. The cat is under it.',q:'Kitob qayerda?',o:['Under','On','Behind','In'],c:1},ls:'The keys are in my pocket.',w:'Mashina uyning ortida.',ws:'The car is behind the house.',sp:'Describe locations.',g:'In - ichida | On - ustida | Under - pastida'},
+{id:34,lv:'A2',t:'Past Simple vs Continuous',v:[['While','Ayni paytda'],['When','...ganda'],['Was/Were + V-ing','O\'tgan davomiy'],['Reading','O\'qiyotgan'],['Sleeping','Uxlayotgan'],['Cooking','Pishiryotgan'],['Working','Ishlayotgan'],['Studying','O\'qiyotgan'],['Playing','O\'ynayotgan'],['Watching','Ko\'rayotgan'],['Talking','Gaplashayotgan'],['Eating','Yeyayotgan'],['Walking','Yurayotgan'],['Suddenly','Kutilmagan'],['Immediately','Darhol'],['Quietly','Jimjim'],['Loudly','Baland'],['Quickly','Tez'],['Phone','Telefon'],['Door','Eshik'],['Alarm','Signal'],['Interrupted','To\'xtatilgan'],['Background','Orqa fon'],['Action','Harakat'],['Story','Hikoya']],r:{t:'I was reading when the phone rang.',q:'Telefon qo\'ng\'iroq qilganda?',o:['Kitob o\'qiyapti','Ovqat','Telefon','Uxlayapti'],c:0},ls:'I was sleeping when the alarm went off.',w:'TV ko\'rayotganda eshik ochildi.',ws:'The door opened while I was watching TV.',sp:'Describe interrupted actions.',g:'While - ayni paytda | When - ganda | Was ...ing'}];
 
-const TEST_QUESTIONS = [
-    {q:'Hello! My name ___ Alex.',opts:['am','is','are','be'],correct:1,level:'A0'},
-    {q:'I ___ a student.',opts:['is','am','are','do'],correct:1,level:'A0'},
-    {q:'She ___ from Tashkent.',opts:['am','is','are','do'],correct:1,level:'A0'},
-    {q:'This is ___.',opts:['my','I','me','mine'],correct:0,level:'A0'},
-    {q:'How ___ you?',opts:['is','are','am','do'],correct:1,level:'A0'},
-    {q:'I ___ to school every day.',opts:['go','goes','going','went'],correct:0,level:'A1'},
-    {q:'She ___ reading a book now.',opts:['is','are','am','be'],correct:0,level:'A1'},
-    {q:'They ___ football yesterday.',opts:['play','plays','played','playing'],correct:2,level:'A1'},
-    {q:'___ you like coffee?',opts:['Are','Do','Is','Does'],correct:1,level:'A1'},
-    {q:'I have ___ apple.',opts:['a','an','the','one'],correct:1,level:'A1'},
-    {q:'He ___ TV every evening.',opts:['watch','watches','watching','watched'],correct:1,level:'A1'},
-    {q:'I ___ already finished.',opts:['have','has','had','having'],correct:0,level:'A2'},
-    {q:'She ___ to cinema last night.',opts:['go','goes','went','going'],correct:2,level:'A2'},
-    {q:'This is ___ than that.',opts:['good','better','best','well'],correct:1,level:'A2'},
-    {q:'I ___ never been to London.',opts:['have','has','had','did'],correct:0,level:'A2'},
-    {q:'If it ___ tomorrow, we stay home.',opts:['rains','rain','rained','raining'],correct:0,level:'A2'},
-    {q:'She asked me ___ I was from.',opts:['what','where','who','how'],correct:1,level:'A2'},
-    {q:'I wish I ___ more time.',opts:['have','has','had','having'],correct:2,level:'B1'},
-    {q:'The report ___ by the team.',opts:['was completed','completed','completing','completes'],correct:0,level:'B1'},
-    {q:'He said he ___ tired.',opts:['is','was','are','were'],correct:1,level:'B1'}
-];
+var TQ=[{q:'Hello! My name ___ Alex.',o:['am','is','are','be'],c:1,lv:'A0'},{q:'I ___ a student.',o:['is','am','are','do'],c:1,lv:'A0'},{q:'She ___ from Tashkent.',o:['am','is','are','do'],c:1,lv:'A0'},{q:'This is ___.',o:['my','I','me','mine'],c:0,lv:'A0'},{q:'How ___ you?',o:['is','are','am','do'],c:1,lv:'A0'},{q:'I ___ to school every day.',o:['go','goes','going','went'],c:0,lv:'A1'},{q:'She ___ reading now.',o:['is','are','am','be'],c:0,lv:'A1'},{q:'They ___ football yesterday.',o:['play','plays','played','playing'],c:2,lv:'A1'},{q:'___ you like coffee?',o:['Are','Do','Is','Does'],c:1,lv:'A1'},{q:'I have ___ apple.',o:['a','an','the','one'],c:1,lv:'A1'},{q:'He ___ TV every evening.',o:['watch','watches','watching','watched'],c:1,lv:'A1'},{q:'I ___ already finished.',o:['have','has','had','having'],c:0,lv:'A2'},{q:'She ___ to cinema last night.',o:['go','goes','went','going'],c:2,lv:'A2'},{q:'This is ___ than that.',o:['good','better','best','well'],c:1,lv:'A2'},{q:'I ___ never been to London.',o:['have','has','had','did'],c:0,lv:'A2'},{q:'If it ___ tomorrow, we stay.',o:['rains','rain','rained','raining'],c:0,lv:'A2'},{q:'She asked me ___ I was from.',o:['what','where','who','how'],c:1,lv:'A2'},{q:'I wish I ___ more time.',o:['have','has','had','having'],c:2,lv:'B1'},{q:'The report ___ by the team.',o:['was completed','completed','completing','completes'],c:0,lv:'B1'},{q:'He said he ___ tired.',o:['is','was','are','were'],c:1,lv:'B1'}];
 
-const WORDS = [
-    {w:'Hello',t:'Salom',ex:'Hello, how are you?',l:'A0'},{w:'Thank you',t:'Rahmat',ex:'Thank you very much!',l:'A0'},
-    {w:'Please',t:'Iltimos',ex:'Can I have water, please?',l:'A0'},{w:'Sorry',t:'Kechirasiz',ex:'Sorry, I am late.',l:'A0'},
-    {w:'Hungry',t:'Och',ex:'I am very hungry.',l:'A1'},{w:'Beautiful',t:'Chiroyli',ex:'This flower is beautiful.',l:'A1'},
-    {w:'Important',t:'Muhim',ex:'This is very important.',l:'A1'},{w:'Interesting',t:'Qiziq',ex:'This book is interesting.',l:'A1'},
-    {w:'Delicious',t:'Mazzali',ex:'This food is delicious!',l:'A1'},{w:'Tired',t:'Charchagan',ex:'I am tired after work.',l:'A1'},
-    {w:'Happy',t:'Baxtli',ex:'I am happy today.',l:'A1'},{w:'Expensive',t:'Qimmat',ex:'This phone is too expensive.',l:'A2'},
-    {w:'Recommend',t:'Tavsiya qilmoq',ex:'I recommend this restaurant.',l:'A2'},{w:'Experience',t:'Tajriba',ex:'I have good experience.',l:'A2'},
-    {w:'Possible',t:'Mumkin',ex:'Is it possible to help?',l:'A2'},{w:'Immediately',t:'Darhol',ex:'Please come immediately.',l:'A2'},
-    {w:'Government',t:'Hukumat',ex:'The government made a decision.',l:'B1'},{w:'Environment',t:'Atrof-muhit',ex:'Protect the environment.',l:'B1'},
-    {w:'Knowledge',t:'Bilim',ex:'Knowledge is power.',l:'B1'},{w:'Opportunity',t:'Imkoniyat',ex:'This is a great opportunity.',l:'B1'}
-];
+var W=[{w:'Hello',t:'Salom',ex:'Hello, how are you?',l:'A0'},{w:'Thank you',t:'Rahmat',ex:'Thank you very much!',l:'A0'},{w:'Please',t:'Iltimos',ex:'Water, please.',l:'A0'},{w:'Sorry',t:'Kechirasiz',ex:'Sorry, I am late.',l:'A0'},{w:'Hungry',t:'Och',ex:'I am hungry.',l:'A1'},{w:'Beautiful',t:'Chiroyli',ex:'Beautiful flower!',l:'A1'},{w:'Important',t:'Muhim',ex:'Very important.',l:'A1'},{w:'Delicious',t:'Mazzali',ex:'Delicious food!',l:'A1'},{w:'Tired',t:'Charchagan',ex:'I am tired.',l:'A1'},{w:'Happy',t:'Baxtli',ex:'I am happy.',l:'A1'},{w:'Expensive',t:'Qimmat',ex:'Too expensive!',l:'A2'},{w:'Recommend',t:'Tavsiya',ex:'I recommend it.',l:'A2'},{w:'Possible',t:'Mumkin',ex:'Is it possible?',l:'A2'},{w:'Immediately',t:'Darhol',ex:'Come immediately.',l:'A2'},{w:'Environment',t:'Atrof-muhit',ex:'Protect it.',l:'B1'},{w:'Knowledge',t:'Bilim',ex:'Knowledge is power.',l:'B1'},{w:'Opportunity',t:'Imkoniyat',ex:'Great opportunity.',l:'B1'},{w:'Temperature',t:'Harorat',ex:'What temperature?',l:'A1'},{w:'Conversation',t:'Suhbat',ex:'Nice conversation.',l:'A2'},{w:'Education',t:'Ta\'lim',ex:'Education matters.',l:'B1'}];
 
-const ACHIEVEMENTS = [
-    {id:'first',name:'Boshlang\'ich',icon:'🌱',desc:'Birinchi dars'},
-    {id:'five',name:"O'quvchi",icon:'📚',desc:'5 ta dars'},
-    {id:'ten',name:'Talaba',icon:'🎓',desc:'10 ta dars'},
-    {id:'all',name:'Ustoz',icon:'👨\u200d🏫',desc:'34 ta dars'},
-    {id:'xp100',name:'Yulduz',icon:'⭐',desc:'100 XP'},
-    {id:'xp500',name:'Masters',icon:'🏆',desc:'500 XP'},
-    {id:'streak3',name:'Davomiy',icon:'🔥',desc:'3 kunlik streak'},
-    {id:'streak7',name:'Haftalik',icon:'💪',desc:'7 kunlik streak'}
-];
+var AC=[{id:'f',n:'Boshlang\'ich',i:'🌱',d:'Birinchi dars'},{id:'5',n:'O\'quvchi',i:'📚',d:'5 ta dars'},{id:'10',n:'Talaba',i:'🎓',d:'10 ta dars'},{id:'a',n:'Ustoz',i:'👨‍🏫',d:'34 ta dars'},{id:'x1',n:'Yulduz',i:'⭐',d:'100 XP'},{id:'x5',n:'Masters',i:'🏆',d:'500 XP'},{id:'xk',n:'Chempion',i:'🥇',d:'1000 XP'},{id:'s3',n:'Davomiy',i:'🔥',d:'3 kun streak'},{id:'s7',n:'Haftalik',i:'💪',d:'7 kun streak'},{id:'s30',n:'Oylik',i:'👑',d:'30 kun streak'},{id:'l1',n:'A1 daraja',i:'📗',d:'A1 ga yetish'},{id:'l2',n:'A2 daraja',i:'📘',d:'A2 ga yetish'},{id:'l3',n:'B1 daraja',i:'📕',d:'B1 ga yetish'}];
 
-// ==================== STATE ====================
-let state = JSON.parse(localStorage.getItem('english_state') || '{}');
-if (!state.xp) state = {xp:0,streak:0,lastDay:null,completedLessons:[],achievements:[],level:'A0',flashcardIndex:0};
-function save() { localStorage.setItem('english_state', JSON.stringify(state)); updateStats(); }
+var S=JSON.parse(localStorage.getItem('ezh')||'null')||{xp:0,stk:0,done:[],ach:[],lv:'A0',fci:0};
+function sv(){localStorage.setItem('ezh',JSON.stringify(S));uT()}
+function uT(){document.getElementById('sxp').textContent=S.xp;document.getElementById('ssk').textContent=S.stk;document.getElementById('sdn').textContent=S.done.length;var b=document.getElementById('slv');b.textContent=S.lv;b.className='bg b-'+S.lv.toLowerCase()}
+uT();
 
-// ==================== NAVIGATION ====================
-function showPage(id) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    window.scrollTo(0,0);
-    if (id === 'page-lessons') renderLessons();
-    if (id === 'page-progress') renderProgress();
-    if (id === 'page-flashcards') renderFlashcard();
-}
+(function(){var d=Math.floor(Date.now()/86400000)%W.length;var w=W[d];document.getElementById('ww').textContent=w.w;document.getElementById('wt').textContent=w.t;document.getElementById('we').textContent=w.ex})();
 
-// ==================== STATS ====================
-function updateStats() {
-    document.getElementById('total-xp').textContent = state.xp;
-    document.getElementById('streak').textContent = state.streak;
-    document.getElementById('lessons-done').textContent = state.completedLessons.length;
-}
-updateStats();
+function go(id){document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('a')});document.getElementById(id).classList.add('a');window.scrollTo(0,0);if(id==='p1')rL();if(id==='p4')rP();if(id==='p3')rFc()}
 
-// ==================== WORD OF DAY ====================
-function renderWOD() {
-    const day = Math.floor(Date.now() / 86400000) % WORDS.length;
-    const w = WORDS[day];
-    document.getElementById('wod-word').textContent = w.w;
-    document.getElementById('wod-translation').textContent = w.t;
-    document.getElementById('wod-example').textContent = `"${w.ex}"`;
-}
-renderWOD();
+function rL(f){f=f||'all';var ls=f==='all'?L:L.filter(function(x){return x.lv===f});document.getElementById('ll').innerHTML=ls.map(function(l){var d=S.done.indexOf(l.id)>=0;return '<div class="cd" onclick="oL('+l.id+')" style="cursor:pointer"><span class="bg b-'+l.lv+'">'+l.lv+'</span>'+(d?'<span style="float:right;color:var(--ok)">✅</span>':'')+'<h3 style="margin-top:6px">'+l.id+'. '+l.t+'</h3><p style="color:var(--tx2);font-size:.82rem">'+l.v.length+' ta so\'z</p></div>'}).join('')}
+function fL(lv,el){var tabs=el.parentElement.querySelectorAll('.tab');tabs.forEach(function(t){t.classList.remove('ac')});el.classList.add('ac');rL(lv)}
 
-// ==================== LESSONS ====================
-function renderLessons(filter='all') {
-    const list = document.getElementById('lessons-list');
-    const lessons = filter === 'all' ? LESSONS : LESSONS.filter(l => l.level === filter);
-    list.innerHTML = lessons.map(l => {
-        const done = state.completedLessons.includes(l.id);
-        return `<div class="card" onclick="openLesson(${l.id})" style="cursor:pointer">
-            <span class="level-badge level-${l.level.toLowerCase()}">${l.level}</span>
-            ${done ? '<span style="float:right;color:var(--success)">✅</span>' : ''}
-            <h3 style="margin-top:8px">${l.id}. ${l.title}</h3>
-            <p style="color:var(--text-muted);font-size:0.85rem">${l.vocab.length} ta so'z</p>
-        </div>`;
-    }).join('');
-}
+function oL(id){var l=L.find(function(x){return x.id===id});if(!l)return;var d=S.done.indexOf(id)>=0;var vw=l.v.map(function(v){return '<div class="vi"><b>'+v[0]+'</b>'+v[1]+'</div>'}).join('');
+document.getElementById('lc').innerHTML='<span class="bg b-'+l.lv+'">'+l.lv+'</span><h2 style="margin:10px 0">'+l.id+'. '+l.t+'</h2>'+(d?'<p style="color:var(--ok);margin-bottom:14px">✅ Yakunlangan!</p>':'')+
+'<div class="cd"><h3>🔤 So\'zlar ('+l.v.length+')</h3><div class="vl">'+vw+'</div></div>'+
+'<div class="cd"><h3>📖 Reading</h3><pre style="white-space:pre-wrap;margin:8px 0;color:var(--tx2);font-family:Inter,sans-serif">'+l.r.t+'</pre><p class="qq">'+l.r.q+'</p><div class="qos">'+l.r.o.map(function(o,i){return '<div class="qo" onclick="cQ(this,'+i+','+l.r.c+')">'+o+'</div>'}).join('')+'</div></div>'+
+'<div class="cd"><h3>🎧 Listening</h3><p style="color:var(--tx2);margin:6px 0">Bu jumlani yozing:</p><p style="font-style:italic;margin:6px 0">"'+l.ls+'"</p><input class="inp" id="li'+id+'" placeholder="Javob..."><button class="btn bp bs" style="margin-top:8px" onclick="cLs('+id+')">Tekshirish</button><div id="lr'+id+'" style="margin-top:6px"></div></div>'+
+'<div class="cd"><h3>✍️ Writing</h3><p style="color:var(--tx2);margin:6px 0">'+l.w+'</p><textarea class="inp" id="wi'+id+'" placeholder="Inglizcha javob..."></textarea><button class="btn bp bs" style="margin-top:8px" onclick="cWr('+id+')">Tekshirish</button><div id="wr'+id+'" style="margin-top:6px"></div></div>'+
+'<div class="cd"><h3>🗣 Speaking</h3><p style="color:var(--tx2);margin:6px 0">'+l.sp+'</p></div>'+
+(l.g?'<div class="gt"><b>📝 Tip:</b> '+l.g+'</div>':'')+
+(!d?'<button class="btn bp" onclick="dL('+id+')" style="width:100%;justify-content:center;margin-top:12px;background:var(--ok)">✅ Darsni yakunlash (+20 XP)</button>':'');go('p5')}
 
-function filterLessons(level) {
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-    event.target.classList.add('active');
-    renderLessons(level);
-}
+function cQ(el,s,c){el.parentElement.querySelectorAll('.qo').forEach(function(o){o.classList.add('ds')});if(s===c){el.classList.add('ok');el.innerHTML+=' ✅'}else{el.classList.add('no');el.innerHTML+=' ❌';el.parentElement.children[c].classList.add('ok')}}
+function cLs(id){var l=L.find(function(x){return x.id===id});var v=document.getElementById('li'+id).value.trim().toLowerCase();var ex=l.ls.toLowerCase();var r=document.getElementById('lr'+id);if(v.length>2&&(ex.indexOf(v)>=0||v.indexOf(ex.split(' ').slice(0,3).join(' '))>=0)){r.innerHTML='<p style="color:var(--ok)">✅ +15 XP</p>';S.xp+=15;sv()}else{r.innerHTML='<p style="color:var(--err)">❌ To\'g\'ri: <i>'+l.ls+'</i></p>'}}
+function cWr(id){var l=L.find(function(x){return x.id===id});var v=document.getElementById('wi'+id).value.trim();var r=document.getElementById('wr'+id);if(v.length>5){r.innerHTML='<p style="color:var(--ok)">✅ +20 XP</p><p style="color:var(--tx2);margin-top:4px">Namuna: <i>'+l.ws+'</i></p>';S.xp+=20;sv()}else{r.innerHTML='<p style="color:var(--err)">❌ To\'liq yozing.</p>'}}
+function dL(id){if(S.done.indexOf(id)<0){S.done.push(id);S.xp+=20;sv();cA();oL(id)}}
 
-function openLesson(id) {
-    const l = LESSONS.find(x => x.id === id);
-    if (!l) return;
-    const done = state.completedLessons.includes(id);
-    const content = document.getElementById('lesson-content');
-    content.innerHTML = `
-        <span class="level-badge level-${l.level.toLowerCase()}">${l.level}</span>
-        <h2 style="margin:12px 0">${l.id}. ${l.title}</h2>
-        ${done ? '<p style="color:var(--success);margin-bottom:16px">✅ Yakunlangan!</p>' : ''}
+var ts={c:0,s:0};function sT(){ts={c:0,s:0};rTQ()}
+function rTQ(){var el=document.getElementById('tc');if(ts.c>=TQ.length){var p=Math.round(ts.s/TQ.length*100);var lv,ds;if(p<=25){lv='A0';ds='Boshlash kerak.'}else if(p<=50){lv='A1';ds='Yaxshi boshladingiz!'}else if(p<=75){lv='A2';ds='Yomon emas!'}else{lv='B1';ds:'Zo\'r!'}S.lv=lv;sv();el.innerHTML='<div class="cd" style="text-align:center;padding:36px"><div style="font-size:3.5rem;margin-bottom:14px">🎉</div><h2>Test tugadi!</h2><p style="font-size:1.4rem;margin:14px 0"><b>'+ts.s+'/'+TQ.length+'</b> ('+p+'%)</p><p style="font-size:1.15rem;color:var(--acc)">Darajangiz: <b>'+lv+'</b></p><p style="color:var(--tx2)">'+ds+'</p><button class="btn bp" onclick="go(\'p0\')" style="margin-top:20px">Bosh sahifa</button></div>';return}var q=TQ[ts.c];el.innerHTML='<div class="cd"><p style="color:var(--tx2);margin-bottom:6px">'+(ts.c+1)+'/'+TQ.length+'</p><div class="qq">'+q.q+'</div><div class="qos">'+q.o.map(function(o,i){return '<div class="qo" onclick="aT('+i+','+q.c+')">'+String.fromCharCode(65+i)+') '+o+'</div>'}).join('')+'</div></div>'}
+function aT(s,c){if(s===c)ts.s++;ts.c++;rTQ()}
 
-        <div class="card" style="margin-bottom:16px">
-            <h3>🔤 Yangi so'zlar</h3>
-            ${l.vocab.map(v => `<p style="margin:8px 0"><b>${v.w}</b> — ${v.t}</p>`).join('')}
-        </div>
+var fS='a',fL2=null,fA=[],fI=0;
+function setFS(s,el){fS=s;document.querySelectorAll('#ft .tab').forEach(function(t){t.classList.remove('ac')});el.classList.add('ac');document.getElementById('fsl').style.display=s==='l'?'block':'none';if(s==='l'){document.getElementById('fli').innerHTML='<option value="0">Dars tanlang...</option>'+L.map(function(l){return '<option value="'+l.id+'">'+l.id+'. '+l.t+'</option>'}).join('')}fI=0;bFc();rFc()}
+function setFL(id){fL2=parseInt(id);fI=0;bFc();rFc()}
+function bFc(){fA=[];if(fS==='a'){W.forEach(function(w){fA.push({w:w.w,t:w.t,e:w.ex})});L.forEach(function(l){l.v.forEach(function(v){fA.push({w:v[0],t:v[1],e:l.t})})})}else if(fS==='l'&&fL2){var l=L.find(function(x){return x.id===fL2});if(l)l.v.forEach(function(v){fA.push({w:v[0],t:v[1],e:l.t})})}if(!fA.length)W.forEach(function(w){fA.push({w:w.w,t:w.t,e:w.ex})})}
+function rFc(){if(!fA.length)bFc();var i=fI%fA.length;var f=fA[i];document.getElementById('fw').textContent=f.w;document.getElementById('fm').textContent=f.t;document.getElementById('fe').textContent=f.e;document.getElementById('fp').textContent=(i+1)+'/'+fA.length;var fc=document.querySelector('.fc');if(fc)fc.classList.remove('flp')}
+function mFc(d){fI=((fI+d)%fA.length+fA.length)%fA.length;rFc()}
+function doS(){var q=document.getElementById('si').value.trim().toLowerCase();if(!q)return;var r=[];W.forEach(function(w){if(w.w.toLowerCase().indexOf(q)>=0||w.t.toLowerCase().indexOf(q)>=0)r.push('<div class="vi"><b>'+w.w+'</b>'+w.t+' <span class="bg b-'+w.l+'">'+w.l+'</span></div>')});L.forEach(function(l){l.v.forEach(function(v){if(v[0].toLowerCase().indexOf(q)>=0||v[1].toLowerCase().indexOf(q)>=0)r.push('<div class="vi"><b>'+v[0]+'</b>'+v[1]+' <span class="bg b-'+l.lv+'">'+l.lv+'</span></div>')})});document.getElementById('sr').innerHTML=r.length?'<div class="vl">'+r.join('')+'</div>':'<p style="color:var(--tx2)">Topilmadi.</p>'}
+function clS(){document.getElementById('si').value='';document.getElementById('sr').innerHTML=''}
 
-        <div class="card" style="margin-bottom:16px">
-            <h3>📖 Reading</h3>
-            <p style="white-space:pre-line;margin:8px 0;color:var(--text-muted)">${l.reading.text}</p>
-            <p style="margin:12px 0"><b>Savol:</b> ${l.reading.q}</p>
-            <div class="quiz-options">
-                ${l.reading.opts.map((o,i) => `<div class="quiz-option" onclick="checkQuiz(this,${i},${l.reading.correct})">${o}</div>`).join('')}
-            </div>
-        </div>
+function rP(){document.getElementById('pxp').textContent=S.xp;document.getElementById('pdn').textContent=S.done.length;document.getElementById('plv').textContent=S.lv;document.getElementById('psk').textContent=S.stk;var p=Math.min(S.xp/30*100,100);document.getElementById('pxf').style.width=p+'%';document.getElementById('pxt').textContent=Math.min(S.xp,30)+'/30';
+document.getElementById('al').innerHTML=AC.map(function(a){var u=S.ach.indexOf(a.id)>=0;return '<div class="ach'+(u?'':' lk')+'"><div class="ic">'+a.i+'</div><div style="flex:1"><div class="nm">'+a.n+(u?' ✅':' 🔒')+'</div><div class="ds">'+a.d+'</div></div></div>'}).join('')}
+function cA(){var n=S.done.length,x=S.xp;var na=[];if(n>=1&&S.ach.indexOf('f')<0)na.push('f');if(n>=5&&S.ach.indexOf('5')<0)na.push('5');if(n>=10&&S.ach.indexOf('10')<0)na.push('10');if(n>=34&&S.ach.indexOf('a')<0)na.push('a');if(x>=100&&S.ach.indexOf('x1')<0)na.push('x1');if(x>=500&&S.ach.indexOf('x5')<0)na.push('x5');if(x>=1000&&S.ach.indexOf('xk')<0)na.push('xk');if(S.stk>=3&&S.ach.indexOf('s3')<0)na.push('s3');if(S.stk>=7&&S.ach.indexOf('s7')<0)na.push('s7');if(S.stk>=30&&S.ach.indexOf('s30')<0)na.push('s30');if(S.lv==='A1'&&S.ach.indexOf('l1')<0)na.push('l1');if(S.lv==='A2'&&S.ach.indexOf('l2')<0)na.push('l2');if(S.lv==='B1'&&S.ach.indexOf('l3')<0)na.push('l3');if(na.length){S.ach=S.ach.concat(na);sv()}}
 
-        <div class="card" style="margin-bottom:16px">
-            <h3>🎧 Listening</h3>
-            <p style="margin:8px 0;color:var(--text-muted)"> Tinglang va yozing:</p>
-            <p style="margin:8px 0;font-style:italic">"${l.listening}"</p>
-            <input type="text" id="listening-input" placeholder="Javobingizni yozing..." style="width:100%;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);margin-top:8px">
-            <button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="checkListening(${id})">Tekshirish</button>
-            <div id="listening-result" style="margin-top:8px"></div>
-        </div>
+var cOp=false;function tChat(){cOp=!cOp;var b=document.getElementById('cbox');var f=document.getElementById('cfab');if(cOp){b.classList.add('op');f.classList.add('ac');f.innerHTML='<i class="fa-solid fa-xmark"></i>'}else{b.classList.remove('op');f.classList.remove('ac');f.innerHTML='<i class="fa-solid fa-comment-dots"></i>'}}
+function sMsg(){var inp=document.getElementById('cinp');var txt=inp.value.trim();if(!txt)return;inp.value='';aM(txt,'u');setTimeout(function(){aM(cRep(txt),'b')},300)}
+function cRep(txt){var t=txt.toLowerCase();var av=[];L.forEach(function(l){l.v.forEach(function(v){av.push({en:v[0],uz:v[1],lt:l.t})})});
+var m=av.find(function(v){return t.indexOf(v.en.toLowerCase())>=0});if(m)return '<b>'+m.en+'</b> = "'+m.uz+'" — '+m.lt+' darsidan.\n\n📖 Misol: "I use '+m.en.toLowerCase()+' every day."';
+var uz=av.find(function(v){return t.indexOf(v.uz.toLowerCase())>=0});if(uz)return '"'+uz.uz+'" → <b>'+uz.en+'</b>\n\n📖 Misol: "'+uz.en+', please."';
+if(/^(salom|hello|hi|hey)/.test(t))return 'Salom! 👋 Menga inglizcha yoki o\'zbekcha yozing. Grammatika, tarjima, so\'zlar bo\'yicha yordam beraman!\n\n💡 "hello" yozing — sababini tushuntiraman.';
+if(t.indexOf('present')>=0)return '📘 Present Simple: I play / She plays\n📘 Present Continuous: I am playing\n\n📌 Always/Sometimes = Simple\n📌 Now/Right now = Continuous';
+if(t.indexOf('past')>=0)return '📘 Past Simple: I went / She went\n📌 Yesterday / Last week / Ago\n\nMisol: "Yesterday I went to the park."';
+if(t.indexOf('will')>=0||t.indexOf('future')>=0)return '📘 Future: I will go / I am going to go\n📌 Will — bashorat | Going to — reja\n\nMisol: "I will study tomorrow."';
+if(t.indexOf('thank')>=0||t.indexOf('rahmat')>=0)return 'Arzimaydi! 😊 Davom eting!';
+var rv=av[Math.floor(Math.random()*av.length)];return '💡 <b>'+rv.en+'</b> = "'+rv.uz+'"\n📖 '+rv.lt+' darsidan.\n\nYana savol bering! 😊'}
+function aM(t,c){var b=document.getElementById('cbody');var d=document.createElement('div');d.className='msg '+c;d.innerHTML=t.replace(/\n/g,'<br>');b.appendChild(d);b.scrollTop=b.scrollHeight}
 
-        <div class="card" style="margin-bottom:16px">
-            <h3>✍️ Writing</h3>
-            <p style="margin:8px 0;color:var(--text-muted)">${l.writing}</p>
-            <textarea id="writing-input" placeholder="Inglizcha javobingizni yozing..." style="width:100%;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);min-height:80px;margin-top:8px"></textarea>
-            <button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="checkWriting(${id})">Tekshirish</button>
-            <div id="writing-result" style="margin-top:8px"></div>
-        </div>
-
-        ${!done ? `<button class="btn btn-success" onclick="completeLesson(${id})" style="width:100%;justify-content:center">✅ Darsni yakunlash (+${10 + id * 2} XP)</button>` : ''}
-    `;
-    showPage('page-lesson-detail');
-}
-
-function checkQuiz(el, selected, correct) {
-    document.querySelectorAll('.quiz-option').forEach(o => o.classList.add('disabled'));
-    if (selected === correct) {
-        el.classList.add('correct');
-        el.innerHTML += ' ✅';
-    } else {
-        el.classList.add('wrong');
-        el.innerHTML += ' ❌';
-        document.querySelectorAll('.quiz-option')[correct].classList.add('correct');
-    }
-}
-
-function checkListening(lessonId) {
-    const input = document.getElementById('listening-input').value.trim().toLowerCase();
-    const expected = LESSONS.find(l => l.id === lessonId).listening.toLowerCase();
-    const result = document.getElementById('listening-result');
-    if (input === expected || expected.includes(input) || input.includes(expected.split(' ').slice(0,3).join(' '))) {
-        result.innerHTML = '<p style="color:var(--success)">✅ To\'g\'ri! +15 XP</p>';
-        state.xp += 15; save();
-    } else {
-        result.innerHTML = `<p style="color:var(--danger)">❌ Noto'g'ri. To'g'ri javob: <i>${LESSONS.find(l => l.id === lessonId).listening}</i></p>`;
-    }
-}
-
-function checkWriting(lessonId) {
-    const input = document.getElementById('writing-input').value.trim();
-    const l = LESSONS.find(x => x.id === lessonId);
-    const result = document.getElementById('writing-result');
-    if (input.length > 5) {
-        result.innerHTML = `<p style="color:var(--success)">✅ Qabul qilindi! +20 XP</p><p style="color:var(--text-muted);margin-top:8px">Namuna: <i>${l.writingSample}</i></p>`;
-        state.xp += 20; save();
-    } else {
-        result.innerHTML = '<p style="color:var(--danger)">❌ Iltimos, to\'liq javob yozing.</p>';
-    }
-}
-
-function completeLesson(id) {
-    if (!state.completedLessons.includes(id)) {
-        state.completedLessons.push(id);
-        state.xp += 10 + id * 2;
-        save();
-        checkAchievements();
-        openLesson(id);
-    }
-}
-
-// ==================== TEST ====================
-let testState = {current: 0, answers: {}, score: 0};
-
-function startTest() {
-    testState = {current: 0, answers: {}, score: 0};
-    renderTestQuestion();
-}
-
-function renderTestQuestion() {
-    const tc = document.getElementById('test-content');
-    if (testState.current >= TEST_QUESTIONS.length) {
-        const pct = Math.round((testState.score / TEST_QUESTIONS.length) * 100);
-        let level, desc;
-        if (pct <= 25) { level = 'A0'; desc = 'Siz endigina boshlamoqdasiz.'; }
-        else if (pct <= 50) { level = 'A1'; desc = 'Siz oddiy gaplarni tushunasiz.'; }
-        else if (pct <= 75) { level = 'A2'; desc = 'Siz kundalik suhbatlarda qatnasha olasiz.'; }
-        else { level = 'B1'; desc = 'Siz yaxshi darajadasiz!'; }
-        state.level = level; save();
-        tc.innerHTML = `<div class="card" style="text-align:center;padding:40px">
-            <div style="font-size:4rem;margin-bottom:16px">🎉</div>
-            <h2>Test tugadi!</h2>
-            <p style="font-size:1.5rem;margin:16px 0"><b>${testState.score}/${TEST_QUESTIONS.length}</b> (${pct}%)</p>
-            <p style="font-size:1.25rem;color:var(--accent);margin-bottom:8px">Sizning darajangiz: <b>${level}</b></p>
-            <p style="color:var(--text-muted)">${desc}</p>
-            <button class="btn btn-primary" onclick="showPage('page-home')" style="margin-top:24px">Bosh sahifaga</button>
-        </div>`;
-        return;
-    }
-    const q = TEST_QUESTIONS[testState.current];
-    tc.innerHTML = `<div class="card animate">
-        <p style="color:var(--text-muted);margin-bottom:8px">Savol ${testState.current + 1}/${TEST_QUESTIONS.length}</p>
-        <div class="quiz-question">${q.q}</div>
-        <div class="quiz-options">
-            ${q.opts.map((o,i) => `<div class="quiz-option" onclick="answerTest(${i},${q.correct})">${String.fromCharCode(65+i)}) ${o}</div>`).join('')}
-        </div>
-    </div>`;
-}
-
-function answerTest(selected, correct) {
-    if (selected === correct) testState.score++;
-    testState.current++;
-    renderTestQuestion();
-}
-
-// ==================== FLASHCARDS ====================
-function renderFlashcard() {
-    const idx = state.flashcardIndex || 0;
-    const w = WORDS[idx % WORDS.length];
-    document.getElementById('fc-word').textContent = w.w;
-    document.getElementById('fc-translation').textContent = w.t;
-    document.getElementById('fc-example').textContent = `"${w.ex}" (${w.l})`;
-}
-
-function nextFlashcard() {
-    state.flashcardIndex = ((state.flashcardIndex || 0) + 1) % WORDS.length;
-    save();
-    const card = document.querySelector('.flashcard');
-    card.classList.remove('flipped');
-    renderFlashcard();
-}
-
-function prevFlashcard() {
-    state.flashcardIndex = ((state.flashcardIndex || 0) - 1 + WORDS.length) % WORDS.length;
-    save();
-    const card = document.querySelector('.flashcard');
-    card.classList.remove('flipped');
-    renderFlashcard();
-}
-
-// ==================== PROGRESS ====================
-function renderProgress() {
-    document.getElementById('p-xp').textContent = state.xp;
-    document.getElementById('p-streak').textContent = state.streak;
-    document.getElementById('p-lessons').textContent = state.completedLessons.length;
-    document.getElementById('p-level').textContent = state.level || 'A0';
-
-    const list = document.getElementById('achievements-list');
-    list.innerHTML = ACHIEVEMENTS.map(a => {
-        const unlocked = state.achievements.includes(a.id);
-        return `<div class="achievement ${unlocked ? 'unlocked' : ''}">
-            <div class="icon">${a.icon}</div>
-            <div class="info">
-                <div class="name">${a.name} ${unlocked ? '✅' : '🔒'}</div>
-                <div class="desc">${a.desc}</div>
-            </div>
-        </div>`;
-    }).join('');
-}
-
-function checkAchievements() {
-    const n = state.completedLessons.length;
-    const xp = state.xp;
-    const newA = [];
-    if (n >= 1 && !state.achievements.includes('first')) newA.push('first');
-    if (n >= 5 && !state.achievements.includes('five')) newA.push('five');
-    if (n >= 10 && !state.achievements.includes('ten')) newA.push('ten');
-    if (n >= 34 && !state.achievements.includes('all')) newA.push('all');
-    if (xp >= 100 && !state.achievements.includes('xp100')) newA.push('xp100');
-    if (xp >= 500 && !state.achievements.includes('xp500')) newA.push('xp500');
-    if (state.streak >= 3 && !state.achievements.includes('streak3')) newA.push('streak3');
-    if (state.streak >= 7 && !state.achievements.includes('streak7')) newA.push('streak7');
-    if (newA.length) {
-        state.achievements.push(...newA);
-        save();
-        newA.forEach(id => {
-            const a = ACHIEVEMENTS.find(x => x.id === id);
-            if (a) alert(`🎉 Yangi yutuq: ${a.icon} ${a.name}!`);
-        });
-    }
-}
-
-// Init
-renderLessons();
+rL();bFc();
 </script>
 </body>
 </html>
