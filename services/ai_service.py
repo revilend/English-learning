@@ -114,5 +114,44 @@ Qisqa va ijobiy javob bering (o'zbek tilida)."""
                            f"⭐ +25 XP qo'shildi!"
             }
 
+    async def chat(self, user_message: str, user_name: str = "O'quvchi") -> str:
+        """
+        Foydalanuvchi bilan ingliz tili bo'yicha suhbat — oddiy yozishmalarda AI javob beradi.
+        """
+        if not self.client:
+            return (
+                f"🤖 <b>AI Chat</b>\n\n"
+                f"Siz yozdingiz: <i>{user_message}</i>\n\n"
+                "⚠️ AI chat ishlashi uchun GEMINI_API_KEY sozlanmagan.\n"
+                "Bot funksiyalaridan foydalanish uchun <b>📚 Darslar</b> tugmasini bosing!"
+            )
+
+        prompt = f"""Siz 'English Zero-to-Hero' Telegram botidagi AI o'qituvchisiz.
+Sizning vazifangiz — o'zbek tilida ingliz tili o'rgatish.
+
+Foydalanuvchi ({user_name}) xabar yubordi: "{user_message}"
+
+Qoidalar:
+1. Agar foydalanuvchi inglizcha yozgan bo'lsa — grammatikasini tekshiring, to'g'risini ko'rsating, o'zbek tilida tushuntiring.
+2. Agar foydalanuvchi o'zbekcha yozgan bo'lsa — unga inglizcha tarjimasini bering va oddiy misol keltiring.
+3. Agar foydalanuvchi savol bergan bo'lsa — javob bering.
+4. Har doim qisqa va tushunarli javob bering.
+5. Javob oxirida yangi so'z yoki ibora o'rgating.
+6. Do'stona va rag'batlantiruvchi tarzda gapiring."""
+
+        try:
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=prompt,
+            )
+            return response.text
+        except Exception as e:
+            logger.error(f"AI chat xatosi: {e}")
+            return (
+                f"🤖 <b>AI Chat</b>\n\n"
+                f"Siz yozdingiz: <i>{user_message}</i>\n\n"
+                "⚠️ Hozircha AI javob bera olmayapti. Qaytadan urinib ko'ring!"
+            )
+
 
 ai_service = AIService()

@@ -3,6 +3,7 @@ from aiogram.types import Message
 from aiogram.filters import CommandStart
 from database import db
 from keyboards import get_main_menu
+from services.ai_service import ai_service
 
 router = Router()
 
@@ -81,3 +82,33 @@ async def vocab_review(message: Message):
         text += f"🔹 <b>{w['word']}</b> — {w['translation']}\n"
     text += "\nBu so'zlarni xotirada mustahkamlang!"
     await message.answer(text, parse_mode="HTML")
+
+
+# ----------------- AI CHAT (Oddiy yozishmalar) -----------------
+# Bu handler boshqa handlerlardan keyin kelishi kerak,
+# shuning uchun eng oxirida
+@router.message(F.text & ~F.text.startswith("/"))
+async def ai_chat_handler(message: Message):
+    """Foydalanuvchi oddiy matn yozganda AI javob beradi."""
+    user_text = message.text.strip()
+    
+    # Agar menyu tugmalari bo'lsa — o'tkazib yuborish
+    menu_buttons = [
+        "📚 Darslar (0 dan A1 ga)", "🗂 So'z boyligi (Lug'at)",
+        "👤 Profil va Natijalar", "🏆 Reyting (Leaderboard)",
+        "ℹ️ Qanday o'rganiladi?"
+    ]
+    if user_text in menu_buttons:
+        return
+    
+    wait_msg = await message.answer("🤖 <i>AI tahlil qilmoqda...</i>", parse_mode="HTML")
+    
+    user_name = message.from_user.full_name or "O'quvchi"
+    response = await ai_service.chat(user_text, user_name)
+    
+    try:
+        await wait_msg.delete()
+    except Exception:
+        pass
+    
+    await message.answer(response, parse_mode="HTML")
