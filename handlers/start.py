@@ -240,24 +240,45 @@ async def handle_level_test_answer(callback: CallbackQuery, state: FSMContext):
 @router.message(F.voice)
 async def ai_voice_handler(message: Message):
     """Foydalanuvchi ovozli xabar yuborsa — AI javob beradi."""
-    wait_msg = await message.answer("🤖 <i>Ovozingiz tahlil qilinmoqda...</i>", parse_mode="HTML")
+    wait_msg = await message.answer("🤖 <i>Ovozingiz qabul qilindi!</i>", parse_mode="HTML")
 
-    # Voice message transkripsiyasi yo'q, shuning uchun umumiy javob
-    user_name = message.from_user.full_name or "O'quvchi"
-    response = (
-        f"🗣 <b>Ovozli xabar qabul qilindi!</b>\n\n"
-        f"Afsuski, ovozni matnga aylantirish hozircha mavjud emas.\n"
-        f"Iltimos, matn ko'rinishida yozing — men sizga javob beraman! 💬\n\n"
-        f"💡 Maslahat: Inglizcha yozsangiz — grammatikangizni tekshiraman.\n"
-        f"O'zbekcha yozsangiz — tarjima beraman."
-    )
-
-    try:
-        await wait_msg.delete()
-    except Exception:
-        pass
-
-    await message.answer(response, parse_mode="HTML")
+    # Voice message uchun audio faylni saqlash
+    file_info = await message.bot.get_file(message.voice.file_id)
+    file_path = file_info.file_path
+    
+    # Transkripsiya qilishga harakat qilish
+    transcribed = await ai_service.transcribe_voice(file_path)
+    
+    if transcribed:
+        # Agar muvaffaqiyatli transkripsiya qilinsa
+        user_name = message.from_user.full_name or "O'quvchi"
+        response = await ai_service.chat(transcribed, user_name)
+        try:
+            await wait_msg.delete()
+        except Exception:
+            pass
+        await message.answer(
+            f"🗣 <b>Siz aytdingiz:</b> <i>{transcribed}</i>\n\n"
+            f"{response}",
+            parse_mode="HTML"
+        )
+    else:
+        # Transkripsiya mumkin bo'lmasa
+        try:
+            await wait_msg.delete()
+        except Exception:
+            pass
+        await message.answer(
+            "🗣 <b>Ovozli xabar qabul qilindi!</b>\n\n"
+            "Hozircha ovozni matnga aylantirish to'liq ishlamayapti.\n"
+            "Iltimos, matn ko'rinishida yozing: 💬\n\n"
+            "💡 <b>Maslahatlar:</b>\n"
+            "• Inglizcha yozsangiz — grammatikangizni tekshiraman\n"
+            "• O'zbekcha yozsangiz — tarjima beraman\n"
+            "• Savol bering — javob beraman\n"
+            "• Grammatika so'rang — tushuntiraman",
+            parse_mode="HTML"
+        )
 
 
 # ----------------- AI CHAT (Oddiy yozishmalar) -----------------

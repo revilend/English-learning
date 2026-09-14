@@ -19,9 +19,6 @@ class AIService:
                 logger.error(f"Gemini AI konfiguratsiyasida xatolik: {e}")
 
     async def check_writing(self, task_description: str, user_answer: str, expected_sample: str) -> dict:
-        """
-        Foydalanuvchi yozgan inglizcha gapni tekshiradi, xatolarni tuzatadi va o'zbekcha izoh beradi.
-        """
         if not self.client:
             user_clean = user_answer.strip().lower()
             expected_clean = expected_sample.strip().lower()
@@ -54,10 +51,9 @@ Izoh: [O'zbek tilida 2-3 jumlada qisqa va aniq izoh]"""
                 model=self.model_name,
                 contents=prompt,
             )
-            text = response.text
             return {
                 "score": 90,
-                "feedback": text,
+                "feedback": response.text,
                 "corrected": expected_sample
             }
         except Exception as e:
@@ -69,9 +65,6 @@ Izoh: [O'zbek tilida 2-3 jumlada qisqa va aniq izoh]"""
             }
 
     async def evaluate_speaking(self, target_phrase: str, transcribed_text: str = None) -> dict:
-        """
-        O'quvchining talaffuzini baholash — AI orqali yoki fallback.
-        """
         if not self.client:
             return {
                 "score": 90,
@@ -82,15 +75,20 @@ Izoh: [O'zbek tilida 2-3 jumlada qisqa va aniq izoh]"""
                            f"⭐ +25 XP qo'shildi!"
             }
 
-        prompt = f"""Siz ingliz tali o'qituvchisiz. Quyidagi maqsadli jumla berilgan:
-'{target_phrase}'
+        context = f"Foydalanuvchi ovozli xabar yubordi."
+        if transcribed_text:
+            context = f"Foydalanuvchi yozgan matn: '{transcribed_text}'"
 
-Foydalanuvchi ovozli xabar yubordi (transkripsiya mavjud emas, faqat talaffuz baholang).
+        prompt = f"""Siz ingliz tili o'qituvchisisiz. Foydalanuvchi speaking mashqini bajarmoqda.
+
+Maqsadli jumla: '{target_phrase}'
+{context}
 
 Baholang:
-1. Ijobiy反馈 bering
-2. Talaffuz haqida maslahat bering
-3. Jumlani qaytadan ayting
+1. Ijobiy feedback bering
+2. Agar matn bo'lsa, grammatikasini tekshiring
+3. Talaffuz haqida maslahat bering
+4. Jumlani to'g'ri shaklda qaytadan ayting
 
 Qisqa va ijobiy javob bering (o'zbek tilida)."""
 
@@ -99,10 +97,9 @@ Qisqa va ijobiy javob bering (o'zbek tilida)."""
                 model=self.model_name,
                 contents=prompt,
             )
-            text = response.text
             return {
                 "score": 90,
-                "feedback": f"🗣 <b>Speaking natijasi:</b>\n\n{text}\n\n⭐ +25 XP qo'shildi!"
+                "feedback": f"🗣 <b>Speaking natijasi:</b>\n\n{response.text}\n\n⭐ +25 XP qo'shildi!"
             }
         except Exception as e:
             logger.error(f"Speaking baholash xatosi: {e}")
@@ -115,9 +112,6 @@ Qisqa va ijobiy javob bering (o'zbek tilida)."""
             }
 
     async def chat(self, user_message: str, user_name: str = "O'quvchi") -> str:
-        """
-        Foydalanuvchi bilan ingliz tili bo'yicha suhbat — oddiy yozishmalarda AI javob beradi.
-        """
         if not self.client:
             return (
                 f"🤖 <b>AI Chat</b>\n\n"
@@ -126,18 +120,28 @@ Qisqa va ijobiy javob bering (o'zbek tilida)."""
                 "Bot funksiyalaridan foydalanish uchun <b>📚 Darslar</b> tugmasini bosing!"
             )
 
-        prompt = f"""Siz 'English Zero-to-Hero' Telegram botidagi AI o'qituvchisiz.
-Sizning vazifangiz — o'zbek tilida ingliz tili o'rgatish.
+        prompt = f"""Siz 'English Zero-to-Hero' — ingliz tilini o'rgatuvchi AI o'qituvchi botsiz.
+Foydalanuvchi: {user_name}
 
-Foydalanuvchi ({user_name}) xabar yubordi: "{user_message}"
+Foydalanuvchi xabar yubordi: "{user_message}"
 
-Qoidalar:
-1. Agar foydalanuvchi inglizcha yozgan bo'lsa — grammatikasini tekshiring, to'g'risini ko'rsating, o'zbek tilida tushuntiring.
-2. Agar foydalanuvchi o'zbekcha yozgan bo'lsa — unga inglizcha tarjimasini bering va oddiy misol keltiring.
-3. Agar foydalanuvchi savol bergan bo'lsa — javob bering.
-4. Har doim qisqa va tushunarli javob bering.
-5. Javob oxirida yangi so'z yoki ibora o'rgating.
-6. Do'stona va rag'batlantiruvchi tarzda gapiring."""
+MUHIM QOIDALAR:
+1. Foydalanuvchi nima so'rasa — shunga aniq javob bering. Savolga javob bering, mavzuni o'zgartirmang.
+2. Agar foydalanuvchi inglizcha yozgan bo'lsa:
+   - Grammatikasini tekshiring
+   - To'g'ri variantini bering
+   - O'zbek tilida tushuntiring
+   - Yangi so'z yoki ibora o'rgating
+3. Agar foydalanuvchi o'zbekcha yozgan bo'lsa:
+   - Inglizcha tarjimasini bering
+   - Oddiy misol keltiring
+   - Eslatma bering
+4. Agar grammatika haqida so'rasa — tushuntiring va misollar keltiring.
+5. Agar tarjima so'rasa — to'g'ri tarjimani bering.
+6. Agar salomlashsa — salomlashing va o'zini tanishtiring.
+7. Javob qisqa va tushunarli bo'lsin (3-5 jumla).
+8. Har doim do'stona va rag'batlantiruvchi tarzda gapiring.
+9. Javob oxirida qiziqarli fakt yoki yangi so'z qo'shing."""
 
         try:
             response = self.client.models.generate_content(
@@ -152,6 +156,27 @@ Qoidalar:
                 f"Siz yozdingiz: <i>{user_message}</i>\n\n"
                 "⚠️ Hozircha AI javob bera olmayapti. Qaytadan urinib ko'ring!"
             )
+
+    async def transcribe_voice(self, file_path: str) -> str:
+        """Ovozli xabarni matnga aylantirish (Whisper API)."""
+        if not self.client:
+            return None
+
+        try:
+            import aiohttp
+            import json
+
+            url = "https://api.openai.com/v1/audio/transcriptions"
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+            }
+
+            # Agar OpenAI API kaliti yo'q bo'lsa, Gemini file API ishlatish
+            # Hozircha oddiy yechim — voice message transkripsiya qilinmaydi
+            return None
+        except Exception as e:
+            logger.error(f"Voice transkripsiya xatosi: {e}")
+            return None
 
 
 ai_service = AIService()

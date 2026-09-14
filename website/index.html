@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 :root{--pri:#2563eb;--acc:#f59e0b;--bg:#0f172a;--bg2:#1e293b;--tx:#f8fafc;--tx2:#94a3b8;--bd:#334155;--ok:#10b981;--err:#ef4444;--grad:linear-gradient(135deg,#2563eb,#7c3aed);--sh:0 4px 24px rgba(0,0,0,.3)}
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;background-image:radial-gradient(circle at 20% 30%,rgba(37,99,235,.12) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(124,58,237,.1) 0%,transparent 50%)}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;background-image:radial-gradient(circle at 20% 30%,rgba(37,99,235,.12) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(124,58,237,.1) 0%,transparent 50%)}
 .tp{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,23,42,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--bd);padding:10px 16px;display:flex;align-items:center;gap:14px;box-shadow:var(--sh)}.tp .br{font-weight:800;font-size:1rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.tp .sts{display:flex;gap:10px;margin-left:auto;flex-wrap:wrap}.tp .st{display:flex;align-items:center;gap:4px;font-size:.8rem;padding:3px 10px;border-radius:99px;background:rgba(255,255,255,.04);border:1px solid var(--bd)}.tp .st i{color:var(--acc)}.tp .st b{color:var(--acc)}
 .pg{display:none;padding:80px 20px 40px;max-width:920px;margin:0 auto;min-height:100vh}.pg.a{display:block;animation:fu .35s ease-out}@keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 .pt{font-size:1.7rem;font-weight:800;margin-bottom:6px}.ps{color:var(--tx2);margin-bottom:22px;font-size:.92rem}.st2{font-size:1.05rem;font-weight:700;margin:26px 0 10px;color:var(--acc)}
@@ -41,6 +41,17 @@
 
 .spk-mic{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#ec4899,#a855f7);color:#fff;border:none;cursor:pointer;font-size:1.1rem;transition:.2s;box-shadow:0 4px 16px rgba(236,72,153,.4)}.spk-mic:hover{transform:scale(1.1)}.spk-mic.recording{background:var(--err);animation:rpulse 1s infinite}
 .skill-done{color:var(--ok)!important;font-weight:700}
+.hero-glow{position:relative;overflow:hidden}.hero-glow::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent,rgba(37,99,235,.08),transparent,rgba(124,58,237,.06),transparent);animation:glowSpin 20s linear infinite;z-index:-1}@keyframes glowSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.card-hover{transition:all .3s cubic-bezier(.4,0,.2,1)}.card-hover:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(37,99,235,.25);border-color:rgba(37,99,235,.5)}
+.gradient-text{background:linear-gradient(135deg,#60a5fa,#a78bfa,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.pulse-glow{animation:pulseGlow 2s ease-in-out infinite}@keyframes pulseGlow{0%,100%{box-shadow:0 0 20px rgba(37,99,235,.2)}50%{box-shadow:0 0 40px rgba(124,58,237,.4)}}
+.float{animation:float 3s ease-in-out infinite}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.shimmer{position:relative;overflow:hidden}.shimmer::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),transparent);animation:shimmer 3s infinite}@keyframes shimmer{0%{left:-100%}100%{left:100%}}
+.msg.typing{display:flex;gap:4px;align-items:center;padding:10px 14px}.msg.typing::after{content:'';display:flex;gap:3px}.msg.typing span{width:6px;height:6px;border-radius:50%;background:var(--tx2);animation:typingBounce 1.4s infinite ease-in-out}.msg.typing span:nth-child(1){animation-delay:-.32s}.msg.typing span:nth-child(2){animation-delay:-.16s}@keyframes typingBounce{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
+.tab{transition:all .2s ease}.tab:hover{transform:translateY(-1px)}.tab.ac{transform:scale(1.05)}
+.wod{position:relative;overflow:hidden}.wod::before{content:'';position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;background:linear-gradient(135deg,#2563eb,#7c3aed,#ec4899,#f59e0b);border-radius:20px;z-index:-1;opacity:.5;filter:blur(8px)}
+.cd{backdrop-filter:blur(10px)}
+.btn{position:relative;overflow:hidden}.btn::after{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:rgba(255,255,255,.15);border-radius:50%;transform:translate(-50%,-50%);transition:width .4s,height .4s}.btn:active::after{width:200px;height:200px}
 @media(max-width:640px){.tp .sts{gap:6px}.tp .st{font-size:.7rem;padding:2px 7px}.cb{width:290px;height:370px}.wod .wd{font-size:1.9rem}.cg{grid-template-columns:1fr}}
 </style>
 </head>
@@ -51,7 +62,7 @@
 
 <div class="pg a" id="p0">
 <div class="wod"><span class="lb">📖 Bugungi so'z</span><div class="wd" id="ww" onclick="speakWord(this.textContent)" style="cursor:pointer" title="Talaffuzni eshiting">...</div><div class="mn" id="wt"></div><span class="ex" id="we"></span></div>
-<h2 class="pt">🇺🇸 Ingliz tilini 0 dan o'rganing</h2><p class="ps">34 dars · 4 ko'nikma · AI yordamida · A0 dan B1 gacha</p>
+<h2 class="pt hero-glow" style="font-size:2.2rem;line-height:1.2">🇺🇸 <span class="gradient-text">Ingliz tilini 0 dan</span> o'rganing</h2><p class="ps">34 dars · 4 ko'nikma · AI yordamida · A0 dan B1 gacha</p>
 <div class="st2">Tezkor boshlash</div>
 <div class="cg"><div class="cd" onclick="go('p1')" style="cursor:pointer"><div style="font-size:1.8rem;margin-bottom:5px">📚</div><h3 style="margin-bottom:3px">Darslar</h3><p style="color:var(--tx2);font-size:.83rem;margin-bottom:8px">34 dars. Har biri: so'zlar, matn, test, audio, yozish.</p><span class="btn bs bo" style="width:100%;justify-content:center">Darslar <i class="fa-solid fa-arrow-right"></i></span></div>
 <div class="cd" onclick="go('p2')" style="cursor:pointer"><div style="font-size:1.8rem;margin-bottom:5px">📝</div><h3 style="margin-bottom:3px">Daraja testi</h3><p style="color:var(--tx2);font-size:.83rem;margin-bottom:8px">20 ta savol → A0/A1/A2/B1.</p><span class="btn bs bo" style="width:100%;justify-content:center">O'tkazing <i class="fa-solid fa-arrow-right"></i></span></div>
@@ -199,10 +210,86 @@ document.getElementById('al').innerHTML=AC.map(function(a){var u=S.ach.indexOf(a
 function cA(){var n=S.done.length,x=S.xp;var na=[];if(n>=1&&S.ach.indexOf('f')<0)na.push('f');if(n>=5&&S.ach.indexOf('5')<0)na.push('5');if(n>=10&&S.ach.indexOf('10')<0)na.push('10');if(n>=34&&S.ach.indexOf('a')<0)na.push('a');if(x>=100&&S.ach.indexOf('x1')<0)na.push('x1');if(x>=500&&S.ach.indexOf('x5')<0)na.push('x5');if(x>=1000&&S.ach.indexOf('xk')<0)na.push('xk');if(S.stk>=3&&S.ach.indexOf('s3')<0)na.push('s3');if(S.stk>=7&&S.ach.indexOf('s7')<0)na.push('s7');if(S.stk>=30&&S.ach.indexOf('s30')<0)na.push('s30');if(S.lv==='A1'&&S.ach.indexOf('l1')<0)na.push('l1');if(S.lv==='A2'&&S.ach.indexOf('l2')<0)na.push('l2');if(S.lv==='B1'&&S.ach.indexOf('l3')<0)na.push('l3');if(na.length){S.ach=S.ach.concat(na);sv()}}
 
 var cOp=false;function tChat(){cOp=!cOp;var b=document.getElementById('cbox');var f=document.getElementById('cfab');if(cOp){b.classList.add('op');f.classList.add('ac');f.innerHTML='<i class="fa-solid fa-xmark"></i>'}else{b.classList.remove('op');f.classList.remove('ac');f.innerHTML='<i class="fa-solid fa-comment-dots"></i>'}}
-function sMsg(){var inp=document.getElementById('cinp');var txt=inp.value.trim();if(!txt)return;inp.value='';aM(txt,'u');setTimeout(function(){aM(cRep(txt),'b')},300)}
-function cRep(txt){var t=txt.toLowerCase().trim();var av=[];L.forEach(function(l){l.v.forEach(function(v){av.push({en:v[0],uz:v[1],lt:l.t})})});
+function sMsg(){var inp=document.getElementById('cinp');var txt=inp.value.trim();if(!txt)return;inp.value='';aM(txt,'u');setTimeout(function(){var ti=document.createElement('div');ti.className='msg b typing';ti.innerHTML='<span></span><span></span><span></span>';document.getElementById('cbody').appendChild(ti);document.getElementById('cbody').scrollTop=99999;setTimeout(function(){ti.remove();aM(cRep(txt),'b')},600)},300)}
+function cRep(txt){var t=txt.toLowerCase().trim();var av=[];L.forEach(function(l){l.v.forEach(function(v){av.push({en:v[0],uz:v[1],lt:l.t})})});var r="";
+// === SMART AI CHAT ENGINE ===
+// Grammar explanations
+var GR={
+'present simple':{uz:'Hozirgi oddiy vaqt',en:'Present Simple',ex:'I play / She plays / We play',rule:'I + V, He/She/It + V-s, We/You/They + V',time:'Every day, Always, Sometimes, Never, Usually'},
+'present continuous':{uz:'Hozirgi davomiy vaqt',en:'Present Continuous',ex:'I am playing / She is playing',rule:'I/He/She/It + am/is/are + V-ing',time:'Now, Right now, At the moment, Today'},
+'past simple':{uz:'O\'tgan oddiy vaqt',en:'Past Simple',ex:'I went / She played / We watched',rule:'V2 (irregular) yoki V+ed (regular)',time:'Yesterday, Last week, Last month, Ago'},
+'future':{uz:'Kelajak vaqti',en:'Future (will / going to)',ex:'I will go / I am going to go',rule:'will + V yoki am/is/are + going to + V',time:'Tomorrow, Next week, In the future'},
+'article':{uz:'Artikellar (a, an, the)',en:'Articles',ex:'a cat / an apple / the sun',rule:'A=unli emas, An=unli, The=ma\'lum'},
+'be verb':{uz:'Be fe\'llari',en:'Be verbs',ex:'I am / You are / He is',rule:'I=am, You/We/They=are, He/She/It=is'},
+'can':{uz:'Imkoniyat (can)',en:'Can / Can\'t',ex:'I can swim / She can\'t drive',rule:'can + V (shakl o\'zgarmaydi)'},
+'have to':{uz:'Majburiyat (have to)',en:'Have to / Must',ex:'I have to study / You must listen',rule:'have to + V, must + V'},
+'preposition':{uz:'Predloglar',en:'Prepositions',ex:'in the room / on the table / at school',rule:'in=ichida, on=ustida, at=joyda'},
+'comparative':{uz:'Taqqoslash',en:'Comparatives',ex:'bigger than / more beautiful than',rule:'qisqa: adj+er+than, uzun: more+adj+than'},
+'superlative':{uz:'Eng darajali',en:'Superlatives',ex:'the biggest / the most beautiful',rule:'qisqa: the+adj+est, uzun: the most+adj'},
+'reported speech':{uz:'Nisbatan nutq',en:'Reported Speech',ex:'He said he was tired.',rule:'said + (V2 / would / could)'},
+'passive':{uz:'Passiv o\'tgan',en:'Passive Voice',ex:'The book was written / The door is opened',rule:'was/were + V3 yoki is/am/are + V3'},
+'conditionals':{uz:'Shartli gaplar',en:'Conditionals',ex:'If it rains, I will stay home.',rule:'If + V1, will + V (1-shart)'},
+'phrasal verb':{uz:'Frazal fe\'llar',en:'Phrasal Verbs',ex:'get up / give up / turn on',rule:'Fe\'l + predlog = yangi ma\'no'},
+};
+var gk=Object.keys(GR);
+for(var gi=0;gi<gk.length;gi++){if(t.indexOf(gk[gi])>=0||t.indexOf(GR[gk[gi]].uz.toLowerCase())>=0){var g=GR[gk[gi]];r='📘 <b>'+g.en+'</b> ('+g.uz+'):\n📌 '+g.rule+'\n📖 Misol: "'+g.ex+'"\n⏰ Vaqt belgilari: '+g.time+'\n\n💡 Misol: '+g.ex;break;}}
+
+// Question patterns
+if(!r){
+var QS=[
+[/^(salom|hello|hi|hey|assalomu|assalomu alaykum)/i,'Salom! 👋 Men sizning AI o\'qituvchingizman. Inglizcha yoki o\'zbekcha yozing!\n\n🎓 Maslahat: grammatika, tarjima yoki so\'z o\'rganish haqida so\'rang!'],
+[/^(kanday|qanday|qalaysan|yaxshimisiz|qalaysiz|yaxshiman|yomon)/i,'Yaxshiman, rahmat! 😊 Siz qandaysiz?\n\n📖 "How are you?" = "Qandaysiz?"\n📌 Javob: "I\'m fine, thank you." = "Yaxshiman, rahmat."'],
+[/^(rahmat|thank|minnatdor|saqlab qo)/i,'Arzimaydi! 😊\n\n📖 "Thank you" = "Rahmat"\n📌 "Thank you very much" = "Juda rahmat"\n📌 "You\'re welcome" = "Arzimaydi / Marhamat"'],
+[/^(xayr|bye|goodbye|ko\'rishguncha|kayt)/i,'Xayr! 👋 Ko\'rishguncha!\n\n📖 "Goodbye" = "Xayr"\n📌 "See you later" = "Keyinroq ko\'rishamiz"\n📌 "Have a nice day" = "Yaxshi kun o\'tkazing!"'],
+[/^(qancha|necha|qancha turadi|narx|pul|money|price|how much)/i,'💰 "How much?" = "Qancha?"\n\n📖 Misol:\n"How much is this?" = "Bu qancha turadi?"\n"How much does it cost?" = "Bu qancha?"\n"It costs 50 dollars." = "Bu 50 dollar turadi."'],
+[/^(qayerda|qayerga|where|manzil|address|joy|location)/i,'📍 "Where?" = "Qayerda?"\n\n📖 Misol:\n"Where is the hotel?" = "Mehmonxona qayerda?"\n"Where are you from?" = "Siz qayerdansiz?"\n"I am from Tashkent." = "Men Toshkentdanman."'],
+[/^(qachon|when|vaqt|time|soat)/i,'⏰ "When?" = "Qachon?"\n\n📖 Misol:\n"When is the meeting?" = "Yig\'ilish qachon?"\n"It is at 3 o\'clock." = "Soat 3 da."\n"Today" = "Bugun", "Tomorrow" = "Ertaga"'],
+[/^(nima|nim|what|nima qiladi|what is)/i,'❓ "What?" = "Nima?"\n\n📖 Misol:\n"What is your name?" = "Ismingiz nima?"\n"What do you do?" = "Nima qilasiz?"\n"What time is it?" = "Soat necha?"'],
+[/^(kim|who|qaysi|which)/i,'👤 "Who?" = "Kim?"\n\n📖 Misol:\n"Who is he?" = "U kim?"\n"Who is your teacher?" = "Sizning o\'qituvchingiz kim?"\n"Which one?" = "Qaysi biri?"'],
+[/^(nega|why|sabab|reason)/i,'🤔 "Why?" = "Nega?"\n\n📖 Misol:\n"Why are you late?" = "Nech uchun kechiktiz?"\n"Because I was sick." = "Chunki men kasal edim."'],
+[/^(qanday|how|talaffuz|pronunciation|o\'qish|read)/i,'📖 "How?" = "Qanday?"\n\n📖 Misol:\n"How do you spell it?" = "Qanday yoziladi?"\n"How do you say this?" = "Bu qanday aytiladi?"\n"How are you?" = "Qandaysiz?"'],
+[/^(help|yordam|qiyin|qiyinchilik|difficult|hard)/i,'💡 Yordam kerakmi? Qo\'rqmang!\n\nEng yaxshi o\'rganish usullari:\n1. Kuniga 10 daqiqa mashq qiling\n2. Ovoz bilan takrorlang\n3. Yangi so\'zlarni yozing\n4. Xatolardan qo\'rqmang!\n\n📖 "I need help" = "Menga yordam kerak"'],
+[/^(ingliz tili|english|til o\'rgan|learn english)/i,'🇺🇸 Ingliz tilini o\'rganish juda qiziq!\n\nBoshlash uchun:\n1. Har kuni 5 ta yangi so\'z o\'rganing\n2. Oddiy gaplar tuzing\n3. Film/serial ko\'ring (subtitr bilan)\n4. AI bilan gaplashing!\n\n📖 "I am learning English" = "Men ingliz tilini o\'rganyapman"'],
+[/^(sport|futbol|football|basketball|tennis)/i,'⚽ Sport haqida:\n\n📖 "I like football" = "Men futbolni yoqtiraman"\n📖 "Do you play sports?" = "Siz sport bilan shug\'ullanasizmi?"\n📖 "My favorite team is..." = "Mening sevimli jamoam..."'],
+[/^(musiqa|music|qo\'shiq|song|film|movie)/i,'🎵 Musiqa haqida:\n\n📖 "I love music" = "Men musiqani sevaman"\n📖 "What is your favorite song?" = "Sevimli qo\'shig\'ingiz qaysi?"\n📖 "I listen to music every day" = "Men har kuni musiqa tinglayman"'],
+[/^(ovqat|food|taom|yemoq|eat|ichmoq|drink)/i,'🍽 Ovqat haqida:\n\n📖 "I am hungry" = "Men ochman"\n📖 "I am thirsty" = "Men chanqaganman"\n📖 "What would you like?" = "Nima istaysiz?"\n📖 "The food is delicious" = "Ovqat juda mazzali"'],
+[/^(ob-havo|weather|issiq|sovuq|yomgir)/i,'🌤 Ob-havo haqida:\n\n📖 "It is hot today" = "Bugun juda issiq"\n📖 "It is cold outside" = "Tashqarida sovuq"\n📖 "It is raining" = "Yomg\'ir yog\'moqda"\n📖 "The weather is nice" = "Ob-havo yaxshi"'],
+[/^(ish|work|job|kasb|salary|oylik)/i,'💼 Ish haqida:\n\n📖 "I work at..." = "Men ... da ishlayman"\n📖 "What do you do?" = "Nima qilasiz?"\n📖 "I am a teacher" = "Men o\'qituvchiman"\n📖 "My job is..." = "Mening kasbim..."'],
+[/^(oil|family|ota|ona|aka|opa|brother|sister|father|mother)/i,'👨‍👩‍👧‍👦 Oila haqida:\n\n📖 "I have a big family" = "Mening katta oilam bor"\n📖 "My father is a doctor" = "Mening otam shifokor"\n📖 "I love my family" = "Men oilamni sevaman"'],
+[/^(vaqt|time|soat|minute|daqiqa|second|soniya)/i,'⏰ Vaqt haqida:\n\n📖 "What time is it?" = "Soat necha?"\n📖 "It is 3 o\'clock" = "Soat 3"\n📖 "I wake up at 7" = "Men 7 da uyg\'onaman"\n📖 "See you tomorrow!" = "Ertaga ko\'rishamiz!"'],
+[/^(sayohat|travel|hotel|mehmonxona|aeroport|airport|chipta|ticket)/i,'✈️ Sayohat haqida:\n\n📖 "I am going to travel" = "Men sayohatga boraman"\n📖 "Where is the hotel?" = "Mehmonxona qayerda?"\n📖 "I need a ticket" = "Menga chipta kerak"\n📖 "Have a nice trip!" = "Yaxshi sayohat!"'],
+[/^(referans|reference|introduction|tanishuv|tanishtir)/i,'🤝 Tanishuv:\n\n📖 "My name is..." = "Mening ismim..."\n📖 "Nice to meet you" = "Tanishganimdan xursandman"\n📖 "I am from..." = "Men ... danman"\n📖 "I am ... years old" = "Men ... yoshdaman"']
+];
+for(var qi=0;qi<QS.length;qi++){if(QS[qi][0].test(t)){r=QS[qi][1];break;}}
+}
+
+// Word lookup in vocabulary
+if(!r){var m=av.find(function(v){return t.indexOf(v.en.toLowerCase())>=0;});
+if(m)r='<b>'+m.en+'</b> = "'+m.uz+'" — '+m.lt+' darsidan.\n📖 Misol: "I use '+m.en.toLowerCase()+' every day."\n🔊 Bosish eshiting.';}
+if(!r){var uz=av.find(function(v){return t.indexOf(v.uz.toLowerCase())>=0;});
+if(r==='')r='"'+uz.uz+'" → <b>'+uz.en+'</b>\n📖 Misol: "'+uz.en+', please."';}
+
+// Translation requests
+if(!r&&(t.indexOf('tarjima')>=0||t.indexOf('translate')>=0)){r='📝 Tarjima xizmati:\n\nInglizchadan o\'zbekchaga yoki o\'zbekchadan inglizchaga yozing, men tarjima beraman!\n\n📖 "Translate" = "Tarjima qilmoq"\n📌 Misol: "Hello" = "Salom"';}
+
+// Grammar fallback
+if(!r&&gk.some(function(k){return t.indexOf(k)>=0;})){for(var gi2=0;gi2<gk.length;gi2++){if(t.indexOf(gk[gi2])>=0){var g2=GR[gk[gi2]];r='📘 <b>'+g2.en+'</b>:\n'+g2.rule+'\n📖 "'+g2.ex+'"\n⏰ '+g2.time;break;}}}
+
+// Default smart response
+if(!r){
+r='🤖 Men sizning AI o\'qituvchingizman!\n\n';
+r+='Men quyidagilarni tushunaman:\n';
+r+='• 📝 Tarjima — o\'zbekcha/inglizcha yozing\n';
+r+='• 📘 Grammatika — "present simple", "past simple" deb yozing\n';
+r+='• 📖 So\'zlar — inglizcha yoki o\'zbekcha so\'z yozing\n';
+r+='• ❓ Savollar — istalgan savol bering\n';
+r+='• 💡 Maslahat — qiyinchilik haqida yozing\n\n';
+r+='Sinab ko\'ring: "Salom" yoki "hello" deb yozing! 😊';
+}
+return r;
 var m=av.find(function(v){return t.indexOf(v.en.toLowerCase())>=0});if(m)return '<b>'+m.en+'</b> = "'+m.uz+'" — '+m.lt+' darsidan.\n📖 Misol: "I use '+m.en.toLowerCase()+' every day."\n🔊 Bosish eshiting.';
-var uz=av.find(function(v){return t.indexOf(v.uz.toLowerCase())>=0});if(uz)return '"'+uz.uz+'" → <b>'+uz.en+'</b>\n📖 Misol: "'+uz.en+', please."\n🔊 Bosish eshiting.';
+var uz=av.find(function(v){return t.indexOf(v.uz.toLowerCase())>=0
+return r;});if(uz)return '"'+uz.uz+'" → <b>'+uz.en+'</b>\n📖 Misol: "'+uz.en+', please."\n🔊 Bosish eshiting.';
 if(/^(salom|hello|hi|hey|assalomu)/.test(t))return 'Salom! 👋 Men sizning AI o\'qituvchingizman. Inglizcha yoki o\'zbekcha yozing!\n\n🎓 Maslahat: savol bering, grammatikani tushuntiraman, so\'z o\'rgataman.';
 if(t.indexOf('how are you')>=0||t.indexOf('qanday')>=0)return 'I am fine, thank you! 😊 Siz qandaysiz?\n📖 "How are you?" = "Qandaysiz?" — Salomlashish darsidan.';
 if(t.indexOf('present')>=0)return '📘 <b>Present Simple</b>: I play / She plays / We play\n📘 <b>Present Continuous</b>: I am playing / She is playing\n\n📌 <b>Belgilar</b>:\n• Always / Sometimes / Never → Present Simple\n• Now / Right now / At the moment → Present Continuous\n\n📖 Misol: "I always drink coffee" (Simple)\n📖 Misol: "I am drinking coffee now" (Continuous)';
@@ -210,14 +297,7 @@ if(t.indexOf('past')>=0)return '📘 <b>Past Simple</b>: I went / She went / We 
 if(t.indexOf('will')>=0||t.indexOf('future')>=0||t.indexOf('kelajak')>=0)return '📘 <b>Future</b>: I will go / I am going to go\n\n📌 <b>Will</b> — bashorat, to\'satdli reja\n📌 <b>Going to</b> — oldindan rejalangan\n\n📖 "I will study tomorrow" (bashorat)\n📖 "I am going to visit my friend" (reja)';
 if(t.indexOf('article')>=0||t.indexOf('a an the')>=0)return '📘 <b>Artikellar</b>:\n• <b>A</b> — bitta narsa (unli harf emas): a cat, a book\n• <b>An</b> — bitta narsa (unli harf): an apple, an hour\n• <b>The</b> — ma\'lum narsa: the sun, the book\n\n📖 Misol: "I have a cat. The cat is black."';
 if(t.indexOf('be')>=0&&t.indexOf('verb')>=0)return '📘 <b>Be fe\'llari</b>:\n• I <b>am</b> / You <b>are</b> / He-She-It <b>is</b>\n• We <b>are</b> / They <b>are</b>\n\n📌 Qisqartmalar: I\'m = I am | She\'s = She is | We\'re = We are';
-if(t.indexOf('thank')>=0||t.indexOf('rahmat')>=0)return 'Arzimaydi! 😊\n📖 "Thank you" = "Rahmat" — Salomlashish darsidan.\n📌 "Thank you very much" = "Juda rahmat" — ko\'proq minnatdorchilik.';
-if(t.indexOf('speaking')>=0||t.indexOf('gapir')>=0)return '🗣 <b>Speaking mashqi</b>:\n1. Namunani tinglang 🔊\n2. O\'zingiz takrorlang\n3. Mikrofon tugmasini bosing 🎤\n4. Inglizcha gapiring\n5. Natijani tekshiring\n\n💡 Savolingiz bormi?';
-if(t.indexOf('listening')>=0||t.indexOf('tinglash')>=0)return '🎧 <b>Listening mashqi</b>:\n1. "Eshittirish" tugmasini bosing 🔊\n2. Jumlani diqqat bilan tinglang\n3. Eshitganingizni yozing\n4. "Tekshirish" bosing\n\n💡 Sekinroq eshittirish uchun "Sekin" tugmasini bosing.';
-if(t.indexOf('reading')>=0||t.indexOf('o\'qish')>=0)return '📖 <b>Reading mashqi</b>:\n1. Matnni diqqat bilan o\'qing\n2. Savolga javob bering\n3. To\'g\'ri javob = +10 XP\n\n💡 Yangi so\'zlar avtomatik ravishda lug\'atga qo\'shiladi.';
-if(t.indexOf('writing')>=0||t.indexOf('yozish')>=0)return '✍️ <b>Writing mashqi</b>:\n1. O\'zbekcha jumla beriladi\n2. Uni inglizchaga tarjima qiling\n3. "Tekshirish" bosing\n4. Namunani solishtiring\n\n💡 grammatika maslahatlarini e\'tibor bilan o\'qing.';
-if(t.indexOf('lesson')>=0||t.indexOf('dars')>=0)return '📚 <b>Darslar</b>:\n• 34 ta dars (A0 → B1)\n• Har bir darsda 4 ta ko\'nikma:\n  📖 Reading | 🎧 Listening | ✍️ Writing | 🗣 Speaking\n• Barcha 4 ta mashqni bajargach, keyingi dars ochiladi\n\n💡 Darslar sahifasiga boring!';
-if(t.indexOf('vocab')>=0||t.indexOf('so\'z')>=0||t.indexOf('lug\'at')>=0)return '🗂 <b>Lug\'at</b>:\n• 850+ ta so\'z (A0 dan B1 gacha)\n• Har bir darsda 25 ta yangi so\'z\n• Flashcard bilan takrorlash mumkin\n• Har bir so\'z ustiga bosib talaffuzni eshiting\n\n💡 Flashcards sahifasiga boring!';
-var rv=av[Math.floor(Math.random()*av.length)];return '💡 <b>'+rv.en+'</b> = "'+rv.uz+'"\n📖 '+rv.lt+' darsidan\n🔊 Bosib talaffuzni eshiting!\n\nYana savol bering 😊'}
+
 function aM(t,c){var b=document.getElementById('cbody');var d=document.createElement('div');d.className='msg '+c;d.innerHTML=t.replace(/\n/g,'<br>');b.appendChild(d);b.scrollTop=b.scrollHeight;if(c==='b'){var clean=t.replace(/[^a-zA-Z\s]/g,'').replace(/\s+/g,' ').trim();if(clean.length>3)try{speak(clean.substring(0,300),'en-US',0.85)}catch(e){}}}
 
 
