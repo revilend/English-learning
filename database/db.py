@@ -151,3 +151,11 @@ class Database:
             """, (limit,))
             rows = await cursor.fetchall()
             return [dict(r) for r in rows]
+
+    async def update_user_level(self, user_id: int, level: str, lesson_start: int):
+        async with aiosqlite.connect(self.db_path) as conn:
+            await conn.execute(
+                "UPDATE users SET level = ?, current_lesson = ? WHERE user_id = ?",
+                (level, lesson_start, user_id)
+            )
+            await conn.commit()

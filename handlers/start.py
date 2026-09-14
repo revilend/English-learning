@@ -1,9 +1,13 @@
 from aiogram import Router, F
-from aiogram.types import Message
+from aiogram.types import Message, CallbackQuery
 from aiogram.filters import CommandStart
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State, StatesGroup
 from database import db
 from keyboards import get_main_menu
 from services.ai_service import ai_service
+from services.level_test import LEVEL_TEST_QUESTIONS, calculate_level
+from keyboards.inline import get_level_test_keyboard
 
 router = Router()
 
@@ -82,6 +86,83 @@ async def vocab_review(message: Message):
         text += f"🔹 <b>{w['word']}</b> — {w['translation']}\n"
     text += "\nBu so'zlarni xotirada mustahkamlang!"
     await message.answer(text, parse_mode="HTML")
+
+
+# ----------------- LEVEL TEST -----------------
+class LevelTestStates(StatesGroup):
+    in_test = State()
+
+@router.message(F.text == "📝 Daraja testi")
+async def start_level_test(message: Message, state: FSMContext):
+    await state.update_data(current_q=0, answers={}, correct=0)
+    
+    welcome = (
+        "📝 <b>Ingliz tili daraja testi</b>\n\n"
+        "20 ta savolga javob bering. Natijaga qarab Sizning darajangiz aniqlanadi:\n"
+        "• <b>A0</b> — Boshlang'ich\n"
+        "• <b>A1</b> — Elementar\n"
+        "• <b>A2</b> — O'rtacha\n"
+        "• <b>B1</b> — O'rta\n\n"
+        "Tayyor bo'lsangiz, <b>Boshlash</b> tugmasini bosing!"
+    )
+    await message.answer(welcome, reply_markup=get_level_test_keyboard(0), parse_mode="HTML")
+    await state.set_state(LevelTestStates.in_test)
+
+@router.callback_query(F.data.startswith("lt_start"))
+async def level_test_next(callback: CallbackQuery, state: FSMContext):
+    data = await state.get_data()
+    current_q = data.get("current_q", 0)
+    
+    if current_q >= len(LEVEL_TEST_QUESTIONS):
+        # Test tugadi — natijani hisoblash
+        answers = data.get("answers", {})
+        result = calculate_level(answers)
+        
+        # Foydalanuvchi darajasini yangilash
+        await db.update_user_level(callback.from_user.id, result["level"], result["lesson_start"])
+        
+        text = (
+            f"🎉 <b>Test tugadi!</b>\n\n"
+            f"📊 <b>Natija:</b> {result['score']}/{result['total']} ({result['score_percent']}%)\n\n"
+            f"🎯 <b>Sizning darajangiz: {result['level']}</b>\n"
+            f"📖 <b>Boshlash darsi:</b> {result['lesson_start']}-dars\n\n"
+            f"💡 {result['description']}\n\n"
+            f"📚 Endi <b>'📚 Darslar'</b> tugmasini bosib o'rganishni boshlashingiz mumkin!"
+        )
+        await callback.message.edit_text(text, parse_mode="HTML")
+        await state.clear()
+        await callback.answer()
+        return
+    
+    q = LEVEL_TEST_QUESTIONS[current_q]
+    text = (
+        f"❓ <b>Savol {current_q + 1}/{len(LEVEL_TEST_QUESTIONS)}</b>\n\n"
+        f"{q['question']}"
+    )
+    await callback.message.edit_text(
+        text,
+        reply_markup=get_level_test_keyboard(current_q),
+        parse_mode="HTML"
+    )
+    await callback.answer()
+
+@router.callback_query(F.data.startswith("lt_"))
+async def handle_level_test_answer(callback: CallbackQuery, state: FSMContext):
+    parts = callback.data.split("_")
+    q_index = int(parts[1])
+    selected = int(parts[2])
+    
+    data = await state.get_data()
+    answers = data.get("answers", {})
+    current_q = data.get("current_q", 0)
+    
+    q = LEVEL_TEST_QUESTIONS[q_index]
+    answers[q["id"]] = selected
+    
+    await state.update_data(answers=answers, current_q=current_q + 1)
+    
+    # Keyingi savolga o'tish
+    await level_test_next(callback, state)
 
 
 # ----------------- AI CHAT (Oddiy yozishmalar) -----------------
