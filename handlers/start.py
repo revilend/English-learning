@@ -7,6 +7,8 @@ from database import db
 from keyboards import get_main_menu
 from services.ai_service import ai_service
 from services.level_test import LEVEL_TEST_QUESTIONS, calculate_level
+from services.word_of_day import get_word_of_day
+from services.achievements import check_achievements, format_achievement, ACHIEVEMENTS
 from keyboards.inline import get_level_test_keyboard
 
 router = Router()
@@ -85,6 +87,72 @@ async def vocab_review(message: Message):
     for w in words:
         text += f"🔹 <b>{w['word']}</b> — {w['translation']}\n"
     text += "\nBu so'zlarni xotirada mustahkamlang!"
+    await message.answer(text, parse_mode="HTML")
+
+
+# ----------------- WORD OF THE DAY -----------------
+@router.message(F.text == "📖 Kunlik so'z")
+async def word_of_day(message: Message):
+    word = get_word_of_day()
+    text = (
+        f"📖 <b>Bugungi so'z:</b>\n\n"
+        f"🔤 <b>{word['word']}</b> — {word['translation']}\n"
+        f"📝 <b>Misol:</b> <i>{word['example']}</i>\n"
+        f"📊 <b>Daraja:</b> {word['level']}\n\n"
+        "💡 Bu so'zni eslab qoling va kun davomida ishlatishga harakat qiling!"
+    )
+    await message.answer(text, parse_mode="HTML")
+
+
+# ----------------- ACHIEVEMENTS -----------------
+@router.message(F.text == "🏆 Yutuqlarim")
+async def show_achievements(message: Message):
+    user = await db.get_user(message.from_user.id)
+    if not user:
+        await message.answer("Profil topilmadi. /start ni bosing.")
+        return
+
+    # Yutuqlarni tekshirish
+    completed_lessons = user.get("current_lesson", 1) - 1
+    streak = user.get("streak", 1)
+    new_achievements = check_achievements(user, completed_lessons, streak)
+
+    text = "🏆 <b>Sizning yutuqlaringiz:</b>\n\n"
+    for a_id in new_achievements:
+        text += f"{format_achievement(a_id)}\n\n"
+
+    if not new_achievements:
+        text += "Hozircha yutuqlar yo'q. Darslarni yakunlab yutuqlar to'plang! 💪"
+
+    text += f"\n📊 <b>Umumiy:</b> {len(new_achievements)}/{len(ACHIEVEMENTS)} yutuq"
+    await message.answer(text, parse_mode="HTML")
+
+
+# ----------------- DAILY GOALS -----------------
+@router.message(F.text == "🎯 Kunlik maqsadlar")
+async def daily_goals(message: Message):
+    user = await db.get_user(message.from_user.id)
+    if not user:
+        await message.answer("Profil topilmadi. /start ni bosing.")
+        return
+
+    xp = user.get("xp", 0)
+    streak = user.get("streak", 1)
+    lesson = user.get("current_lesson", 1)
+
+    # Kunlik maqsadlar
+    daily_xp_goal = 50
+    daily_lesson_goal = 1
+    weekly_xp_goal = 350
+
+    text = (
+        f"🎯 <b>Bugungi maqsadlaringiz:</b>\n\n"
+        f"⭐ <b>XP:</b> {xp % daily_xp_goal}/{daily_xp_goal} (kunlik)\n"
+        f"📚 <b>Dars:</b> {daily_lesson_goal} ta dars yakunlash\n"
+        f"🔥 <b>Streak:</b> {streak} kun davom ettirish\n\n"
+        f"📈 <b>Haftalik maqsad:</b> {xp % weekly_xp_goal}/{weekly_xp_goal} XP\n\n"
+        "💡 <b>Maslahat:</b> Kuniga 5-10 daqiqa ajrating va streak'ni sindirmang!"
+    )
     await message.answer(text, parse_mode="HTML")
 
 
@@ -177,7 +245,8 @@ async def ai_chat_handler(message: Message):
     menu_buttons = [
         "📚 Darslar (0 dan A1 ga)", "🗂 So'z boyligi (Lug'at)",
         "👤 Profil va Natijalar", "🏆 Reyting (Leaderboard)",
-        "ℹ️ Qanday o'rganiladi?"
+        "ℹ️ Qanday o'rganiladi?", "📝 Daraja testi",
+        "📖 Kunlik so'z", "🎯 Kunlik maqsadlar", "🏆 Yutuqlarim"
     ]
     if user_text in menu_buttons:
         return
