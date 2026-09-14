@@ -560,4 +560,336 @@ LESSONS = [
             "target_phrase": "I was studying when my friend called me."}
     }
 
+    ,
+    {
+        "id": 35, "title": "Present Perfect", "level": "B2",
+        "vocabulary": [
+            {"word": "Have/Has + V3", "translation": "Hozirgi tugallangan"},
+            {"word": "Already", "translation": "Allaqachon"},
+            {"word": "Yet", "translation": "Hali"},
+            {"word": "Just", "translation": "Endigina"},
+            {"word": "Ever", "translation": "Hech qachon"},
+            {"word": "Never", "translation": "Hech qachon"},
+            {"word": "Since", "translation": "Dan beri"},
+            {"word": "For", "translation": "Davomida"},
+            {"word": "Been", "translation": "Bo'lgan"},
+            {"word": "Gone", "translation": "Ketgan"},
+            {"word": "Experience", "translation": "Tajriba"},
+            {"word": "Achievement", "translation": "Yutuq"}
+        ],
+        "reading": {"title": "Tajriba", "text": "I have visited Tashkent three times. She has lived here since 2020. We have known each other for five years.", "question": "U qachondan beri yerda yashayapti?", "options": ["2019", "2020", "2021", "2022"], "correct_option": 1},
+        "listening": {"audio_text": "I have never been to London.", "task": "Audioni tinglang: 'I have _____ been to London.'", "expected_text": "never"},
+        "writing": {"task": "Ingliz tilida yozing (Present Perfect): 'Men hali hech qachon chet elga bormaganman.'", "sample_solution": "I have never been abroad."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'I have learned many new words today.'", "target_phrase": "I have learned many new words today."}
+    },
+    {
+        "id": 36, "title": "Present Perfect vs Past Simple", "level": "B2",
+        "vocabulary": [
+            {"word": "Experience", "translation": "Tajriba"},
+            {"word": "Specific time", "translation": "Aniq vaqt"},
+            {"word": "Duration", "translation": "Davomiylik"},
+            {"word": "Result", "translation": "Natija"},
+            {"word": "Life experience", "translation": "Hayot tajribasi"},
+            {"word": "Finished action", "translation": "Tugallangan harakat"}
+        ],
+        "reading": {"title": "Farqi", "text": "I have been to Paris (life experience). I went to Paris last year (specific time). She has lived here since 2019. She lived in Samarkand before that.", "question": "Qaysi gap aniq vaqtni bildiradi?", "options": ["I have been to Paris", "I went to Paris last year", "She has lived here", "We have known each other"], "correct_option": 1},
+        "listening": {"audio_text": "I have already finished my homework.", "task": "Audioni tinglang: 'I have _____ finished my homework.'", "expected_text": "already"},
+        "writing": {"task": "Ingliz tilida yozing: 'Men allaqachon kitobni o'qidim. Kecha boshladim.'", "sample_solution": "I have already read the book. I started it yesterday."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'I have visited many countries in my life.'", "target_phrase": "I have visited many countries in my life."}
+    },
+    {
+        "id": 37, "title": "Relative Clauses", "level": "B2",
+        "vocabulary": [
+            {"word": "Who", "translation": "Kim (odam)"},
+            {"word": "Which", "translation": "Qaysi (narsa)"},
+            {"word": "That", "translation": "Kim/niy (hamma)"},
+            {"word": "Where", "translation": "Qayer (joy)"},
+            {"word": "When", "translation": "Qachon (vaqt)"},
+            {"word": "Whose", "translation": "Kimniki"},
+            {"word": "Whom", "translation": "Kimni (rasmiy)"},
+            {"word": "Which", "translation": "Qaysi"},
+            {"word": "Subject", "translation": "Mavzu"},
+            {"word": "Object", "translation": "Ob'ekt"},
+            {"word": "Defining", "translation": "Aniqlash"},
+            {"word": "Non-defining", "translation": "Qo'shimcha"}
+        ],
+        "reading": {"title": "Nisbatli gaplar", "text": "The man who lives next door is a doctor. The book which I read was interesting. The city where I was born is Samarkand.", "question": "Qaysi gap non-defining clause?", "options": ["The man who lives next door", "The book which I read", "The city where I was born", "Hammasi defining"], "correct_option": 2},
+        "listening": {"audio_text": "The teacher who teaches me English is very kind.", "task": "Audioni tinglang: 'The teacher _____ teaches me English is kind.'", "expected_text": "who"},
+        "writing": {"task": "Ingliz tilida yozing (relative clause): 'Mening o'qituvchim juda mehribon. U ingliz tilini o'qitadi.'", "sample_solution": "My teacher, who teaches English, is very kind."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'The city where I live is very beautiful.'", "target_phrase": "The city where I live is very beautiful."}
+    },
+    {
+        "id": 38, "title": "Modals of Deduction", "level": "B2",
+        "vocabulary": [
+            {"word": "Must be", "translation": " Albatta"},
+            {"word": "Can't be", "translation": "Bo'lishi mumkin emas"},
+            {"word": "Might be", "translation": "Bo'lishi mumkin"},
+            {"word": "Could be", "translation": "Bo'lishi mumkin"},
+            {"word": "Should be", "translation": "Bo'lishi kerak"},
+            {"word": "Probably", "translation": "Ehtimol"},
+            {"word": "Certainly", "translation": "Albatta"},
+            {"word": "Possibly", "translation": "Ehtimol"},
+            {"word": "Deduction", "translation": "Xulosa"},
+            {"word": "Evidence", "translation": "Dalil"},
+            {"word": "Conclusion", "translation": "Xulosa"},
+            {"word": "Certainty", "translation": "Ishonch"}
+        ],
+        "reading": {"title": "Xulosa chiqarish", "text": "He must be tired - he worked all day. She can't be at home - her car is gone. They might be late because of the traffic.", "question": "Nima uchun u uyda bo'lishi mumkin emas?", "options": ["U charchagan", "Mashinasi yo'q", "Kech qildi", "Ishladi"], "correct_option": 1},
+        "listening": {"audio_text": "She must be very happy today.", "task": "Audioni tinglang: 'She _____ be very happy today.'", "expected_text": "must"},
+        "writing": {"task": "Ingliz tilida yozing: 'U albatta juda boy. Katta uyda yashaydi.'", "sample_solution": "He must be very rich. He lives in a big house."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'It might rain tomorrow.'", "target_phrase": "It might rain tomorrow."}
+    },
+    {
+        "id": 39, "title": "Wish / If only", "level": "B2",
+        "vocabulary": [
+            {"word": "Wish", "translation": "Xohlash"},
+            {"word": "If only", "translation": "Faqat agar"},
+            {"word": "Had + V3", "translation": "O'tgan voqea"},
+            {"word": "Would + V", "translation": "Kelajak xohlash"},
+            {"word": "Could + V", "translation": "Imkoniyat"},
+            {"word": "Regret", "translation": "Pushaymonlik"},
+            {"word": "Dream", "translation": "Orzu"},
+            {"word": "Hope", "translation": "Umid"},
+            {"word": "Past regret", "translation": "O'tmish pushaymonligi"},
+            {"word": "Present wish", "translation": "Hozirgi xohlash"},
+            {"word": "Future wish", "translation": "Kelajak xohlash"},
+            {"word": "Unreal", "translation": "Noreal"}
+        ],
+        "reading": {"title": "Xohlash", "text": "I wish I had more time. (Hozir) If only I had studied harder. (O'tmish) I wish I could fly. (Imkoniyat)", "question": "Qaysi gap o'tmishga tegishli?", "options": ["I wish I had more time", "If only I had studied harder", "I wish I could fly", "Hammasi hozirga"], "correct_option": 1},
+        "listening": {"audio_text": "I wish I were taller.", "task": "Audioni tinglang: 'I _____ I were taller.'", "expected_text": "wish"},
+        "writing": {"task": "Ingliz tilida yozing: 'Men xohlayman, ko'proq pulim bo'lsa.'", "sample_solution": "I wish I had more money."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'I wish I could speak English fluently.'", "target_phrase": "I wish I could speak English fluently."}
+    },
+    {
+        "id": 40, "title": "Causative (Have something done)", "level": "B2",
+        "vocabulary": [
+            {"word": "Have + V3", "translation": "Qildirmoq"},
+            {"word": "Get + V3", "translation": "Qildirmoq"},
+            {"word": "Service", "translation": "Xizmat"},
+            {"word": "Repair", "translation": "Ta'mirlash"},
+            {"word": "Haircut", "translation": "Soch oldirish"},
+            {"word": "Clean", "translation": "Tozalatmoq"},
+            {"word": "Build", "translation": "Qurdirmoq"},
+            {"word": "Paint", "translation": "Bo'yo'tmoq"},
+            {"word": "Fix", "translation": "Tuzatmoq"},
+            {"word": "Install", "translation": "O'rnatmoq"},
+            {"word": "Arrange", "translation": "Tartibga solmoq"},
+            {"word": "Organize", "translation": "Tashkil etmoq"}
+        ],
+        "reading": {"title": "Xizmat", "text": "I had my car repaired yesterday. She had her hair cut at the salon. We are having the house painted next week.", "question": "U nima qildirdi?", "options": ["Mashinasini ta'mirlatdi", "Sochini oldirdi", "Uyni bo'yattdi", "Hammasi"], "correct_option": 0},
+        "listening": {"audio_text": "I need to have my computer fixed.", "task": "Audioni tinglang: 'I need to have my computer _____.'", "expected_text": "fixed"},
+        "writing": {"task": "Ingliz tilida yozing: 'Men dushanba kuni mashinamni ta'mirlatdim.'", "sample_solution": "I had my car repaired on Monday."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'I had my house cleaned yesterday.'", "target_phrase": "I had my house cleaned yesterday."}
+    },
+    {
+        "id": 41, "title": "Inversion", "level": "C1",
+        "vocabulary": [
+            {"word": "Never have I", "translation": "Hech qachon men"},
+            {"word": "Rarely", "translation": "Kamdan-kam"},
+            {"word": "Seldom", "translation": "Kamdan-kam"},
+            {"word": "Not only", "translation": "Faqat emas"},
+            {"word": "Hardly", "translation": "Zarb"},
+            {"word": "Scarcely", "translation": "Zarb"},
+            {"word": "No sooner", "translation": "Darhol"},
+            {"word": "Had I known", "translation": "Bilsam edi"},
+            {"word": "Were I you", "translation": "Siz o'rnimda bo'lsangiz"},
+            {"word": "So + adj", "translation": "Shunchalik"},
+            {"word": "Neither/nor", "translation": "Na...na"},
+            {"word": "Only then", "translation": "Faqat keyin"}
+        ],
+        "reading": {"title": "Teskari tartib", "text": "Never have I seen such a beautiful sunset. Had I known, I would have helped. Not only did she win, but she also broke the record.", "question": "Qaysi gap inversion ishlatilgan?", "options": ["Never have I seen", "I have never seen", "She won", "I helped"], "correct_option": 0},
+        "listening": {"audio_text": "Rarely does he arrive on time.", "task": "Audioni tinglang: 'Rarely _____ he arrive on time.'", "expected_text": "does"},
+        "writing": {"task": "Ingliz tilida yozing (inversion): 'Men hech qachon bunchalik chiroyli ko'rmaganman.'", "sample_solution": "Never have I seen something so beautiful."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'Not only did I pass the exam, but I also got the highest score.'", "target_phrase": "Not only did I pass the exam, but I also got the highest score."}
+    },
+    {
+        "id": 42, "title": "Advanced Conditionals (3rd & Mixed)", "level": "C1",
+        "vocabulary": [
+            {"word": "Had + V3", "translation": "3-shart (o'tmish)"},
+            {"word": "Would have + V3", "translation": "O'tmish natija"},
+            {"word": "Could have + V3", "translation": "O'tmish imkoniyat"},
+            {"word": "Should have + V3", "translation": "Kerak edi"},
+            {"word": "Might have + V3", "translation": "Ehtimol"},
+            {"word": "Mixed conditional", "translation": "Aralash shart"},
+            {"word": "Counterfactual", "translation": "Noreal"},
+            {"word": "Regret", "translation": "Pushaymonlik"},
+            {"word": "If only", "translation": "Faqat agar"},
+            {"word": "Suppose", "translation": "Tasavvur qiling"},
+            {"word": "Imagine", "translation": "Tasavvur qiling"},
+            {"word": "Past hypothetical", "translation": "O'tmish virtual"}
+        ],
+        "reading": {"title": "3-shart", "text": "If I had studied harder, I would have passed the exam. Had she arrived earlier, she could have caught the train. If I were you, I would have accepted the offer.", "question": "U imtihondan o'tganmi?", "options": ["Ha", "Yo'q", "Noma'lum", "Ehtimol"], "correct_option": 1},
+        "listening": {"audio_text": "If I had known, I would have helped you.", "task": "Audioni tinglang: 'If I had known, I _____ have helped you.'", "expected_text": "would"},
+        "writing": {"task": "Ingliz tilida yozing: 'Agar men ko'proq harakat qilgan bo'lsam, men yutgan bo'lardim.'", "sample_solution": "If I had tried harder, I would have won."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'Had I known earlier, I would have prepared better.'", "target_phrase": "Had I known earlier, I would have prepared better."}
+    },
+    {
+        "id": 43, "title": "Cleft Sentences", "level": "C1",
+        "vocabulary": [
+            {"word": "It was... who", "translation": "Shaxsni ta'kidlash"},
+            {"word": "It was... that", "translation": "Narsani ta'kidlash"},
+            {"word": "What I need", "translation": "Menga kerak narsa"},
+            {"word": "The thing that", "translation": "Narsa"},
+            {"word": "Emphasis", "translation": "Ta'kidlash"},
+            {"word": "Focus", "translation": "E'tibor"},
+            {"word": "Subject focus", "translation": "Mavzu ta'kidi"},
+            {"word": "Object focus", "translation": "Ob'ekt ta'kidi"},
+            {"word": "Adverbial focus", "translation": "Atrof so'z ta'kidi"},
+            {"word": "Negative focus", "translation": "Inkor ta'kidi"},
+            {"word": "Question focus", "translation": "Savol ta'kidi"},
+            {"word": "Contrastive", "translation": "Taqqoslash"}
+        ],
+        "reading": {"title": "Ta'kidlash", "text": "It was John who broke the window. It was yesterday that I met her. What I need is a good rest.", "question": "Qaysi gap odamni ta'kidlaydi?", "options": ["It was John who broke the window", "It was yesterday that I met her", "What I need is a good rest", "Hammasi"], "correct_option": 0},
+        "listening": {"audio_text": "It was the teacher who helped me.", "task": "Audioni tinglang: 'It was _____ who helped me.'", "expected_text": "the teacher"},
+        "writing": {"task": "Ingliz tilida yozing (cleft sentence): 'Meni sevindirgan narsa — sizning yordamingiz.'", "sample_solution": "What made me happy was your help."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'It was the exam that I was worried about.'", "target_phrase": "It was the exam that I was worried about."}
+    },
+    {
+        "id": 44, "title": "Advanced Passive Structures", "level": "C1",
+        "vocabulary": [
+            {"word": "It is said that", "translation": "Aytishlaricha"},
+            {"word": "It is believed", "translation": "Ishonishlaricha"},
+            {"word": "It is reported", "translation": "Xabar berishlaricha"},
+            {"word": "It is known", "translation": "Ma'lumki"},
+            {"word": "It is thought", "translation": "O'ylashlaricha"},
+            {"word": "It is considered", "translation": "Hisoblashlaricha"},
+            {"word": "It is rumored", "translation": "Mish-mishlaricha"},
+            {"word": "It is rumored", "translation": "Mish-mishlaricha"},
+            {"word": "Passive report", "translation": "Passiv xabar"},
+            {"word": "Formal", "translation": "Rasmiy"},
+            {"word": "Journalistic", "translation": "Jurnalistik"},
+            {"word": "Academic", "translation": "Akademik"}
+        ],
+        "reading": {"title": "Rasmiy passiv", "text": "It is said that he is very rich. She is believed to be the best student. The report is expected to be ready tomorrow.", "question": "Qaysi gap passiv xabar?", "options": ["It is said that he is rich", "He is rich", "She is the best", "The report is ready"], "correct_option": 0},
+        "listening": {"audio_text": "It is believed that climate change is real.", "task": "Audioni tinglang: 'It is _____ that climate change is real.'", "expected_text": "believed"},
+        "writing": {"task": "Ingliz tilida yozing: 'Aytishlaricha, u juda mehribon o'qituvchi ekan.'", "sample_solution": "It is said that he is a very kind teacher."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'It is known that education is important.'", "target_phrase": "It is known that education is important."}
+    },
+    {
+        "id": 45, "title": "Subjunctive Mood", "level": "C1",
+        "vocabulary": [
+            {"word": "If I were", "translation": "Agar men bo'lgan bo'lsam"},
+            {"word": "I suggest that", "translation": "Men taklif qilaman"},
+            {"word": "It is essential", "translation": "Zarur"},
+            {"word": "It is vital", "translation": "Muhim"},
+            {"word": "It is important", "translation": "Muhim"},
+            {"word": "Demand that", "translation": "Talab qilmoq"},
+            {"word": "Insist that", "translation": "Talab qilmoq"},
+            {"word": "Recommend that", "translation": "Tavsiya qilmoq"},
+            {"word": "Mandate", "translation": "Buyruq"},
+            {"word": "Proposal", "translation": "Taklif"},
+            {"word": "Formal request", "translation": "Rasmiy so'rov"},
+            {"word": "Authority", "translation": "Vacohat"}
+        ],
+        "reading": {"title": "Virtual Hold", "text": "If I were you, I would accept the offer. The doctor suggested that he rest for a week. It is essential that every student attend the meeting.", "question": "Qaysi gap rasmiy virtual hold?", "options": ["If I were you", "The doctor suggested", "It is essential that", "Hammasi"], "correct_option": 2},
+        "listening": {"audio_text": "I suggest that he study harder.", "task": "Audioni tinglang: 'I suggest that he _____ harder.'", "expected_text": "study"},
+        "writing": {"task": "Ingliz tilida yozing: 'Men taklif qilaman, har kuni 5 daqiqa mashq qilinsin.'", "sample_solution": "I suggest that everyone practice for 5 minutes every day."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'If I were the president, I would improve education.'", "target_phrase": "If I were the president, I would improve education."}
+    },
+    {
+        "id": 46, "title": "Advanced Linking Words", "level": "C1",
+        "vocabulary": [
+            {"word": "Furthermore", "translation": "Shuningdek"},
+            {"word": "Moreover", "translation": "Bundan tashqari"},
+            {"word": "Nevertheless", "translation": "Shunga qaramay"},
+            {"word": "However", "translation": "Biroq"},
+            {"word": "Consequently", "translation": "Shuning uchun"},
+            {"word": "Therefore", "translation": "Shuning uchun"},
+            {"word": "Nonetheless", "translation": "Shunga qaramay"},
+            {"word": "Despite", "translation": "Qaramay"},
+            {"word": "In spite of", "translation": "Qaramay"},
+            {"word": "Whereas", "translation": "Holboki"},
+            {"word": "Whilst", "translation": "Holboki"},
+            {"word": "Conversely", "translation": "Aksincha"}
+        ],
+        "reading": {"title": " bog'lovchi so'zlar", "text": "The project was difficult; nevertheless, we completed it on time. He is young, whereas she is experienced. The weather was bad; however, we still went out.", "question": "Qaysi so'z qarama-qarshilik bildiradi?", "options": ["Furthermore", "Nevertheless", "Therefore", "Moreover"], "correct_option": 1},
+        "listening": {"audio_text": "She is intelligent; moreover, she is very hardworking.", "task": "Audioni tinglang: 'She is intelligent; _____, she is very hardworking.'", "expected_text": "moreover"},
+        "writing": {"task": "Ingliz tilida yozing (advanced linking): 'Qiyin edi. Lekin biz muvaffaq bo'ldik.'", "sample_solution": "It was difficult; nevertheless, we succeeded."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'The task was hard, but we managed to complete it.'", "target_phrase": "The task was hard, but we managed to complete it."}
+    },
+    {
+        "id": 47, "title": "Academic English", "level": "C1",
+        "vocabulary": [
+            {"word": "Hypothesis", "translation": "Taxmin"},
+            {"word": "Analysis", "translation": "Tahlil"},
+            {"word": "Conclusion", "translation": "Xulosa"},
+            {"word": "Furthermore", "translation": "Shuningdek"},
+            {"word": "Consequently", "translation": "Shuning uchun"},
+            {"word": "The research", "translation": "Tadqiqot"},
+            {"word": "Evidence", "translation": "Dalil"},
+            {"word": "Significant", "translation": "Muhim"},
+            {"word": "Demonstrate", "translation": "Ko'rsatmoq"},
+            {"word": "Indicate", "translation": "Ko'rsatmoq"},
+            {"word": "Suggest", "translation": "Taklif qilmoq"},
+            {"word": "Contradict", "translation": "Zid kelmoq"}
+        ],
+        "reading": {"title": "Akademik matn", "text": "The research demonstrates that education has a significant impact on economic development. Furthermore, the evidence suggests that early childhood education is particularly important.", "question": "Tadqiqot nima ko'rsatadi?", "options": ["Ta'lim iqtisodiyotga ta'sir qiladi", "Bolalar ta'limi muhim emas", "Tadqiqot natijasi yo'q", "Iqtisodiyot ta'limdan mustaqil"], "correct_option": 0},
+        "listening": {"audio_text": "The study indicates a strong correlation between sleep and productivity.", "task": "Audioni tinglang: 'The study _____ a strong correlation.'", "expected_text": "indicates"},
+        "writing": {"task": "Ingliz tilida yozing (akademik): 'Tadqiqot shuni ko'rsatadiki, ta'lim juda muhim.'", "sample_solution": "The research demonstrates that education is very important."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'This study provides evidence that technology improves learning.'", "target_phrase": "This study provides evidence that technology improves learning."}
+    },
+    {
+        "id": 48, "title": "Advanced Report Writing", "level": "C1",
+        "vocabulary": [
+            {"word": "Executive summary", "translation": "Boshqaruv xulosasi"},
+            {"word": "Methodology", "translation": "Usul"},
+            {"word": "Findings", "translation": "Topilmalar"},
+            {"word": "Recommendations", "translation": "Tavsiyalar"},
+            {"word": "Objective", "translation": "Maqsad"},
+            {"word": "Scope", "translation": "Doirasi"},
+            {"word": "Limitations", "translation": "Cheklovlar"},
+            {"word": "Implications", "translation": "Oqibatlar"},
+            {"word": "Appendix", "translation": "Qo'shimcha"},
+            {"word": "Abstract", "translation": "Annotatsiya"},
+            {"word": "Citation", "translation": "Iltibos"},
+            {"word": "Reference", "translation": "Manba"}
+        ],
+        "reading": {"title": "Hisobot", "text": "This report examines the impact of remote work on productivity. The methodology involved surveys of 500 employees. The findings suggest that remote work increases productivity by 20%.", "question": "Hisobot nimani tekshiradi?", "options": ["Uydan ishlash samaradorlikka ta'siri", "500 xodim so'rovi", "20% samaradorlik oshishi", "Hammasi"], "correct_option": 0},
+        "listening": {"audio_text": "The recommendations include implementing flexible work hours.", "task": "Audioni tinglang: 'The _____ include implementing flexible work hours.'", "expected_text": "recommendations"},
+        "writing": {"task": "Ingliz tilida yozing (hisobot): 'Hisobotning maqsad — uydan ishlashni tahlil qilish.'", "sample_solution": "The objective of the report is to analyze remote work."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'The findings indicate a positive trend in employee satisfaction.'", "target_phrase": "The findings indicate a positive trend in employee satisfaction."}
+    },
+    {
+        "id": 49, "title": "Idiomatic Expressions (Advanced)", "level": "C1",
+        "vocabulary": [
+            {"word": "A blessing in disguise", "translation": "Yashirin ne'mat"},
+            {"word": "Beat around the bush", "translation": "Xaftaga kelish"},
+            {"word": "Break the ice", "translation": "Muzni sindirmoq"},
+            {"word": "Hit the nail on the head", "translation": "To'g'ri aytmoq"},
+            {"word": "Let the cat out of the bag", "translation": "Sirni ochmoq"},
+            {"word": "On the ball", "translation": "Serharakat"},
+            {"word": "The ball is in your court", "translation": "Navbat sizda"},
+            {"word": "Cost an arm and a leg", "translation": "Juda qimmat"},
+            {"word": "Piece of cake", "translation": "Juda oson"},
+            {"word": "Under the weather", "translation": "Kasal"},
+            {"word": "Burn the midnight oil", "translation": "Tungi ish"},
+            {"word": "Go the extra mile", "translation": "Ko'proq harakat"}
+        ],
+        "reading": {"title": "Ibratli iboralar", "text": "Don't beat around the bush - just tell me the truth. The meeting really hit the nail on the head. Getting this job was a blessing in disguise.", "question": "'Beat around the bush' nima ma'noni anglatadi?", "options": ["To'g'ri aytmoq", "Xaftaga kelish", "Sirni ochmoq", "Ko'proq harakat"], "correct_option": 1},
+        "listening": {"audio_text": "The exam was a piece of cake.", "task": "Audioni tinglang: 'The exam was a _____.'", "expected_text": "piece of cake"},
+        "writing": {"task": "Ingliz tilida yozing (idiom): 'Imtihon juda oson edi.'", "sample_solution": "The exam was a piece of cake."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'I need to hit the books for the exam.'", "target_phrase": "I need to hit the books for the exam."}
+    },
+    {
+        "id": 50, "title": "Debate & Opinion Language", "level": "C1",
+        "vocabulary": [
+            {"word": "I strongly believe", "translation": "Men kuchli ishonaman"},
+            {"word": "In my opinion", "translation": "Mening fikrimcha"},
+            {"word": "I would argue that", "translation": "Men da'vo qilamanki"},
+            {"word": "On the other hand", "translation": "Boshqa tomondan"},
+            {"word": "To be honest", "translation": "Ro'stdan aytganda"},
+            {"word": "I see your point", "translation": "Sizning fikringizni tushunaman"},
+            {"word": "However", "translation": "Biroq"},
+            {"word": "Furthermore", "translation": "Shuningdek"},
+            {"word": "Consequently", "translation": "Shuning uchun"},
+            {"word": "It goes without saying", "translation": "Aytish ham shart emas"},
+            {"word": "Needless to say", "translation": "Aytish ham shart emas"},
+            {"word": "I couldn't agree more", "translation": "To'liq roziman"}
+        ],
+        "reading": {"title": "Munozara", "text": "I strongly believe that education should be free for everyone. On the other hand, some argue that it would be too expensive. However, the benefits outweigh the costs.", "question": "Muallif nima da'vo qiladi?", "options": ["Ta'lim pulli bo'lishi kerak", "Ta'lim bepul bo'lishi kerak", "Ta'lim qimmat", "Ta'lim muhim emas"], "correct_option": 1},
+        "listening": {"audio_text": "In my opinion, technology has changed our lives significantly.", "task": "Audioni tinglang: 'In _____ opinion, technology has changed our lives.'", "expected_text": "my"},
+        "writing": {"task": "Ingliz tilida yozing (munozara): 'Men ishonaman, sport sog'liq uchun juda muhim.'", "sample_solution": "I strongly believe that sports are very important for health."},
+        "speaking": {"task": "Ovozli xabar yuboring: 'I would argue that learning languages opens many doors.'", "target_phrase": "I would argue that learning languages opens many doors."}
+    }
+
 ]

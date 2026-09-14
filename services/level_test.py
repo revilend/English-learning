@@ -178,26 +178,36 @@ def calculate_level(answers: dict) -> dict:
     total_questions = len(LEVEL_TEST_QUESTIONS)
     score_percent = (correct_count / total_questions) * 100
 
-    if score_percent <= 25:
+    if score_percent <= 15:
         determined_level = "A0"
         next_level = "A1"
         lesson_start = 1
         description = "Siz ingliz tilini endigina boshlamoqdasiz. Boshlang'ich darslardan boshlang!"
-    elif score_percent <= 50:
+    elif score_percent <= 30:
         determined_level = "A1"
         next_level = "A2"
-        lesson_start = 9
+        lesson_start = 4
         description = "Siz oddiy gaplarni tushunasiz. Davom eting!"
-    elif score_percent <= 75:
+    elif score_percent <= 50:
         determined_level = "A2"
         next_level = "B1"
-        lesson_start = 17
+        lesson_start = 15
         description = "Siz kundalik suhbatlarda qatnasha olasiz. Yana biroz harakat qiling!"
-    else:
+    elif score_percent <= 70:
         determined_level = "B1"
         next_level = "B2"
-        lesson_start = 25
+        lesson_start = 22
         description = "Siz yaxshi darajadasiz! Murakkab mavzularni o'rganing."
+    elif score_percent <= 85:
+        determined_level = "B2"
+        next_level = "C1"
+        lesson_start = 35
+        description = "Siz yuqori darajadasiz! Advanced mavzularni o'rganing."
+    else:
+        determined_level = "C1"
+        next_level = "C2"
+        lesson_start = 41
+        description = "Siz juda yuqori darajadasiz! Professional darajaga tayyorlaning!"
 
     return {
         "level": determined_level,
