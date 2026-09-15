@@ -384,17 +384,7 @@ r+='• 💡 Maslahat — qiyinchilik haqida yozing\n\n';
 r+='Sinab ko\'ring: "Salom" yoki "hello" deb yozing! 😊';
 }
 return r;
-var m=av.find(function(v){return t.indexOf(v.en.toLowerCase())>=0});if(m)return '<b>'+m.en+'</b> = "'+m.uz+'" — '+m.lt+' darsidan.\n📖 Misol: "I use '+m.en.toLowerCase()+' every day."\n🔊 Bosish eshiting.';
-var uz=av.find(function(v){return t.indexOf(v.uz.toLowerCase())>=0
-return r;});if(uz)return '"'+uz.uz+'" → <b>'+uz.en+'</b>\n📖 Misol: "'+uz.en+', please."\n🔊 Bosish eshiting.';
-if(/^(salom|hello|hi|hey|assalomu)/.test(t))return 'Salom! 👋 Men sizning AI o\'qituvchingizman. Inglizcha yoki o\'zbekcha yozing!\n\n🎓 Maslahat: savol bering, grammatikani tushuntiraman, so\'z o\'rgataman.';
-if(t.indexOf('how are you')>=0||t.indexOf('qanday')>=0)return 'I am fine, thank you! 😊 Siz qandaysiz?\n📖 "How are you?" = "Qandaysiz?" — Salomlashish darsidan.';
-if(t.indexOf('present')>=0)return '📘 <b>Present Simple</b>: I play / She plays / We play\n📘 <b>Present Continuous</b>: I am playing / She is playing\n\n📌 <b>Belgilar</b>:\n• Always / Sometimes / Never → Present Simple\n• Now / Right now / At the moment → Present Continuous\n\n📖 Misol: "I always drink coffee" (Simple)\n📖 Misol: "I am drinking coffee now" (Continuous)';
-if(t.indexOf('past')>=0)return '📘 <b>Past Simple</b>: I went / She went / We played\n📌 <b>Belgilar</b>: Yesterday, Last week, Last month, Ago\n\n📖 Misol: "Yesterday I went to the park."\n📖 Misol: "Last week I visited my grandmother."\n\n💡 Noto\'g\'ri: "I goed" → To\'g\'ri: "I went"';
-if(t.indexOf('will')>=0||t.indexOf('future')>=0||t.indexOf('kelajak')>=0)return '📘 <b>Future</b>: I will go / I am going to go\n\n📌 <b>Will</b> — bashorat, to\'satdli reja\n📌 <b>Going to</b> — oldindan rejalangan\n\n📖 "I will study tomorrow" (bashorat)\n📖 "I am going to visit my friend" (reja)';
-if(t.indexOf('article')>=0||t.indexOf('a an the')>=0)return '📘 <b>Artikellar</b>:\n• <b>A</b> — bitta narsa (unli harf emas): a cat, a book\n• <b>An</b> — bitta narsa (unli harf): an apple, an hour\n• <b>The</b> — ma\'lum narsa: the sun, the book\n\n📖 Misol: "I have a cat. The cat is black."';
-if(t.indexOf('be')>=0&&t.indexOf('verb')>=0)return '📘 <b>Be fe\'llari</b>:\n• I <b>am</b> / You <b>are</b> / He-She-It <b>is</b>\n• We <b>are</b> / They <b>are</b>\n\n📌 Qisqartmalar: I\'m = I am | She\'s = She is | We\'re = We are';
-
+}
 function aM(t,c){var b=document.getElementById('cbody');var d=document.createElement('div');d.className='msg '+c;d.innerHTML=t.replace(/\n/g,'<br>');b.appendChild(d);b.scrollTop=b.scrollHeight;if(c==='b'){var clean=t.replace(/[^a-zA-Z\s]/g,'').replace(/\s+/g,' ').trim();if(clean.length>3)try{speak(clean.substring(0,300),'en-US',0.85)}catch(e){}}}
 
 
