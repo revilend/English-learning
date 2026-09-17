@@ -31,6 +31,9 @@
   </div>
 </div>
 
+<!-- ============ DARAJA TUGADI BANNER (mock imtihon taklifi) ============ -->
+<div id="mockBanner" style="display:none;max-width:1180px;margin:10px auto 0;padding:0 14px"></div>
+
 <button class="fab" id="cfab" onclick="tChat()" aria-label="AI o'qituvchi"><i class="fa-solid fa-comment-dots"></i></button>
 
 <!-- ======================= AI CHAT ======================= -->
@@ -98,6 +101,12 @@
       <p style="color:var(--tx2);font-size:.83rem;margin-bottom:10px">Rasmiy imtihonlar, tayyorlik sinovi va o'z-o'zini tekshirish.</p>
       <span class="btn bs bo" style="width:100%;justify-content:center">Batafsil <i class="fa-solid fa-arrow-right"></i></span>
     </div>
+    <div class="cd card-hover" onclick="openMocks()">
+      <div style="font-size:1.8rem;margin-bottom:6px">🧪</div>
+      <h3 style="margin-bottom:5px">Daraja imtihonlari</h3>
+      <p style="color:var(--tx2);font-size:.83rem;margin-bottom:10px">Har daraja tugagach imtihon: cloze, so'z yasash, transformatsiya, reading, listening, writing.</p>
+      <span class="btn bs bo" style="width:100%;justify-content:center">Imtihonlar <i class="fa-solid fa-arrow-right"></i></span>
+    </div>
   </div>
 
   <div class="st2">💬 AI o'qituvchi</div>
@@ -154,6 +163,18 @@
     <button class="tab" onclick="fL('B2',this)">B2</button>
     <button class="tab" onclick="fL('C1',this)">C1</button>
   </div>
+
+  <div class="cd" style="cursor:default;border-color:rgba(99,102,241,.55)">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <span style="font-size:1.5rem">🧪</span>
+      <div style="flex:1;min-width:220px">
+        <b>Daraja imtihonlari (CEFR uslubida)</b>
+        <p id="mockHint" style="color:var(--tx2);font-size:.85rem;margin-top:3px">Daraja tugagach, shu darajaning imtihoni avtomatik ochiladi.</p>
+      </div>
+      <button class="btn bp bs" onclick="openMocks()"><i class="fa-solid fa-graduation-cap"></i> Imtihonlar</button>
+    </div>
+  </div>
+
   <div id="ll" class="cg"></div>
 </div>
 
@@ -296,6 +317,13 @@
   <div id="examStage" style="display:none"></div>
   <div id="examLast"></div>
 
+  <div class="st2">🧪 Daraja imtihonlari (haqiqiy CEFR formatida)</div>
+  <p class="ps" style="margin-bottom:12px">Har bir daraja (A0–C1) tugagach, shu darajaning imtihoni ochiladi. Savollar haqiqiy imtihon topshiriq turlarida: <b>Part 1</b> multiple-choice cloze, <b>Part 2</b> open cloze, <b>Part 3</b> word formation, <b>Part 4</b> key word transformation, <b>Part 5</b> reading, <b>Listening</b> va <b>Writing</b>. O‘tish chegarasi — 65%.</p>
+  <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+    <button class="btn bp" onclick="openMocks()"><i class="fa-solid fa-graduation-cap"></i> Daraja imtihonlari</button>
+    <button class="btn bo" onclick="mockStartPractice()"><i class="fa-solid fa-play"></i> CEFR uslubidagi aralash sinov</button>
+  </div>
+
   <div class="st2">✅ O'z-o'zini tekshirish</div>
   <p class="ps" style="margin-bottom:12px">Quyidagi gaplarni o'zingizga nisbatan baholang. 80%+ bo'lsa, keyingi daraja imtihonini sinab ko'rish mumkin.</p>
   <div id="examReadiness"></div>
@@ -306,6 +334,32 @@
     Rasmiy imtihon va sertifikat: <b>Cambridge University Press &amp; Assessment</b> (cambridgeenglish.org),
     <b>British Council</b> (britishcouncil.org) va <b>IELTS</b> (ielts.org). Narx, sana va markazlar o'zgarib turadi —
     joriy ma’lumotni albatta rasmiy saytlardan tekshiring.
+  </div>
+</div>
+
+<!-- ======================= PAGE 8: LEVEL MOCKS (CEFR) ======================= -->
+<div class="pg" id="p8">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <button class="btn bo bs" onclick="go('p0')"><i class="fa-solid fa-arrow-left"></i> Bosh</button>
+    <button class="btn bs bo" onclick="go('p1')"><i class="fa-solid fa-book-open"></i> Darslar</button>
+    <button class="btn bs bo" onclick="openExam()"><i class="fa-solid fa-graduation-cap"></i> CEFR imtihon yo'li</button>
+  </div>
+
+  <h2 class="pt">🧪 Daraja imtihonlari</h2>
+  <p class="ps">Har bir daraja (A0–C1) tugagach, shu darajaning imtihoni ochiladi. Savollar haqiqiy CEFR/Cambridge formatida: variantli bo'sh joy, o'zingiz yozadigan bo'sh joy, so'z yasash, kalit so'z bilan qayta yozish, o'qish, tinglash va yozish. Vaqt cheklangan, o'tish chegarasi 65%.</p>
+
+  <div class="gt" style="margin-bottom:16px">
+    <b>Qanday ishlaydi:</b> darslar sahifasida biror darajaning barcha darslarini tugatasiz → shu darajaning imtihoni ochiladi (ekranda avtomatik taklif chiqadi).
+    Imtihonni topshirasiz → natija bo'yicha har bir qism bo'yicha ball va keyingi daraja tavsiyasi ko'rsatiladi.
+    Ball <b>65%</b> dan yuqori bo'lsa — o'tdingiz. Qayta topshirish mumkin.
+  </div>
+
+  <div id="mockStage" style="display:none;margin-bottom:18px"></div>
+  <div id="mockList" class="cg"></div>
+
+  <div class="gt" style="margin-top:18px">
+    <b>Halol izoh:</b> bu imtihonlar — o'rgangan darajangizni <b>mashq qilish va tekshirish</b> uchun. Ular rasmiy CEFR sertifikatini bermaydi;
+    rasmiy hujjat faqat akkreditatsiyalangan markazda (Cambridge, British Council, IELTS) topshiriladi.
   </div>
 </div>
 
@@ -366,6 +420,7 @@
 <script src="app.js"></script>
 <script src="certificate.js"></script>
 <script src="exam.js"></script>
+<script src="mock.js"></script>
 <script>
 /* Fon zarrachalari (yengil animatsiya) */
 (function () {
