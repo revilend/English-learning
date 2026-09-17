@@ -92,6 +92,12 @@
       <p style="color:var(--tx2);font-size:.83rem;margin-bottom:10px">Darslarni tugatasiz — sertifikat avtomatik ochiladi.</p>
       <span class="btn bs bo" style="width:100%;justify-content:center">Sertifikat <i class="fa-solid fa-arrow-right"></i></span>
     </div>
+    <div class="cd card-hover" onclick="openExam()">
+      <div style="font-size:1.8rem;margin-bottom:6px">🎓</div>
+      <h3 style="margin-bottom:5px">CEFR imtihon yo'li</h3>
+      <p style="color:var(--tx2);font-size:.83rem;margin-bottom:10px">Rasmiy imtihonlar, tayyorlik sinovi va o'z-o'zini tekshirish.</p>
+      <span class="btn bs bo" style="width:100%;justify-content:center">Batafsil <i class="fa-solid fa-arrow-right"></i></span>
+    </div>
   </div>
 
   <div class="st2">💬 AI o'qituvchi</div>
@@ -264,6 +270,42 @@
     <p id="certHint" style="color:var(--tx2);font-size:.9rem">Darslar tugatilgach sertifikat shu yerda ochiladi.</p>
     <div class="prr"><div class="prf" id="certBar" style="width:0%"></div></div>
     <button class="btn bp" style="margin-top:12px" onclick="openCertificate()"><i class="fa-solid fa-award"></i> Sertifikat sahifasi</button>
+    <button class="btn bo" style="margin-top:12px;margin-left:8px" onclick="openExam()"><i class="fa-solid fa-graduation-cap"></i> CEFR imtihonga tayyorlik</button>
+  </div>
+</div>
+
+<!-- ======================= PAGE 7: CEFR EXAM PATH ======================= -->
+<div class="pg" id="p7">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <button class="btn bo bs" onclick="go('p0')"><i class="fa-solid fa-arrow-left"></i> Bosh</button>
+    <button class="btn bs bo" onclick="go('p1')"><i class="fa-solid fa-book-open"></i> Darslar</button>
+    <button class="btn bs bo" onclick="openCertificate()"><i class="fa-solid fa-award"></i> Sertifikat</button>
+  </div>
+
+  <h2 class="pt">🎓 CEFR imtihon yo'li</h2>
+  <p class="ps">Bu kurs sizni poydevordan C1 darajasigacha olib boradi. Rasmiy CEFR sertifikati uchun esa akkreditatsiyalangan markazda imtihon topshiriladi. Quyida: qaysi imtihon qaysi darajaga to'g'ri keladi, imtihon nimalardan iborat va tayyorligingizni qanday sinash mumkin.</p>
+
+  <div id="examIntro"></div>
+
+  <div class="st2">🧪 Tayyorlik sinovi (mock exam)</div>
+  <p class="ps" style="margin-bottom:12px"><b>32 daqiqalik</b> sinov: Grammar &amp; Vocabulary (7 daq.), Reading (8 daq.), Listening (5 daq.), Writing (12 daq.). Imtihondagidek vaqt cheklangan — vaqt tugasa keyingi qismga o'tadi.</p>
+  <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+    <button class="btn bp" onclick="examStart()"><i class="fa-solid fa-play"></i> Sinovni boshlash</button>
+    <button class="btn bo" onclick="examStop()">To'xtatish</button>
+  </div>
+  <div id="examStage" style="display:none"></div>
+  <div id="examLast"></div>
+
+  <div class="st2">✅ O'z-o'zini tekshirish</div>
+  <p class="ps" style="margin-bottom:12px">Quyidagi gaplarni o'zingizga nisbatan baholang. 80%+ bo'lsa, keyingi daraja imtihonini sinab ko'rish mumkin.</p>
+  <div id="examReadiness"></div>
+
+  <div class="gt" style="margin-top:20px">
+    <b>Xulosa:</b> kursni tugatish — bu <b>poydevor</b>. Rasmiy imtihondan o'tish uchun ustiga: har kuni tinglash (podkast, film),
+    haftada kamida 2 marta yozish, jonli suhbat amaliyoti (o'qituvchi yoki hamkor) va imtihon formatini mashq qilish kerak.
+    Rasmiy imtihon va sertifikat: <b>Cambridge University Press &amp; Assessment</b> (cambridgeenglish.org),
+    <b>British Council</b> (britishcouncil.org) va <b>IELTS</b> (ielts.org). Narx, sana va markazlar o'zgarib turadi —
+    joriy ma’lumotni albatta rasmiy saytlardan tekshiring.
   </div>
 </div>
 
@@ -323,6 +365,7 @@
 
 <script src="app.js"></script>
 <script src="certificate.js"></script>
+<script src="exam.js"></script>
 <script>
 /* Fon zarrachalari (yengil animatsiya) */
 (function () {
