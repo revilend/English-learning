@@ -3,413 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Zero-to-Hero | Ingliz tilini 0 dan o'rganing</title>
-<meta name="description" content="50 dars, 4 ko'nikma (Reading, Listening, Writing, Speaking), AI yordamida. A0 dan C1 gacha. Ingliz tilini 0 dan o'rganing — bepul, interaktiv, mobile-friendly.">
+<title>English Zero-to-Hero | Ingliz tilini 0 dan C1 gacha o'rganing</title>
+<meta name="description" content="50 dars, 4 ko'nikma (Reading, Listening, Writing, Speaking), AI o'qituvchi va bepul testlar. Ingliz tilini A0 dan C1 gacha o'rganing.">
 <meta name="theme-color" content="#6366f1">
 <meta name="author" content="English Zero-to-Hero">
 <meta property="og:title" content="English Zero-to-Hero">
-<meta property="og:description" content="Ingliz tilini 0 dan o'rganing. 50 dars · 4 ko'nikma · AI.">
+<meta property="og:description" content="Ingliz tilini 0 dan o'rganing: 50 dars, 4 ko'nikma, AI yordamchi.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://sizning-username.github.io/ingliz-zero-to-hero/">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236366f1'/><text x='16' y='22' font-size='18' text-anchor='middle' fill='white'>🇺🇸</text></svg>">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='32' fill='%236366f1'/><text x='90' y='120' font-size='80' text-anchor='middle'>🇺🇸</text></svg>">
-<link rel="canonical" href="https://sizning-username.github.io/ingliz-zero-to-hero/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%236366f1'/><text x='32' y='44' font-size='34' text-anchor='middle'>A</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<style>
-:root{
-  --pri:#6366f1; --acc:#f59e0b; --bg:#0a0e1a; --bg2:#111827;
-  --tx:#f1f5f9; --tx2:#94a3b8; --bd:#1e293b; --ok:#10b981; --err:#ef4444;
-  --grad:linear-gradient(135deg,#6366f1,#8b5cf6,#a855f7);
-  --grad2:linear-gradient(135deg,#f59e0b,#f97316);
-  --sh:0 4px 24px rgba(0,0,0,.4); --glass:rgba(17,24,39,.7);
-  --glow:0 0 30px rgba(99,102,241,.15);
-}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;tap-highlight-color:transparent}
-*:focus{outline:none!important;box-shadow:none!important}
-*:focus-visible{outline:none!important;box-shadow:none!important}
-*:active{outline:none!important;box-shadow:none!important}
-html{scroll-behavior:smooth}
-body{
-  font-family:'Inter',sans-serif; background:var(--bg); color:var(--tx);
-  min-height:100vh; overflow-x:hidden;
-  background-image:
-    radial-gradient(ellipse at 20% 0%,rgba(99,102,241,.12) 0%,transparent 50%),
-    radial-gradient(ellipse at 80% 100%,rgba(168,85,247,.08) 0%,transparent 50%),
-    radial-gradient(ellipse at 50% 50%,rgba(15,23,42,.5) 0%,transparent 70%);
-}
-/* Top bar */
-.tp{
-  position:fixed; top:0; left:0; right:0; z-index:100;
-  background:rgba(10,14,26,.85); backdrop-filter:blur(24px) saturate(180%);
-  border-bottom:1px solid rgba(99,102,241,.12);
-  padding:12px 20px; display:flex; align-items:center; gap:16px;
-  box-shadow:0 4px 30px rgba(0,0,0,.4);
-}
-.tp .br{font-weight:800;font-size:1rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.tp .sts{display:flex;gap:10px;margin-left:auto;flex-wrap:wrap}
-.tp .st{display:flex;align-items:center;gap:4px;font-size:.8rem;padding:3px 10px;border-radius:99px;background:rgba(255,255,255,.04);border:1px solid var(--bd)}
-.tp .st i{color:var(--acc)}
-.tp .st b{color:var(--acc)}
-
-/* Pages */
-.pg{display:none;padding:80px 20px 40px;max-width:920px;margin:0 auto;min-height:100vh}
-.pg.a{display:block;animation:fu .35s ease-out}
-@keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-
-/* Typography */
-.pt{font-size:1.8rem;font-weight:800;margin-bottom:8px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.ps{color:var(--tx2);margin-bottom:24px;font-size:.95rem;line-height:1.6}
-.st2{font-size:1.1rem;font-weight:700;margin:28px 0 12px;color:var(--acc);display:flex;align-items:center;gap:8px}
-
-/* Buttons */
-.btn{
-  -webkit-user-select:none; user-select:none; display:inline-flex;
-  align-items:center; gap:7px; padding:10px 18px; border-radius:12px;
-  font-weight:600; text-decoration:none; border:none; cursor:pointer;
-  transition:all .25s cubic-bezier(.4,0,.2,1); font-size:.88rem;
-  font-family:'Inter',sans-serif; white-space:nowrap;
-  position:relative; overflow:hidden;
-}
-.bp{background:var(--grad);color:#fff;box-shadow:0 4px 15px rgba(99,102,241,.3)}
-.bp:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(99,102,241,.45);filter:brightness(1.1)}
-.bo{background:rgba(255,255,255,.03);color:var(--tx);border:1.5px solid var(--bd);backdrop-filter:blur(4px)}
-.bo:hover{border-color:var(--pri);background:rgba(99,102,241,.08);transform:translateY(-1px)}
-.bs{padding:6px 11px;font-size:.8rem}
-
-/* Cards */
-.cd{
-  -webkit-user-select:none; user-select:none;
-  background:linear-gradient(145deg,rgba(17,24,39,.95),rgba(10,14,26,.8));
-  border:1px solid rgba(30,41,59,.8); border-radius:16px; padding:20px;
-  margin-bottom:12px; transition:all .3s cubic-bezier(.4,0,.2,1);
-  box-shadow:0 4px 20px rgba(0,0,0,.2); backdrop-filter:blur(10px);
-  cursor:pointer;
-}
-.cd:hover{border-color:rgba(99,102,241,.3);box-shadow:0 8px 32px rgba(99,102,241,.1);transform:translateY(-2px)}
-.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
-.cd.locked{opacity:.5;pointer-events:none;filter:grayscale(.4)}
-.cd.locked:hover{transform:none;border-color:var(--bd)}
-
-/* Badges */
-.bg{display:inline-flex;align-items:center;padding:3px 10px;border-radius:8px;font-size:.7rem;font-weight:700;letter-spacing:.3px}
-.b-a0{background:rgba(99,102,241,.15);color:#818cf8;border:1px solid rgba(99,102,241,.2)}
-.b-a1{background:rgba(16,185,129,.12);color:#34d399;border:1px solid rgba(16,185,129,.2)}
-.b-a2{background:rgba(245,158,11,.12);color:#fbbf24;border:1px solid rgba(245,158,11,.2)}
-.b-b1{background:rgba(236,72,153,.12);color:#f472b6;border:1px solid rgba(236,72,153,.2)}
-.b-b2{background:rgba(168,85,247,.12);color:#c084fc;border:1px solid rgba(168,85,247,.2)}
-.b-c1{background:rgba(244,63,94,.12);color:#fb7185;border:1px solid rgba(244,63,94,.2)}
-
-/* Tabs */
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
-.tab{
-  -webkit-user-select:none; user-select:none; padding:8px 16px;
-  border-radius:10px; background:rgba(255,255,255,.03);
-  border:1px solid var(--bd); color:var(--tx2); font-weight:600;
-  font-size:.82rem; cursor:pointer; transition:all .25s ease;
-  font-family:'Inter',sans-serif;
-}
-.tab:hover{border-color:rgba(99,102,241,.4);color:var(--tx);background:rgba(99,102,241,.06)}
-.tab.ac{background:rgba(99,102,241,.12);border-color:var(--pri);color:#fff;box-shadow:0 2px 12px rgba(99,102,241,.2)}
-
-/* Option buttons (quiz) */
-.qo{
-  -webkit-user-select:none; user-select:none; padding:14px 16px;
-  background:rgba(255,255,255,.03); border:1px solid rgba(30,41,59,.8);
-  border-radius:12px; cursor:pointer; transition:all .25s ease;
-  font-size:.9rem; outline:none; position:relative; overflow:hidden;
-}
-.qo:hover{border-color:rgba(99,102,241,.4);background:rgba(99,102,241,.06);transform:translateX(4px)}
-.qo.ok{border-color:var(--ok)!important;background:rgba(16,185,129,.1)!important;box-shadow:0 0 20px rgba(16,185,129,.1)}
-.qo.no{border-color:var(--err)!important;background:rgba(239,68,68,.1)!important}
-.qos{display:grid;gap:10px;margin-top:12px}
-
-/* Flashcards */
-.fcw{display:flex;justify-content:center;margin:16px 0;perspective:1000px}
-.fc{width:100%;max-width:310px;height:200px;cursor:pointer;user-select:none}
-.fci{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
-.fc.flp .fci{transform:rotateY(180deg)}
-.fcf,.fcb{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;text-align:center}
-.fcf{background:var(--grad)}
-.fcb{background:var(--bg2);border:1.5px solid var(--pri);transform:rotateY(180deg)}
-.fcw2{font-size:1.8rem;font-weight:800}
-.fcm{font-size:1.2rem;color:var(--tx2);margin-top:5px}
-.fce{font-size:.82rem;color:rgba(255,255,255,.7);margin-top:10px;font-style:italic}
-.fch{font-size:.78rem;color:rgba(255,255,255,.6);margin-top:12px}
-
-/* Stats grid */
-.pg2{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:20px}
-.pb{text-align:center;padding:18px 10px;background:rgba(99,102,241,.04);border:1px solid rgba(30,41,59,.8);border-radius:14px;transition:all .3s ease}
-.pb:hover{border-color:rgba(99,102,241,.3);transform:translateY(-2px)}
-.pb .n{font-size:2rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.pb .l{color:var(--tx2);font-size:.8rem;margin-top:4px}
-
-/* Progress bar */
-.prr{width:100%;height:8px;background:rgba(255,255,255,.06);border-radius:20px;overflow:hidden;margin:8px 0}
-.prf{height:100%;background:var(--grad);border-radius:20px;transition:width .6s cubic-bezier(.4,0,.2,1);box-shadow:0 0 10px rgba(99,102,241,.3)}
-
-/* Achievement */
-.ach{display:flex;align-items:center;gap:14px;padding:12px 14px;background:rgba(99,102,241,.03);border:1px solid rgba(30,41,59,.8);border-radius:12px;margin-bottom:8px;transition:all .3s ease}
-.ach:hover{border-color:rgba(99,102,241,.2);transform:translateX(4px)}
-.ach .ic{font-size:1.6rem}
-.ach .nm{font-weight:700;font-size:.92rem}
-.ach .ds{color:var(--tx2);font-size:.82rem}
-
-/* Word of day */
-.wod{
-  background:linear-gradient(135deg,rgba(99,102,241,.15),rgba(168,85,247,.1),rgba(244,63,94,.08));
-  border:1px solid rgba(99,102,241,.2); border-radius:20px;
-  padding:32px 24px; text-align:center; margin-bottom:28px;
-  box-shadow:0 0 50px rgba(99,102,241,.1),var(--sh);
-  position:relative; overflow:hidden; backdrop-filter:blur(10px);
-}
-.wod .lb{font-size:.8rem;opacity:.85;letter-spacing:1px;text-transform:uppercase}
-.wod .wd{font-size:2.4rem;font-weight:900;margin:6px 0 3px;cursor:pointer}
-.wod .mn{font-size:1rem;opacity:.9}
-.wod .ex{font-style:italic;opacity:.75;margin-top:6px;display:block}
-
-/* Inputs */
-.inp{
-  width:100%; padding:12px 14px; border-radius:12px;
-  border:1px solid rgba(30,41,59,.8); background:rgba(255,255,255,.03);
-  color:var(--tx); font-family:'Inter',sans-serif; font-size:.9rem;
-  outline:none; transition:all .25s ease; backdrop-filter:blur(4px);
-}
-.inp:focus{border-color:var(--pri);box-shadow:none;background:rgba(255,255,255,.05)}
-textarea.inp{resize:vertical;min-height:80px;line-height:1.5}
-
-/* FAB */
-.fab{
-  position:fixed; right:16px; bottom:18px; z-index:200;
-  width:56px; height:56px; border-radius:16px; background:var(--grad);
-  color:#fff; border:none; box-shadow:0 8px 30px rgba(99,102,241,.4);
-  cursor:pointer; font-size:1.4rem; display:flex; align-items:center;
-  justify-content:center; transition:all .3s cubic-bezier(.4,0,.2,1);
-}
-.fab:hover{transform:scale(1.05) translateY(-2px);box-shadow:0 12px 40px rgba(99,102,241,.5)}
-
-/* Chat box */
-.cb{
-  position:fixed; right:16px; bottom:76px; width:340px;
-  max-width:calc(100% - 36px); height:460px;
-  background:rgba(10,14,26,.95); border:1px solid rgba(30,41,59,.8);
-  border-radius:20px; box-shadow:0 20px 60px rgba(0,0,0,.6);
-  display:none; flex-direction:column; z-index:300;
-  overflow:hidden; backdrop-filter:blur(24px);
-}
-.cb.op{display:flex;animation:fu .22s ease-out}
-.cbh{padding:14px 16px;border-bottom:1px solid rgba(30,41,59,.6);display:flex;align-items:center;justify-content:space-between;background:rgba(99,102,241,.03)}
-.cbh .nm{font-weight:700;display:flex;align-items:center;gap:7px}
-.cbh .nm i{color:var(--acc)}
-.cbh .cls{background:none;border:none;color:var(--tx2);cursor:pointer;font-size:1.1rem;padding:3px 6px}
-.cbb{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
-.cbb::-webkit-scrollbar{width:4px}
-.cbb::-webkit-scrollbar-thumb{background:var(--bd);border-radius:10px}
-.msg{padding:10px 14px;border-radius:14px;max-width:85%;font-size:.88rem;line-height:1.5;animation:mi .2s ease-out;backdrop-filter:blur(4px)}
-@keyframes mi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-.msg.b{align-self:flex-start;background:linear-gradient(135deg,rgba(99,102,241,.08),rgba(168,85,247,.06));border:1px solid rgba(99,102,241,.15);border-top-left-radius:4px}
-.msg.u{align-self:flex-end;background:var(--grad);color:#fff;border-top-right-radius:4px;box-shadow:0 4px 12px rgba(37,99,235,.3)}
-.cbf{padding:8px 10px;border-top:1px solid var(--bd);display:flex;gap:7px;background:rgba(15,23,42,.5)}
-.cbf input{flex:1;padding:9px 11px;border-radius:9px;border:1px solid var(--bd);background:rgba(255,255,255,.05);color:var(--tx);font-family:'Inter',sans-serif;font-size:.87rem;outline:none}
-.cbf input:focus{border-color:var(--pri)}
-.cbf button{padding:9px 11px;border-radius:9px;background:var(--grad);color:#fff;border:none;cursor:pointer;font-weight:700}
-
-/* Leaderboard */
-.vl{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin:10px 0}
-.vi{padding:10px 12px;background:rgba(99,102,241,.03);border:1px solid rgba(30,41,59,.8);border-radius:10px;font-size:.84rem;transition:all .25s ease}
-.vi:hover{border-color:rgba(99,102,241,.3);background:rgba(99,102,241,.06);transform:translateY(-1px)}
-.vi b{color:var(--acc);display:block;margin-bottom:3px;font-size:.88rem}
-
-/* Tip box */
-.gt{background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.15);border-radius:12px;padding:14px 16px;margin:12px 0;font-size:.88rem;line-height:1.6;backdrop-filter:blur(4px)}
-.gt b{color:var(--acc)}
-
-/* Pulse button */
-.spk-btn{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.3);color:var(--pri);cursor:pointer;font-size:.65rem;transition:.2s;margin-left:4px;vertical-align:middle;flex-shrink:0}
-.spk-btn:hover{background:var(--pri);color:#fff;transform:scale(1.15)}
-
-/* Recording button */
-.rec-btn{
-  position:absolute; right:50px; top:50%; transform:translateY(-50%);
-  width:32px; height:32px; border-radius:50%;
-  background:rgba(239,68,68,.15); border:1px solid rgba(239,68,68,.3);
-  color:var(--err); cursor:pointer; font-size:.8rem;
-  display:flex; align-items:center; justify-content:center; transition:.2s;
-}
-.rec-btn:hover{background:var(--err);color:#fff}
-.rec-btn.recording{background:var(--err);color:#fff;animation:rpulse 1s infinite}
-@keyframes rpulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.4)}50%{box-shadow:0 0 0 8px rgba(239,68,68,0)}}
-
-/* Mic button */
-.spk-mic{
-  display:inline-flex; align-items:center; justify-content:center;
-  width:44px; height:44px; border-radius:50%;
-  background:linear-gradient(135deg,#ec4899,#a855f7); color:#fff;
-  border:none; cursor:pointer; font-size:1.1rem; transition:.2s;
-  box-shadow:0 4px 16px rgba(236,72,153,.4);
-}
-.spk-mic:hover{transform:scale(1.1)}
-.spk-mic.recording{background:var(--err);animation:rpulse 1s infinite}
-
-/* Animations */
-.hero-glow{position:relative;overflow:hidden}
-.hero-glow::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent,rgba(37,99,235,.08),transparent,rgba(124,58,237,.06),transparent);animation:glowSpin 20s linear infinite;z-index:-1}
-@keyframes glowSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.card-hover{transition:all .3s cubic-bezier(.4,0,.2,1)}
-.card-hover:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(37,99,235,.25);border-color:rgba(37,99,235,.5)}
-.gradient-text{background:linear-gradient(135deg,#60a5fa,#a78bfa,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.pulse-glow{animation:pulseGlow 2s ease-in-out infinite}
-@keyframes pulseGlow{0%,100%{box-shadow:0 0 20px rgba(37,99,235,.2)}50%{box-shadow:0 0 40px rgba(124,58,237,.4)}}
-.float{animation:float 3s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.shimmer{position:relative;overflow:hidden}
-.shimmer::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),transparent);animation:shimmer 3s infinite}
-@keyframes shimmer{0%{left:-100%}100%{left:100%}}
-.msg.typing{display:flex;gap:4px;align-items:center;padding:10px 14px}
-.msg.typing::after{content:'';display:flex;gap:3px}
-.msg.typing span{width:6px;height:6px;border-radius:50%;background:var(--tx2);animation:typingBounce 1.4s infinite ease-in-out}
-.msg.typing span:nth-child(1){animation-delay:-.32s}
-.msg.typing span:nth-child(2){animation-delay:-.16s}
-@keyframes typingBounce{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
-
-.tab{transition:all .2s ease}
-.tab:hover{transform:translateY(-1px)}
-.tab.ac{transform:scale(1.05)}
-.wod{position:relative;overflow:hidden}
-.wod::before{content:'';position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;background:linear-gradient(135deg,#2563eb,#7c3aed,#ec4899,#f59e0b);border-radius:20px;z-index:-1;opacity:.5;filter:blur(8px)}
-.cd{backdrop-filter:blur(10px)}
-.btn{position:relative;overflow:hidden}
-.btn::after{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:rgba(255,255,255,.15);border-radius:50%;transform:translate(-50%,-50%);transition:width .4s,height .4s}
-.btn:active::after{width:200px;height:200px}
-
-.hero-section{position:relative;padding:40px 20px;text-align:center;overflow:hidden}
-.hero-section::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 50% 50%,rgba(99,102,241,.15) 0%,transparent 70%);z-index:-1}
-.hero-badge{display:inline-block;padding:6px 16px;border-radius:99px;background:linear-gradient(135deg,rgba(99,102,241,.2),rgba(168,85,247,.2));border:1px solid rgba(99,102,241,.3);font-size:.8rem;font-weight:600;color:var(--acc);margin-bottom:16px;animation:fadeInUp .6s ease-out}
-@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
-.btn:active{transform:scale(.97)!important}
-.qo:active{transform:scale(.98)}
-.tab:active{transform:scale(.95)}
-a:focus{outline:none!important}
-
-@media(max-width:640px){
-  .tp{padding:8px 12px;gap:8px}
-  .tp .sts{gap:6px}
-  .tp .st{font-size:.7rem;padding:2px 8px}
-  .tp .br{font-size:.85rem}
-  .cb{width:calc(100% - 24px);right:12px;bottom:70px;height:400px;border-radius:16px}
-  .wod .wd{font-size:1.8rem}
-  .wod{padding:24px 16px}
-  .cg{grid-template-columns:1fr}
-  .pg{padding:70px 14px 30px}
-  .pt{font-size:1.4rem}
-  .cd{padding:16px}
-  .fab{width:48px;height:48px;font-size:1.2rem;right:12px;bottom:12px;border-radius:14px}
-  .vl{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
-  .pg2{grid-template-columns:repeat(2,1fr)}
-  .fcw .fc{max-width:260px;height:180px}
-}
-</style>
-<!-- Particles canvas -->
-<canvas id="particleCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none"></canvas>
-<script>
-(function(){
-  var cv=document.getElementById('particleCanvas');
-  var ctx=cv.getContext('2d');
-  var ps=[];
-  function resize(){cv.width=window.innerWidth;cv.height=window.innerHeight;}
-  resize();window.addEventListener('resize',resize);
-  for(var i=0;i<50;i++){
-    ps.push({
-      x:Math.random()*cv.width, y:Math.random()*cv.height,
-      r:Math.random()*3+1, dx:(Math.random()-.5)*.5, dy:(Math.random()-.5)*.5,
-      o:Math.random()*.3+.1
-    });
-  }
-  function draw(){
-    ctx.clearRect(0,0,cv.width,cv.height);
-    ps.forEach(function(p){
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle='rgba(99,102,241,'+p.o+')';
-      ctx.fill();
-      p.x+=p.dx; p.y+=p.dy;
-      if(p.x<0||p.x>cv.width)p.dx*=-1;
-      if(p.y<0||p.y>cv.height)p.dy*=-1;
-    });
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-</script>
-<canvas id="pcv" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:.6"></canvas>
-<script>
-(function(){
-  var cv=document.getElementById('pcv'), cx=cv.getContext('2d'), ps=[];
-  function rs(){cv.width=window.innerWidth;cv.height=window.innerHeight}
-  rs();window.addEventListener('resize',rs);
-  var colors=['99,102,241','168,85,247','236,72,153'];
-  for(var i=0;i<40;i++){
-    ps.push({
-      x:Math.random()*cv.width, y:Math.random()*cv.height,
-      r:Math.random()*2+.5, dx:(Math.random()-.5)*.3, dy:(Math.random()-.5)*.3,
-      o:Math.random()*.25+.05, c:colors[Math.floor(Math.random()*3)]
-    });
-  }
-  function draw(){
-    cx.clearRect(0,0,cv.width,cv.height);
-    ps.forEach(function(p){
-      cx.beginPath();
-      cx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      cx.fillStyle='rgba('+p.c+','+p.o+')';
-      cx.fill();
-      p.x+=p.dx; p.y+=p.dy;
-      if(p.x<0||p.x>cv.width)p.dx*=-1;
-      if(p.y<0||p.y>cv.height)p.dy*=-1;
-    });
-    cx.strokeStyle='rgba(99,102,241,.03)';cx.lineWidth=.5;
-    for(var i=0;i<ps.length;i++)
-      for(var j=i+1;j<ps.length;j++){
-        var dx=ps[i].x-ps[j].x, dy=ps[i].y-ps[j].y;
-        var d=Math.sqrt(dx*dx+dy*dy);
-        if(d<120){
-          cx.beginPath();
-          cx.moveTo(ps[i].x,ps[i].y);
-          cx.lineTo(ps[j].x,ps[j].y);
-          cx.stroke();
-        }
-      }
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-</script>
-<style>
-.pg.a{animation:pageIn .4s ease-out}
-@keyframes pageIn{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-.cd{transition:all .35s cubic-bezier(.4,0,.2,1)}
-.cd:hover{transform:translateY(-4px) scale(1.01)}
-.btn:active{transform:scale(.95)!important;transition:transform .1s ease}
-.tab:active{transform:scale(.93)!important;transition:transform .1s ease}
-.qo:active{transform:scale(.98)!important;transition:transform .1s ease}
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<!-- Top bar -->
+
+<canvas id="bgCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none"></canvas>
+
+<!-- ======================= TOP BAR ======================= -->
 <div class="tp">
   <div class="br"><i class="fa-solid fa-language" style="color:var(--acc);-webkit-text-fill-color:var(--acc)"></i> English Zero-to-Hero</div>
   <div class="sts">
     <div class="st"><i class="fa-solid fa-star"></i> <b id="sxp">0</b> XP</div>
     <div class="st"><i class="fa-solid fa-fire"></i> <b id="ssk">0</b> 🔥</div>
-    <div class="st"><i class="fa-solid fa-book-open"></i> <b id="sdn">0</b>/50</div>
+    <div class="st"><i class="fa-solid fa-book-open"></i> <b id="sdn">0/50</b></div>
     <div class="st"><span class="bg b-a0" id="slv">A0</span></div>
   </div>
 </div>
 
-<!-- FAB -->
-<button class="fab" id="cfab" onclick="tChat()" aria-label="AI chatni ochish"><i class="fa-solid fa-comment-dots"></i></button>
+<button class="fab" id="cfab" onclick="tChat()" aria-label="AI o'qituvchi"><i class="fa-solid fa-comment-dots"></i></button>
 
-<!-- Chat box -->
+<!-- ======================= AI CHAT ======================= -->
 <div class="cb" id="cbox">
   <div class="cbh">
     <div class="nm"><i class="fa-solid fa-robot"></i> AI O'qituvchi</div>
@@ -421,11 +45,10 @@ a:focus{outline:none!important}
   <div class="cbf">
     <input type="text" id="cinp" placeholder="Xabaringizni yozing..." onkeydown="if(event.key==='Enter')sMsg()" aria-label="Xabar">
     <button onclick="sMsg()" aria-label="Yuborish"><i class="fa-solid fa-paper-plane"></i></button>
-    <button class="rec-btn" id="recBtn" onclick="toggleRec()" title="Ovozli gapirish" aria-label="Ovozli"><i class="fa-solid fa-microphone"></i></button>
   </div>
 </div>
 
-<!-- Page 0: Bosh sahifa -->
+<!-- ======================= PAGE 0: HOME ======================= -->
 <div class="pg a" id="p0">
   <div class="wod">
     <span class="lb">📖 Bugungi so'z</span>
@@ -433,104 +56,106 @@ a:focus{outline:none!important}
     <div class="mn" id="wt"></div>
     <span class="ex" id="we"></span>
   </div>
-  <h2 class="pt hero-glow" style="font-size:2.2rem;line-height:1.2">🇺🇸 <span class="gradient-text">Ingliz tilini 0 dan</span> o'rganing</h2>
+
+  <h2 class="pt" style="font-size:2.1rem;line-height:1.2">🇺🇸 <span class="gradient-text">Ingliz tilini 0 dan</span> o'rganing</h2>
   <p class="ps">50 dars · 4 ko'nikma · AI yordamida · A0 dan C1 gacha</p>
+
   <div class="st2" style="margin-top:8px"><i class="fa-solid fa-rocket"></i> Tezkor boshlash</div>
   <div class="cg">
     <div class="cd card-hover" onclick="go('p1')">
-      <div style="font-size:1.8rem;margin-bottom:5px">📚</div>
-      <h3 style="margin-bottom:3px">Darslar</h3>
-      <p style="color:var(--tx2);font-size:.83rem;margin-bottom:8px">50 dars. Har biri: so'zlar, matn, test, audio, yozish.</p>
-      <span class="btn bs bo" style="width:100%;justify-content:center;cursor:pointer" onclick="event.stopPropagation();go('p1')">Darslar <i class="fa-solid fa-arrow-right"></i></span>
+      <div style="font-size:1.8rem;margin-bottom:6px">📚</div>
+      <h3 style="margin-bottom:5px">Darslar</h3>
+      <p style="color:var(--tx2);font-size:.83rem;margin-bottom:10px">50 dars, A0 dan C1 gacha: so'zlar, matn, test, audio, yozish.</p>
+      <span class="btn bs bo" style="width:100%;justify-content:center">Boshlash <i class="fa-solid fa-arrow-right"></i></span>
     </div>
     <div class="cd card-hover" onclick="go('p2')">
-      <div style="font-size:1.8rem;margin-bottom:5px">📝</div>
-      <h3 style="margin-bottom:3px">Daraja testi</h3>
-      <p style="color:var(--tx2);font-size:.83rem;margin-bottom:8px">20 ta savol → A0/A1/A2/B1/C1.</p>
-      <span class="btn bs bo" style="width:100%;justify-content:center;cursor:pointer" onclick="event.stopPropagation();go('p2')">O'tkazing <i class="fa-solid fa-arrow-right"></i></span>
+      <div style="font-size:1.8rem;margin-bottom:6px">📝</div>
+      <h3 style="margin-bottom:5px">Daraja testi</h3>
+      <p style="color:var(--tx2);font-size:.83rem;margin-bottom:10px">20 savol — darajangizni aniqlang: A0 / A1 / A2 / B1 / C1.</p>
+      <span class="btn bs bo" style="width:100%;justify-content:center">Testni boshlash <i class="fa-solid fa-arrow-right"></i></span>
     </div>
     <div class="cd card-hover" onclick="go('p3')">
-      <div style="font-size:1.8rem;margin-bottom:5px">🃏</div>
-      <h3 style="margin-bottom:3px">Flashcards</h3>
-      <p style="color:var(--tx2);font-size:.83rem;margin-bottom:8px">100+ so'z. Kartochkani bosing — tarjima ko'ring.</p>
-      <span class="btn bs bo" style="width:100%;justify-content:center;cursor:pointer" onclick="event.stopPropagation();go('p3')">O'rganish <i class="fa-solid fa-arrow-right"></i></span>
+      <div style="font-size:1.8rem;margin-bottom:6px">🃏</div>
+      <h3 style="margin-bottom:5px">Flashcards</h3>
+      <p style="color:var(--tx2);font-size:.83rem;margin-bottom:10px">100+ so'z kartochkalari va qidiruv.</p>
+      <span class="btn bs bo" style="width:100%;justify-content:center">O'rganish <i class="fa-solid fa-arrow-right"></i></span>
     </div>
     <div class="cd card-hover" onclick="go('p4')">
-      <div style="font-size:1.8rem;margin-bottom:5px">📊</div>
-      <h3 style="margin-bottom:3px">Rivojlanish</h3>
-      <p style="color:var(--tx2);font-size:.83rem;margin-bottom:8px">XP, streak, yutuqlar, leaderboard.</p>
-      <span class="btn bs bo" style="width:100%;justify-content:center;cursor:pointer" onclick="event.stopPropagation();go('p4')">Ko'rish <i class="fa-solid fa-arrow-right"></i></span>
+      <div style="font-size:1.8rem;margin-bottom:6px">📊</div>
+      <h3 style="margin-bottom:5px">Rivojlanish</h3>
+      <p style="color:var(--tx2);font-size:.83rem;margin-bottom:10px">XP, kunlik maqsad, yutuqlar va reyting.</p>
+      <span class="btn bs bo" style="width:100%;justify-content:center">Ko'rish <i class="fa-solid fa-arrow-right"></i></span>
     </div>
   </div>
 
-  <div class="st2" style="margin-top:26px">💬 AI bilan suhbat</div>
-  <div class="cd" style="text-align:center;padding:20px">
+  <div class="st2">💬 AI o'qituvchi</div>
+  <div class="cd" style="text-align:center;padding:22px">
     <div style="font-size:1.8rem;margin-bottom:6px">🤖</div>
-    <p style="color:var(--tx2);margin-bottom:10px">Saytda AI o'qituvchi bilan yozib qoling.</p>
-    <button class="btn bp" onclick="tChat();document.getElementById('cinp').focus()"><i class="fa-solid fa-comment"></i> AI bilan gaplashish</button>
+    <p style="color:var(--tx2);margin-bottom:12px">Yozing yoki ovoz chiqarib gapiring — AI sizga yordam beradi.</p>
+    <button class="btn bp" onclick="tChat()"><i class="fa-solid fa-comment"></i> Suhbatni boshlash</button>
   </div>
 
-  <div class="st2" style="margin-top:26px"><i class="fa-solid fa-wand-magic-sparkles"></i> Qanday ishlaydi</div>
+  <div class="st2"><i class="fa-solid fa-wand-magic-sparkles"></i> Qanday ishlaydi</div>
   <div class="cg">
-    <div class="cd" style="text-align:center;padding:24px 16px">
-      <div style="font-size:2rem;margin-bottom:8px;width:48px;height:48px;border-radius:12px;background:rgba(99,102,241,.1);display:inline-flex;align-items:center;justify-content:center">📖</div>
+    <div class="cd" style="text-align:center;padding:22px 16px">
+      <div style="font-size:2rem;margin-bottom:8px">📖</div>
       <h3 style="margin-bottom:4px">Reading</h3>
-      <p style="color:var(--tx2);font-size:.85rem">Matn o'qish va test</p>
+      <p style="color:var(--tx2);font-size:.85rem">Matn o'qish va savol-javob</p>
     </div>
-    <div class="cd" style="text-align:center;padding:24px 16px">
-      <div style="font-size:2rem;margin-bottom:8px;width:48px;height:48px;border-radius:12px;background:rgba(168,85,247,.1);display:inline-flex;align-items:center;justify-content:center">🎧</div>
+    <div class="cd" style="text-align:center;padding:22px 16px">
+      <div style="font-size:2rem;margin-bottom:8px">🎧</div>
       <h3 style="margin-bottom:4px">Listening</h3>
-      <p style="color:var(--tx2);font-size:.85rem">Audio diktant</p>
+      <p style="color:var(--tx2);font-size:.85rem">Audio va diktant</p>
     </div>
-    <div class="cd" style="text-align:center;padding:24px 16px">
-      <div style="font-size:2rem;margin-bottom:8px;width:48px;height:48px;border-radius:12px;background:rgba(244,63,94,.1);display:inline-flex;align-items:center;justify-content:center">✍️</div>
+    <div class="cd" style="text-align:center;padding:22px 16px">
+      <div style="font-size:2rem;margin-bottom:8px">✍️</div>
       <h3 style="margin-bottom:4px">Writing</h3>
-      <p style="color:var(--tx2);font-size:.85rem">AI tekshiradi</p>
+      <p style="color:var(--tx2);font-size:.85rem">Tarjima va tekshirish</p>
     </div>
-    <div class="cd" style="text-align:center;padding:24px 16px">
-      <div style="font-size:2rem;margin-bottom:8px;width:48px;height:48px;border-radius:12px;background:rgba(245,158,11,.1);display:inline-flex;align-items:center;justify-content:center">🗣</div>
+    <div class="cd" style="text-align:center;padding:22px 16px">
+      <div style="font-size:2rem;margin-bottom:8px">🗣</div>
       <h3 style="margin-bottom:4px">Speaking</h3>
       <p style="color:var(--tx2);font-size:.85rem">Ovozli mashq</p>
     </div>
   </div>
 
-  <div class="st2" style="margin-top:26px"><i class="fa-brands fa-telegram"></i> Telegram bot</div>
-  <div class="cd" style="text-align:center;padding:24px">
-    <div style="font-size:2rem;margin-bottom:8px">🤖</div>
-    <p style="color:var(--tx2);margin-bottom:12px;font-size:.92rem">Telegram bot orqali ham o'rganing</p>
-    <a href="https://t.me/" class="btn bp" target="_blank" style="width:100%;justify-content:center;padding:12px"><i class="fa-brands fa-telegram"></i> Telegramda boshlash</a>
+  <div class="st2"><i class="fa-brands fa-telegram"></i> Telegram bot</div>
+  <div class="cd" style="text-align:center;padding:22px">
+    <p style="color:var(--tx2);margin-bottom:12px;font-size:.92rem">Telegram bot orqali ham mashq qiling</p>
+    <a href="https://t.me/" class="btn bp" target="_blank" rel="noopener" style="width:100%;justify-content:center;padding:12px"><i class="fa-brands fa-telegram"></i> Telegramda boshlash</a>
   </div>
 </div>
 
-<!-- Page 1: Darslar -->
+<!-- ======================= PAGE 1: LESSONS ======================= -->
 <div class="pg" id="p1">
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap">
     <button class="btn bo bs" onclick="go('p0')"><i class="fa-solid fa-arrow-left"></i> Bosh</button>
-    <div class="tabs" id="lt">
-      <button class="tab ac" onclick="fL('all',this)">Barchasi</button>
-      <button class="tab" onclick="fL('A0',this)">A0</button>
-      <button class="tab" onclick="fL('A1',this)">A1</button>
-      <button class="tab" onclick="fL('A2',this)">A2</button>
-      <button class="tab" onclick="fL('B1',this)">B1</button>
-      <button class="tab" onclick="fL('B2',this)">B2</button>
-      <button class="tab" onclick="fL('C1',this)">C1</button>
-    </div>
   </div>
   <h2 class="pt">📚 Darslar</h2>
-  <p class="ps">Har bir darsni tugatganingizdan keyin keyingisi ochiladi 🔒</p>
+  <p class="ps">A0 dan C1 gacha 50 dars. Har bir darsda so'zlar, matn, test, audio, yozish va gapirish mashqlari bor.</p>
+  <div class="tabs" id="lt">
+    <button class="tab ac" onclick="fL('all',this)">Barchasi</button>
+    <button class="tab" onclick="fL('A0',this)">A0</button>
+    <button class="tab" onclick="fL('A1',this)">A1</button>
+    <button class="tab" onclick="fL('A2',this)">A2</button>
+    <button class="tab" onclick="fL('B1',this)">B1</button>
+    <button class="tab" onclick="fL('B2',this)">B2</button>
+    <button class="tab" onclick="fL('C1',this)">C1</button>
+  </div>
   <div id="ll" class="cg"></div>
 </div>
 
-<!-- Page 5: Dars tafsilotlari -->
+<!-- ======================= PAGE 5: LESSON DETAIL ======================= -->
 <div class="pg" id="p5">
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap">
     <button class="btn bo bs" onclick="go('p1')"><i class="fa-solid fa-arrow-left"></i> Darslar</button>
-    <button class="btn bs bo" onclick="go('p3')"><i class="fa-solid fa-clone"></i> Dars so'zlari</button>
+    <button class="btn bs bo" onclick="go('p3')"><i class="fa-solid fa-clone"></i> Flashcards</button>
+    <button class="btn bs bo" onclick="go('p4')"><i class="fa-solid fa-chart-simple"></i> Natijalar</button>
   </div>
   <div id="lc"></div>
 </div>
 
-<!-- Page 2: Daraja testi -->
+<!-- ======================= PAGE 2: LEVEL TEST ======================= -->
 <div class="pg" id="p2">
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
     <button class="btn bo bs" onclick="go('p0')"><i class="fa-solid fa-arrow-left"></i> Bosh</button>
@@ -538,36 +163,38 @@ a:focus{outline:none!important}
   <h2 class="pt">📝 Daraja testi</h2>
   <p class="ps">20 ta savol. Har bir to'g'ri javob +5 XP.</p>
   <div id="tc">
-    <div class="cd" style="text-align:center;padding:20px">
+    <div class="cd" style="text-align:center;padding:24px">
       <div style="font-size:2rem;margin-bottom:8px">📝</div>
-      <h3 style="margin-bottom:5px">Testni boshlash</h3>
-      <p style="color:var(--tx2);margin-bottom:14px">20 ta savolga javob bering.</p>
+      <h3 style="margin-bottom:6px">Testni boshlash</h3>
+      <p style="color:var(--tx2);margin-bottom:14px">20 ta savolga javob bering va darajangizni bilib oling.</p>
       <button class="btn bp" onclick="sT()"><i class="fa-solid fa-play"></i> Boshlash</button>
     </div>
   </div>
 </div>
 
-<!-- Page 3: Flashcards -->
+<!-- ======================= PAGE 3: FLASHCARDS ======================= -->
 <div class="pg" id="p3">
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap">
     <button class="btn bo bs" onclick="go('p0')"><i class="fa-solid fa-arrow-left"></i> Bosh</button>
   </div>
   <h2 class="pt">🃏 Flashcards</h2>
-  <p class="ps">100+ so'z. Kartochkani bosing — tarjimani ko'ring.</p>
+  <p class="ps">100+ so'z. Kartochkani bosing — tarjimani ko'ring. So'z ustiga bosib talaffuzni eshitasiz.</p>
+
   <div class="tabs" id="ft">
-    <button class="tab ac" onclick="setFS('a',this)">Umumiy (100+ so'z)</button>
+    <button class="tab ac" onclick="setFS('a',this)">Umumiy so'zlar</button>
     <button class="tab" onclick="setFS('l',this)">Dars so'zlaridan</button>
   </div>
   <div id="fsl" style="display:none;margin-bottom:12px">
-    <select id="fli" class="inp" style="max-width:300px" onchange="setFL(this.value)">
+    <select id="fli" class="inp" style="max-width:320px" onchange="setFL(this.value)">
       <option value="0">Darsni tanlang...</option>
     </select>
   </div>
+
   <div class="fcw">
-    <div class="fc" onclick="this.classList.toggle('flp')">
+    <div class="fc" id="fcCard" onclick="this.classList.toggle('flp')">
       <div class="fci">
         <div class="fcf">
-          <div class="fcw2" id="fw" onclick="event.stopPropagation();speakWord(this.textContent)" title="Talaffuzni eshiting">...</div>
+          <div class="fcw2" id="fw" onclick="event.stopPropagation();speakWord(this.textContent)">...</div>
           <div class="fch"><i class="fa-solid fa-hand-pointer"></i> Bosing</div>
         </div>
         <div class="fcb">
@@ -577,15 +204,17 @@ a:focus{outline:none!important}
       </div>
     </div>
   </div>
-  <div style="display:flex;justify-content:center;gap:10px;align-items:center;margin:4px 0 12px">
+
+  <div style="display:flex;justify-content:center;gap:10px;align-items:center;margin:4px 0 16px">
     <button class="btn bo bs" onclick="mFc(-1)"><i class="fa-solid fa-chevron-left"></i></button>
     <span style="color:var(--tx2);font-size:.85rem" id="fp">1/1</span>
     <button class="btn bp bs" onclick="mFc(1)"><i class="fa-solid fa-chevron-right"></i></button>
   </div>
-  <div class="st2"><i class="fa-solid fa-magnifying-glass"></i> Qidirish</div>
-  <div class="cd" style="position:relative">
-    <input class="inp" id="si" style="padding-left:36px" placeholder="So'z yoki tarjima qidirish..." onkeydown="if(event.key==='Enter')doS()">
-    <div style="margin-top:8px">
+
+  <div class="st2"><i class="fa-solid fa-magnifying-glass"></i> So'z qidirish</div>
+  <div class="cd" style="cursor:default">
+    <input class="inp" id="si" placeholder="So'z yoki tarjima qidirish..." onkeydown="if(event.key==='Enter')doS()">
+    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn bs bp" onclick="doS()"><i class="fa-solid fa-magnifying-glass"></i> Qidirish</button>
       <button class="btn bs bo" onclick="clS()">Tozalash</button>
     </div>
@@ -593,7 +222,7 @@ a:focus{outline:none!important}
   </div>
 </div>
 
-<!-- Page 4: Rivojlanish -->
+<!-- ======================= PAGE 4: PROGRESS ======================= -->
 <div class="pg" id="p4">
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap">
     <button class="btn bo bs" onclick="go('p0')"><i class="fa-solid fa-arrow-left"></i> Bosh</button>
@@ -601,773 +230,60 @@ a:focus{outline:none!important}
     <button class="btn bs bo" onclick="go('p2')"><i class="fa-solid fa-file-pen"></i> Test</button>
   </div>
   <h2 class="pt">📊 Rivojlanish</h2>
-  <p class="ps">Ma'lumotlar brauzer local storage'ida.</p>
+  <p class="ps">Ma'lumotlar brauzeringizda (local storage) saqlanadi.</p>
+
   <div class="pg2">
     <div class="pb"><div class="n" id="pxp">0</div><div class="l">⭐ XP</div></div>
     <div class="pb"><div class="n" id="pdn">0</div><div class="l">✅ Darslar</div></div>
     <div class="pb"><div class="n" id="plv">A0</div><div class="l">🎯 Daraja</div></div>
     <div class="pb"><div class="n" id="psk">0</div><div class="l">🔥 Streak</div></div>
   </div>
-  <div class="cd">
-    <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+
+  <div class="cd" style="cursor:default">
+    <div style="display:flex;justify-content:space-between;margin-bottom:4px">
       <span style="font-weight:700">Bugungi maqsad (30 XP)</span>
       <span style="font-weight:700" id="pxt">0/30</span>
     </div>
     <div class="prr"><div class="prf" id="pxf" style="width:0%"></div></div>
   </div>
-  <div class="st2">🏆 Yutuqlar</div>
+
+  <div class="st2">🏆 Yutuqlar <span style="font-size:.8rem;color:var(--tx2);margin-left:auto" id="achCount">0/8</span></div>
   <div id="al"></div>
-  <div class="st2" style="margin-top:16px">🏅 Top foydalanuvchilar</div>
+
+  <div class="st2">🏅 Top o'quvchilar</div>
   <div class="vl" id="lb"></div>
 </div>
 
-<!-- ============ KELGUZ JAVOB ============ -->
+<script src="app.js"></script>
 <script>
-// ====== LESSON DATA ======
-var L = [
-{id:1,lv:'A0',t:'Salomlashish va Tanishuv',
-  v:[['Hello','Salom'],['Good morning','Erta tong'],['Goodbye','Xayr'],['Name','Ism'],['My name is','Mening ismim'],['I am','Men'],['You are','Siz'],['Nice to meet you','Tanishganimdan xursandman'],['What is your name?','Ismingiz nima?'],['How are you?','Qandaysiniz?'],['I\'m fine','Yaxshiman'],['Thank you','Rahmat'],['Please','Iltimos'],['Sorry','Kechirasiz'],['Yes','Ha'],['No','Yo\'q'],['From','...dan'],['This is','Bu'],['My friend','Mening do\'stim'],['Teacher','O\'qituvchi'],['Student','Talaba'],['Learn','O\'rganmoq'],['Speak','Gapirmoq'],['Help','Yordam'],['Welcome','Xush kelibsiz']],
-  r:{t:'Alex: Hello! My name is Alex.\nSarah: Hi! I am Sarah. Nice to meet you.\nAlex: Nice to meet you too! Are you from Tashkent?\nSarah: Yes, I am. And you?',q:'Sarahlardan kim Toshkentdan?',o:['Alex','Sarah','Tom','David'],c:1},
-  ls:'Hello, my name is Alex. Nice to meet you.',w:'Salom! Mening ismim ...',ws:'Hello! My name is ...',sp:'Introduce yourself.',g:'Ism - Name | Salomlashish - Greetings | Rahmat - Thank you'},
-{id:2,lv:'A0',t:'Raqamlar va Yosh',
-  v:[['One','Bir'],['Two','Ikki'],['Three','Uch'],['Four','To\'rt'],['Five','Besh'],['Six','Olti'],['Seven','Yetti'],['Eight','Sakkiz'],['Nine','To\'qqiz'],['Ten','O\'n'],['Twenty','Yigirma'],['Thirty','O\'ttiz'],['Hundred','Yuz'],['Years old','Yoshda'],['Student','Talaba'],['Teacher','O\'qituvchi'],['Doctor','Shifokor'],['Old','Katta'],['Young','Yosh'],['First','Birinchi'],['Second','Ikkinchi'],['Third','Uchinchi'],['Number','Raqam'],['Age','Yosh'],['Birthday','Tug\'ilgan kun']],
-  r:{t:'Anna is twenty-five. She is a teacher.\nMark is thirty. He is an engineer.',q:'Anna necha yoshda?',o:['5','20','25','30'],c:2},
-  ls:'I am twenty-five years old.',w:'Men 18 yoshdaman.',ws:'I am 18 years old.',sp:'Say your age and job.',g:'Raqamlar - Numbers | Yosh - Age'},
-{id:3,lv:'A0',t:'Oila va Qarindoshlar',
-  v:[['Father','Ota'],['Mother','Ona'],['Brother','Aka'],['Sister','Opa'],['Family','Oila'],['Grandfather','Katta ota'],['Grandmother','Katta ona'],['Son','O\'g\'il'],['Daughter','Qiz'],['Husband','Er'],['Wife','Xotin'],['Uncle','Amaki'],['Aunt','Tegishli'],['Cousin','Jiyana'],['Love','Sevmoq'],['Big','Katta'],['Small','Kichik'],['I have','Mening bor'],['Parents','Ota-onalar'],['Baby','Chaqaloq'],['Young','Yosh'],['Old','Katta'],['Together','Birga'],['Home','Uy'],['Happy','Baxtli']],
-  r:{t:'I have a big family. My father is a doctor. My mother is a teacher.',q:'Onasi nima qiladi?',o:['Doctor','Driver','Teacher','Engineer'],c:2},
-  ls:'My father is a doctor.',w:'Mening otam shifokor.',ws:'My father is a doctor.',sp:'Talk about your family.',g:'Oila - Family | Ota - Father | Ona - Mother'},
-{id:4,lv:'A1',t:'Kundalik Harakatlar',
-  v:[['Wake up','Uyg\'onmoq'],['Get up','Turmoq'],['Drink','Ichmoq'],['Eat','Yemoq'],['Go to work','Ishga bormoq'],['Sleep','Uxlamoq'],['Rest','Dam olmoq'],['Morning','Ertalab'],['Evening','Kechqurun'],['Night','Kechasi'],['Every day','Har kuni'],['Always','Doimo'],['Never','Hech qachon'],['Breakfast','Nonushta'],['Lunch','Tushlik'],['Dinner','Kechki ovqat'],['Coffee','Kofe'],['Tea','Choy'],['Shower','Dush'],['Brush teeth','Tish cho\'tqamoq'],['Read','O\'qimoq'],['Write','Yozmoq'],['Study','O\'qish'],['Work','Ish'],['Start','Boshlamoq']],
-  r:{t:'Every day, I wake up at 7. I drink coffee. I go to work.',q:'U ertalab nima ichadi?',o:['Tea','Juice','Milk','Coffee'],c:3},
-  ls:'Every day I wake up at seven.',w:'Men har kuni ertalab uyg\'onaman.',ws:'I wake up at 7 every morning.',sp:'Describe your morning.',g:'Uyg\'onmoq - Wake up | Ichmoq - To drink'},
-{id:5,lv:'A1',t:'Taom va Ichimlik',
-  v:[['Water','Suv'],['Bread','Non'],['Apple','Olma'],['Rice','Guruch'],['Meat','Go\'sht'],['Milk','Sut'],['Eggs','Tuxum'],['Fish','Baliq'],['Chicken','Tovuq'],['Vegetables','Sabzavot'],['Fruit','Meva'],['Sugar','Shakar'],['Salt','Tuz'],['I would like','...istayman'],['Waiter','Ofitsiant'],['Delicious','Mazzali'],['Hungry','Och'],['Thirsty','Chanqagan'],['Menu','Menyu'],['Order','Buyurtma'],['Plate','Taroq'],['Fork','Sanchq'],['Knife','Pichoq'],['Spoon','Qoshiq'],['Cup','Kupa']],
-  r:{t:'Waiter: What would you like?\nTom: Rice and chicken, please.',q:'Tom nima oldi?',o:['Juice','Rice and chicken','Coffee','Milk'],c:1},
-  ls:'I would like water and bread, please.',w:'Men suv va non istayman.',ws:'I would like water and bread, please.',sp:'Order food.',g:'I would like - Men istayman | Mazzali - Delicious'},
-{id:6,lv:'A1',t:'Ranglar va Buyumlar',
-  v:[['Red','Qizil'],['Blue','Ko\'k'],['Green','Yashil'],['Yellow','Sariq'],['White','O\'q'],['Black','Qora'],['Orange','Piyo\'z'],['Purple','Binafsha'],['Pink','Rangli'],['Brown','Jigarrang'],['Beautiful','Chiroyli'],['Big','Katta'],['Small','Kichik'],['New','Yangi'],['Old','Eski'],['Cheap','Arzon'],['Expensive','Qimmat'],['This is','Bu'],['My','Mening'],['Shirt','Ko\'ylak'],['Pants','Shalvar'],['Shoes','Poyabzal'],['Bag','Sumka'],['Hat','Kepka'],['Dress','Kiyim']],
-  r:{t:'Lisa: Look! This is a beautiful red dress.\nAnna: I like green more.',q:'Lisa nima yoqtiradi?',o:['Green bag','Red dress','Blue shirt','Yellow hat'],c:1},
-  ls:'This is a beautiful blue car.',w:'Bu chiroyli yashil daftar.',ws:'This is a beautiful green notebook.',sp:'Describe a colorful object.',g:'Ranglar - Colors | Chiroyli - Beautiful'},
-{id:7,lv:'A1',t:'Vaqt va Kun',
-  v:[['Morning','Ertalab'],['Afternoon','Kechki'],['Evening','Kechqurun'],['Night','Kechasi'],['Today','Bugun'],['Tomorrow','Ertaga'],['Yesterday','Kecha'],['Monday','Dushanba'],['Tuesday','Seshanba'],['Wednesday','Chorshanba'],['Thursday','Payshanba'],['Friday','Juma'],['Saturday','Shanba'],['Sunday','Yakshanba'],['Now','Hozir'],['Time','Vaqt'],['Clock','Soat'],['Breakfast','Nonushta'],['Lunch','Tushlik'],['Dinner','Kechki'],['Hour','Soat'],['Minute','Daqiqa'],['Second','Soniya'],['Early','Erta'],['Late','Kech']],
-  r:{t:'It is Monday morning. The time is 8 AM.',q:'Sarah qachon boradi?',o:['Weekends','Monday morning','Sunday','Night'],c:1},
-  ls:'What time is it? It is eight o\'clock.',w:'Hozir soat 9.',ws:'It is 9 AM.',sp:'Tell the time.',g:'Kunlar - Days | Vaqt - Time'},
-{id:8,lv:'A1',t:'Sayyoh va Joylar',
-  v:[['Airport','Aeroport'],['Hotel','Mehmonxona'],['Beach','Plyaj'],['Station','Stansiya'],['Ticket','Chipta'],['Taxi','Taksi'],['Bus','Avtobus'],['Train','Poyezd'],['Where is?','Qayerda?'],['Near','Yaqinda'],['Far','Uzoqda'],['Here','Bu yerda'],['There','U yerda'],['Left','Chap'],['Right','O\'ng'],['Straight','To\'g\'ri'],['Turn','Burilmoq'],['Excuse me','Kechirasiz'],['Map','Xarita'],['Passport','Pasport'],['Luggage','Yuk'],['Room','Xona'],['Travel','Sayyoh'],['Visit','Tashrif'],['Holiday','Tashish']],
-  r:{t:'Where is the hotel? It is near the beach.',q:'Mehmonxona qayerda?',o:['Airport','Beach','Station','City'],c:1},
-  ls:'Where is the hotel?',w:'Mehmonxona plyaj yaqinida.',ws:'The hotel is near the beach.',sp:'Ask directions.',g:'Qayerda? - Where? | Yaqinda - Near'},
-{id:9,lv:'A1',t:'Dukkan va Xarid',
-  v:[['Shop','Dukkan'],['How much?','Nechada?'],['Cheap','Arzon'],['Expensive','Qimmat'],['Money','Pul'],['Buy','Sotib olmoq'],['Price','Narx'],['Discount','Chegirma'],['Cash','Naqd'],['Card','Karta'],['Size','O\'lcham'],['Color','Rang'],['Shirt','Ko\'ylak'],['Phone','Telefon'],['Bag','Sumka'],['Sale','Chegirma'],['Receipt','Check'],['Want','Xohlamoq'],['Need','Kerak'],['Show','Ko\'rsatmoq'],['Try','Sinamoq'],['Change','Almashtirmoq'],['Return','Qaytarmoq']],
-  r:{t:'How much is this shirt? It is 50,000 so\'m.',q:'Ko\'ylak qancha turadi?',o:['30,000','50,000','20,000','100,000'],c:1},
-  ls:'How much is this book?',w:'Bu kitob qancha turadi?',ws:'How much is this book?',sp:'Ask about prices.',g:'Nechada? - How much? | Narx - Price'},
-{id:10,lv:'A1',t:'Ob-havo va Fasllar',
-  v:[['Hot','Issiq'],['Cold','Sovuq'],['Rain','Yomg\'ir'],['Snow','Qor'],['Wind','Shamol'],['Sun','Quyosh'],['Cloud','Bulut'],['Summer','Yoz'],['Winter','Qish'],['Spring','Bahor'],['Autumn','Kuz'],['Warm','Iliq'],['Cool','Salqin'],['Umbrella','Soyanchqa'],['Jacket','Kurtka'],['Sunny','Quyoshli'],['Cloudy','Bulutli'],['Windy','Shamolli'],['Weather','Ob-havo'],['Temperature','Harorat'],['Today','Bugun'],['Tomorrow','Ertaga'],['Nice','Chiroyli'],['Ice','Muz'],['Frost','Muzlash']],
-  r:{t:'Today is very hot. The sun is shining.',q:'Bugun qanday?',o:['Sovuq','Issiq','Yomg\'ir','Bulutli'],c:1},
-  ls:'It is raining today.',w:'Bugun juda issiq.',ws:'Today is very hot.',sp:'Describe weather.',g:'Issiq - Hot | Sovuq - Cold | Yomg\'ir - Rain'},
-{id:11,lv:'A1',t:'Kasblar va Ish',
-  v:[['Doctor','Shifokor'],['Teacher','O\'qituvchi'],['Engineer','Muhandis'],['Nurse','Hamshira'],['Driver','Haydovchi'],['Cook','Oshpaz'],['Farmer','Dehqon'],['Worker','Ishchi'],['Boss','Rahbar'],['Hospital','Kasalxona'],['School','Maktab'],['Office','Idora'],['Work','Ish'],['Job','Kasb'],['I work at','Men ishlayman'],['I am a','Men ...man'],['Want to be','Bo\'lmoqchi'],['Bank','Bank'],['Factory','Zavod'],['Money','Pul'],['Team','Jamoah'],['Help','Yordam'],['Good','Yaxshi'],['Busy','Band'],['Free','Erkin']],
-  r:{t:'She works at a hospital. She is a nurse.',q:'Uning kasbi nima?',o:['Doctor','Teacher','Nurse','Driver'],c:2},
-  ls:'I am a student.',w:'Men talaba-man.',ws:'I am a student.',sp:'Talk about your job.',g:'Kasb - Job | Ish - Work | Shamol - Driver'},
-{id:12,lv:'A2',t:'O\'tgan vaqtlar',
-  v:[['Yesterday','Kecha'],['Last week','O\'tgan hafta'],['Last month','O\'tgan oy'],['Last year','O\'tgan yil'],['Two days ago','Ikki kun oldin'],['Ago','...oldin'],['Went','Ketdim'],['Saw','Ko\'rdim'],['Visited','Tashrif','Buyurdim'],['Traveled','Sayyoh bo\'ldim'],['Studied','O\'qidim'],['Worked','Ishladim'],['Played','O\'ydim'],['Ate','Yedim'],['Drank','Ichdim'],['Sleeped','Uktim'],['Wrote','Yozdим'],['Read','O\'qidim'],['Met','Uchrashtirdim'],['Finished','Tugattim']],
-  r:{t:'Last week I went to Tashkent. I visited my grandmother. I ate delicious plov.',q:'U nima qilgan?',o:['Went to Tashkent','Stayed home','Visited brother','Watched TV'],c:0},
-  ls:'Last week I went to Tashkent.',w:'Men o\'tgan hafta Toshkentga bordim.',ws:'I went to Tashkent last week.',sp:'Talk about what you did last week.',g:'O\'tgan vaqt - Past tense | Ketmoq - To go'},
-... (truncated for brevity — would continue with full 50 lessons)
-];
-
-// ====== FUNCTIONS ======
-var pages = {};
-document.querySelectorAll('.pg').forEach(p => { pages[p.id] = p; });
-
-function go(id) {
-  Object.keys(pages).forEach(k => {
-    const show = k === id;
-    pages[k].style.display = show ? 'block' : 'none';
-    pages[k].classList.toggle('a', show);
-  });
-  // Page-specific init
-  if (id === 'p1') renderLessons(currentFilter || 'all');
-  if (id === 'p3') { fCard(); populateFCSelect(); }
-  if (id === 'p4') updateProgressPage();
-}
-
-var currentFilter = 'all';
-function fL(level, btn) {
-  document.querySelectorAll('#lt .tab').forEach(t => t.classList.remove('ac'));
-  btn.classList.add('ac');
-  currentFilter = level;
-  renderLessons(level);
-}
-
-function renderLessons(filter) {
-  const container = document.getElementById('ll');
-  if (!container) return;
-  container.innerHTML = '';
-  const filtered = filter === 'all' ? L : L.filter(l => l.lv === filter);
-  if (filtered.length === 0) {
-    container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--tx2);font-size:1rem">Bu darajada darslar hali tayyorlanmoqda. Boshqa darajani tanlang.</div>`;
-    return;
+/* Fon zarrachalari (yengil animatsiya) */
+(function () {
+  var cv = document.getElementById('bgCanvas');
+  if (!cv) return;
+  var ctx = cv.getContext('2d'), ps = [];
+  var colors = ['99,102,241', '168,85,247', '236,72,153'];
+  function resize() { cv.width = window.innerWidth; cv.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  for (var i = 0; i < 36; i++) {
+    ps.push({
+      x: Math.random() * cv.width, y: Math.random() * cv.height,
+      r: Math.random() * 2 + 0.6, dx: (Math.random() - .5) * .35, dy: (Math.random() - .5) * .35,
+      o: Math.random() * .25 + .06, c: colors[Math.floor(Math.random() * 3)]
+    });
   }
-  filtered.forEach(l => {
-    const div = document.createElement('div');
-    div.className = 'cd card-hover';
-    div.style.cursor = 'pointer';
-    const badgeClass = 'b-' + l.lv.toLowerCase().replace('a','a').replace('b','b').replace('c','c');
-    div.innerHTML = `
-      <div style="display:flex;align-items:center;gap:12px;height:100%">
-        <div style="font-size:2rem;flex-shrink:0">📘</div>
-        <div style="flex:1;min-width:0">
-          <h3 style="margin-bottom:3px;font-size:1.05rem">${l.t}</h3>
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px">
-            <span class="bg ${badgeClass}">${l.lv}</span>
-            <span style="color:var(--tx2);font-size:.8rem">Dars ${l.id}</span>
-          </div>
-          <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
-            <span style="font-size:.72rem;color:var(--tx2)">📖 ${l.r.t.split('\n').length} qator</span>
-            <span style="font-size:.72rem;color:var(--tx2)">📝 ${l.v.length} so'z</span>
-          </div>
-        </div>
-        <div style="flex-shrink:0">
-          <span class="btn bs bo" style="padding:6px 10px;cursor:pointer" onclick="event.stopPropagation();openLesson(${l.id})">
-            <i class="fa-solid fa-arrow-right" style="font-size:.75rem"></i>
-          </span>
-        </div>
-      </div>
-    `;
-    div.onclick = () => openLesson(l.id);
-    container.appendChild(div);
-  });
-}
-
-function populateFCSelect() {
-  const sel = document.getElementById('fli');
-  if (!sel) return;
-  sel.innerHTML = '<option value="0">Darsni tanlang...</option>';
-  L.forEach(l => {
-    const opt = document.createElement('option');
-    opt.value = l.id;
-    opt.textContent = `Dars ${l.id}: ${l.t} (${l.lv})`;
-    sel.appendChild(opt);
-  });
-}
-
-function openLesson(id) {
-  const lesson = L.find(l => l.id === id);
-  if (!lesson) { go('p1'); return; }
-  localStorage.setItem('currentLesson', id);
-  go('p5');
-  renderLessonDetail(id);
-}
-
-function renderLessonDetail(id) {
-  const container = document.getElementById('lc');
-  const lesson = L.find(l => l.id === id);
-  if (!lesson) { container.innerHTML = '<div style="text-align:center;padding:30px;color:var(--tx2)">Dars topilmadi.</div>'; return; }
-  const allDone = ['reading','listening','writing','speaking'].every(s => isSkillDone(id, s));
-  container.innerHTML = `
-    <div style="margin-bottom:20px">
-      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-        <h2 class="pt" style="margin:0">${lesson.t}</h2>
-        <span class="bg b-${lesson.lv.toLowerCase().replace('a','a').replace('b','b').replace('c','c')}">${lesson.lv}</span>
-        ${allDone ? '<span class="bg b-a1" style="cursor:pointer" onclick="nextLesson()">✅ Tugatildi</span>' : ''}
-      </div>
-    </div>
-    <div class="st2" style="font-size:1rem">📚 So'zlar ( ${lesson.v.length} ta )</div>
-    <div class="vl" style="margin-bottom:20px">
-      ${lesson.v.map(([eng,uz]) => `
-        <div class="vi">
-          <b style="cursor:pointer" onclick="speakWord('${eng.replace(/'/g,"\\'")}')">${eng}</b>
-          <span>${uz}</span>
-        </div>
-      `).join('')}
-    </div>
-    <div class="st2">📖 Reading</div>
-    <div class="gt">${lesson.r.t.replace(/\n/g, '<br>')}</div>
-    <div class="cd" style="padding:12px 16px">
-      <div style="font-weight:700;margin-bottom:4px">${lesson.r.q}</div>
-      <div class="qos">
-        ${lesson.r.o.map((opt,i) => `
-          <div class="qo" onclick="answerQuiz(${id},${i})" data-opt="${i}">
-            ${opt}
-          </div>
-        `).join('')}
-      </div>
-    </div>
-    <div class="st2">🎧 Listening</div>
-    <div class="gt">
-      <button class="btn bp bs" onclick="speakWord('${lesson.r.t.replace(/'/g,"\\'")}')"><i class="fa-solid fa-play"></i> Ovozni eshiting</button>
-      <div style="margin-top:8px;color:var(--tx2)">${lesson.r.t.replace(/\n/g, '<br>')}</div>
-    </div>
-    <div class="st2">✍️ Writing</div>
-    <div class="cd">
-      <p style="color:var(--tx2);font-size:.9rem;margin-bottom:10px">${lesson.w}</p>
-      <textarea class="inp" id="winput" rows="3" placeholder="Javobingizni yozing..."></textarea>
-      <div style="margin-top:10px;display:flex;gap:8px">
-        <button class="btn bp" onclick="checkWriting(${id})"><i class="fa-solid fa-check"></i> Tekshirish</button>
-        <button class="btn bo" onclick="document.getElementById('winput').value=''">Tozalash</button>
-      </div>
-      <div id="wresult" style="margin-top:10px"></div>
-    </div>
-    <div class="st2">🗣 Speaking</div>
-    <div class="gt">
-      <p style="margin-bottom:8px">${lesson.sp}</p>
-      <button class="spk-mic" onclick="speakWord('${lesson.ws.replace(/'/g,"\\'")}')" title="${lesson.ws}"><i class="fa-solid fa-volume-up"></i></button>
-      <span style="margin-left:8px;color:var(--tx2)">${lesson.ws}</span>
-    </div>
-    <div class="st2">💡 Grammatikalar</div>
-    <div class="gt"><b>${lesson.g}</b></div>
-    ${allDone ? '' : `<div style="margin-top:16px;text-align:center">
-      <button class="btn bp" onclick="completeLesson(${id})">Darsni tugatish (+10 XP)</button>
-    </div>`}
-  `;
-}
-
-function isSkillDone(lessonId, skill) {
-  // Placeholder: localStorage-based
-  const key = `skill_${lessonId}_${skill}`;
-  return localStorage.getItem(key) === 'done';
-}
-function markSkillDone(lessonId, skill) {
-  localStorage.setItem(`skill_${lessonId}_${skill}`, 'done');
-}
-
-function completeLesson(id) {
-  const lesson = L.find(l => l.id === id);
-  if (!lesson) return;
-  // Check all 4 skills marked (or force-complete)
-  ['reading','listening','writing','speaking'].forEach(s => markSkillDone(id, s));
-  let xp = parseInt(localStorage.getItem('xp') || '0');
-  xp += 10;
-  localStorage.setItem('xp', xp);
-  let done = parseInt(localStorage.getItem('completed') || '0');
-  localStorage.setItem('completed', done + 1);
-  updateStats();
-  renderLessonDetail(id);
-  // Auto open this lesson's detail
-}
-
-function nextLesson() {
-  const current = parseInt(localStorage.getItem('currentLesson') || '1');
-  const next = L.find(l => l.id === current + 1);
-  if (next) openLesson(next.id);
-  else alert('Hamma darslar tugatildi! 🎉 Tabriklayman!');
-}
-
-// ====== TEST ======
-var testQuestions = [
-  {q:'My name ___ Alex.', o:['am','is','are','be'], c:0, l:'A0'},
-  {q:'She ___ from Tashkent.', o:['am','is','are','do'], c:1, l:'A0'},
-  {q:'This is ___ book.', o:['my','I','me','mine'], c:0, l:'A0'},
-  {q:'I ___ to school every day.', o:['go','goes','going','went'], c:0, l:'A1'},
-  {q:'She ___ reading now.', o:['is','are','am','be'], c:0, l:'A1'},
-  {q:'They ___ football yesterday.', o:['play','plays','played','playing'], c:2, l:'A1'},
-  {q:'___ you like coffee?', o:['Are','Do','Is','Does'], c:1, l:'A1'},
-  {q:'There ___ a cat on the table.', o:['is','are','am','be'], c:0, l:'A1'},
-  {q:'I have ___ apple.', o:['a','an','the','one'], c:1, l:'A1'},
-  {q:'He ___ TV every evening.', o:['watch','watches','watching','watched'], c:1, l:'A1'},
-  {q:'I ___ already finished my homework.', o:['have','has','had','having'], c:0, l:'A2'},
-  {q:'She ___ to the cinema last night.', o:['go','goes','went','going'], c:2, l:'A2'},
-  {q:'This book is ___ than that one.', o:['good','better','best','well'], c:1, l:'A2'},
-  {q:'I ___ never been to London.', o:['have','has','had','did'], c:0, l:'A2'},
-  {q:'If it ___ tomorrow, we will stay home.', o:['rains','rain','rained','raining'], c:0, l:'A2'},
-  {q:'___ is your favourite colour?', o:['Who','What','Where','How'], c:1, l:'A2'},
-  {q:'The report ___ by the team yesterday.', o:['was completed','completed','completing','completes'], c:0, l:'B1'},
-  {q:'She asked me ___ I was from.', o:['what','where','who','how'], c:1, l:'B1'},
-  {q:'I wish I ___ more time.', o:['have','has','had','having'], c:2, l:'B1'},
-  {q:'By next year, I ___ here for five years.', o:['work','will work','will be working','will have been working'], c:3, l:'B1'}
-];
-
-var testState = null;
-function sT() {
-  testState = { current:0, score:0, answers:[] };
-  renderTestQuestion();
-}
-function renderTestQuestion() {
-  const tc = document.getElementById('tc');
-  if (!tc) return;
-  if (!testState) return;
-  const q = testQuestions[testState.current];
-  const total = testQuestions.length;
-  if (!q) {
-    // Test finished
-    const pct = Math.round((testState.score / total) * 100);
-    let level = 'A0';
-    if (pct >= 80) level = 'B1';
-    else if (pct >= 60) level = 'A2';
-    else if (pct >= 40) level = 'A1';
-    const xpGain = testState.score * 5;
-    let xp = parseInt(localStorage.getItem('xp') || '0');
-    localStorage.setItem('xp', xp + xpGain);
-    let done = parseInt(localStorage.getItem('completed') || '0');
-    localStorage.setItem('completed', done + 1);
-    localStorage.setItem('level', level);
-    updateStats();
-    tc.innerHTML = `
-      <div class="cd" style="text-align:center;padding:30px">
-        <div style="font-size:3rem;margin-bottom:10px">🎉</div>
-        <h3 style="margin-bottom:5px">Test tugadi!</h3>
-        <p style="font-size:1.2rem;color:var(--tx2);margin-bottom:8px">${testState.score} / ${total} to'g'ri (${pct}%)</p>
-        <p style="color:var(--ok);font-weight:700;margin-bottom:8px">Siz=${level} darajadasiz 🎯</p>
-        <p style="color:var(--tx2)">+${xpGain} XP oshirdingiz</p>
-        <div style="margin-top:16px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
-          <button class="btn bp" onclick="go('p1')">Darslarga qaytish</button>
-          <button class="btn bo" onclick="go('p0')">Bosh sahifaga</button>
-        </div>
-      </div>
-    `;
-    testState = null;
-    return;
-  }
-  tc.innerHTML = `
-    <div class="cd">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-        <span style="color:var(--tx2);font-size:.8rem">Savol ${testState.current+1} / ${total}</span>
-        <span class="bg b-${q.l.toLowerCase().replace('a','a').replace('b','b')}">${q.l}</span>
-      </div>
-      <p style="font-size:1.1rem;font-weight:600;margin-bottom:16px;line-height:1.6">${q.q}</p>
-      <div class="qos">
-        ${q.o.map((opt,i) => `
-          <div class="qo" onclick="selectTestAnswer(${testState.current},${i})">
-            ${String.fromCharCode(65+i)}. ${opt}
-          </div>
-        `).join('')}
-      </div>
-    </div>
-  `;
-}
-function selectTestAnswer(qIdx, optIdx) {
-  if (!testState) return;
-  const q = testQuestions[qIdx];
-  const correct = optIdx === q.c;
-  if (correct) testState.score++;
-  testState.answers.push({qIdx, selected:optIdx, correct});
-  // Mark the selected
-  const tc = document.getElementById('tc');
-  if (tc) {
-    const options = tc.querySelectorAll('.qo');
-    if (options[optIdx]) {
-      options[optIdx].classList.add(correct ? 'ok' : 'no');
-      options[optIdx].classList.add('ds');
-    }
-  }
-  testState.current++;
-  setTimeout(() => renderTestQuestion(), 500);
-}
-
-// ====== WRITING CHECK ======
-function checkWriting(lessonId) {
-  const inp = document.getElementById('winput');
-  const resultEl = document.getElementById('wresult');
-  const lesson = L.find(l => l.id === lessonId);
-  if (!lesson || !inp) return;
-  const userText = inp.value.trim();
-  if (!userText) { resultEl.innerHTML = '<div class="gt" style="color:var(--err)">Iltimos, gap yozing.</div>'; return; }
-  // Simple check: length, basic word match
-  let feedback = '';
-  const doneSkills = ['writing'];
-  doneSkills.forEach(s => markSkillDone(lessonId, s));
-  let xp = parseInt(localStorage.getItem('xp') || '0');
-  xp += 5;
-  localStorage.setItem('xp', xp);
-  updateStats();
-  resultEl.innerHTML = `<div class="gt" style="color:var(--ok)"><b>✅ Yaxshi!</b> Gap yozdingiz. +5 XP. Sizning variantingiz: "${userText}"</div>`;
-}
-
-// ====== FLASHCARDS ======
-var allWords = [
-  {en:'hello', uz:'salom', ex:'Hello, how are you?'},
-  {en:'good morning', uz:'ertalab tug\'iladi', ex:'Good morning, teacher.'},
-  {en:'thank you', uz:'rahmat', ex:'Thank you for your help.'},
-  {en:'please', uz:'iltimos', ex:'Can you please help me?'},
-  {en:'sorry', uz:'kechirasiz', ex:'Sorry, I am late.'},
-  {en:'yes', uz:'ha', ex:'Yes, I understand.'},
-  {en:'no', uz:'yo\'q', ex:'No, thank you.'},
-  {en:'water', uz:'suv', ex:'Can I have some water?'},
-  {en:'bread', uz:'non', ex:'I would like some bread.'},
-  {en:'apple', uz:'olma', ex:'This is a red apple.'},
-  {en:'name', uz:'ism', ex:'What is your name?'},
-  {en:'student', uz:'talaba', ex:'I am a student.'},
-  {en:'teacher', uz:'o\'qituvchi', ex:'She is a teacher.'},
-  {en:'book', uz:'kitob', ex:'I have a book.'},
-  {en:'pen', uz:'ruchka', ex:'I am writing with a pen.'},
-  {en:'table', uz:'stol', ex:'Put it on the table.'},
-  {en:'chair', uz:'stul', ex:'Sit on a chair.'},
-  {en:'door', uz:'kap\'i', ex:'The door is open.'},
-  {en:'window', uz:'deraza', ex:'The window is closed.'},
-  {en:'house', uz:'uy', ex:'This is my house.'},
-  {en:'cat', uz:'mushuk', ex:'The cat is sleeping.'},
-  {en:'dog', uz:'it', ex:'The dog is barking.'},
-  {en:'friend', uz:'dost', ex:'My friend is kind.'},
-  {en:'family', uz:'oil\'a', ex:'I love my family.'},
-  {en:'school', uz:'maktab', ex:'I go to school.'},
-  {en:'work', uz:'ish', ex:'I go to work.'},
-  {en:'money', uz:'pul', ex:'I need money.'},
-  {en:'time', uz:'vaqt', ex:'What time is it?'},
-  {en:'day', uz:'kun', ex:'Today is a good day.'},
-  {en:'night', uz:'kecha', ex:'Good night!'},
-  {en:'food', uz:'ovqat', ex:'The food is delicious.'},
-  {en:'drink', uz:'ichmoq', ex:'I want a drink.'},
-  {en:'eat', uz:'yemoq', ex:'Let\'s eat together.'},
-  {en:'sleep', uz:'uxlamoq', ex:'I need to sleep.'},
-  {en:'go', uz:'bormoq', ex:'Let\'s go!'},
-  {en:'come', uz:'kelmoq', ex:'Please come in.'},
-  {en:'say', uz:'aytmoq', ex:'Say it again.'},
-  {en:'read', uz:'o\'qimoq', ex:'I like to read.'},
-  {en:'write', uz:'yozmoq', ex:'I am writing a letter.'},
-  {en:'speak', uz:'gapirmoq', ex:'Speak slowly, please.'},
-  {en:'listen', uz:'eshitish', ex:'Listen to me.'},
-  {en:'learn', uz:'o\'rganmoq', ex:'I want to learn English.'},
-  {en:'study', uz:'o\'qish', ex:'I study every day.'},
-  {en:'play', uz:'o\'ynamoq', ex:'Let\'s play a game.'},
-  {en:'work', uz:'ishlamoq', ex:'I work hard.'},
-  {en:'help', uz:'yordam', ex:'Can you help me?'},
-  {en:'need', uz:'kerak', ex:'I need your help.'},
-  {en:'want', uz:'xohlamoq', ex:'I want a coffee.'},
-  {en:'like', uz:'yoqtirish', ex:'I like tea.'},
-  {en:'love', uz:'sevmoq', ex:'I love music.'},
-  {en:'happy', uz:'baxtli', ex:'I am very happy today.'},
-  {en:'sad', uz:'ke\'k', ex:'Don\'t be sad.'},
-  {en:'good', uz:'yaxshi', ex:'This is very good.'},
-  {en:'bad', uz:'yomon', ex:'That is a bad idea.'},
-  {en:'big', uz:'katta', ex:'This is a big house.'},
-  {en:'small', uz:'kichik', ex:'The dog is small.'},
-  {en:'new', uz:'yangi', ex:'This is a new book.'},
-  {en:'old', uz:'eski', ex:'That is an old car.'},
-  {en:'hot', uz:'issiq', ex:'The tea is hot.'},
-  {en:'cold', uz:'sovuq', ex:'It is cold today.'},
-  {en:'rain', uz:'yomg\'ir', ex:'It is raining outside.'},
-  {en:'sun', uz:'quyosh', ex:'The sun is shining.'},
-  {en:'snow', uz:'qor', ex:'It is snowing.'},
-  {en:'wind', uz:'shamol', ex:'The wind is strong.'},
-  {en:'color', uz:'rang', ex:'What is your favorite color?'},
-  {en:'red', uz:'qizil', ex:'The apple is red.'},
-  {en:'blue', uz:'ko\'k', ex:'The sky is blue.'},
-  {en:'green', uz:'yashil', ex:'The grass is green.'},
-  {en:'yellow', uz:'sariq', ex:'The sun is yellow.'},
-  {en:'black', uz:'qora', ex:'I have a black bag.'},
-  {en:'white', uz:'o\'q', ex:'Snow is white.'},
-  {en:'one', uz:'bir', ex:'I have one cat.'},
-  {en:'two', uz:'ikki', ex:'I have two friends.'},
-  {en:'three', uz:'uch', ex:'There are three cars.'},
-  {en:'four', uz:'to\'rt', ex:'I have four books.'},
-  {en:'five', uz:'besh', ex:'I eat five apples.'},
-  {en:'six', uz:'olti', ex:'There are six chairs.'},
-  {en:'seven', uz:'yetti', ex:'I have seven pens.'},
-  {en:'eight', uz:'sakkiz', ex:'There are eight windows.'},
-  {en:'nine', uz:'to\'qqiz', ex:'I have nine cats.'},
-  {en:'ten', uz:'o\'n', ex:'I see ten birds.'}
-];
-
-var currentFCWords = allWords.slice();
-var fcIndex = 0;
-
-function setFS(mode, btn) {
-  document.querySelectorAll('#ft .tab').forEach(t => t.classList.remove('ac'));
-  btn.classList.add('ac');
-  if (mode === 'l') {
-    document.getElementById('fsl').style.display = 'block';
-    currentFCWords = getLessonWords(parseInt(localStorage.getItem('currentLesson') || '1') || 1);
-  } else {
-    document.getElementById('fsl').style.display = 'none';
-    currentFCWords = allWords.slice();
-  }
-  fcIndex = 0;
-  fCard();
-}
-
-function setFL(lessonId) {
-  currentFCWords = getLessonWords(parseInt(lessonId) || 1);
-  fcIndex = 0;
-  fCard();
-}
-
-function getLessonWords(lessonId) {
-  const lesson = L.find(l => l.id === lessonId);
-  if (!lesson) return allWords.slice();
-  return lesson.v.map(([eng,uz]) => ({en:eng, uz:uz, ex:''}));
-
-}
-
-function fCard() {
-  const fw = document.getElementById('fw');
-  const fm = document.getElementById('fm');
-  const fe = document.getElementById('fe');
-  const fp = document.getElementById('fp');
-  if (!fw) return;
-  if (currentFCWords.length === 0) {
-    fw.textContent = '...';
-    fm.textContent = 'So\'zlarni darslardan tanlang';
-    fe.textContent = '';
-    fp.textContent = '0/0';
-    return;
-  }
-  if (fcIndex >= currentFCWords.length) fcIndex = 0;
-  if (fcIndex < 0) fcIndex = currentFCWords.length - 1;
-  const card = currentFCWords[fcIndex];
-  fw.textContent = card.en;
-  fm.textContent = card.uz;
-  fe.textContent = card.ex || '';
-  fp.textContent = `${fcIndex+1}/${currentFCWords.length}`;
-}
-
-function mFc(dir) {
-  fcIndex += dir;
-  fCard();
-}
-
-// ====== SEARCH ======
-function doS() {
-  const q = document.getElementById('si').value.trim().toLowerCase();
-  const sr = document.getElementById('sr');
-  if (!q || !sr) return;
-  sr.innerHTML = '';
-  const results = allWords.filter(w =>
-    w.en.toLowerCase().includes(q) || w.uz.toLowerCase().includes(q)
-  );
-  if (results.length === 0) {
-    sr.innerHTML = '<div style="color:var(--tx2);padding:10px;text-align:center">Hech narsa topilmadi.</div>';
-    return;
-  }
-  results.slice(0,10).forEach(w => {
-    const div = document.createElement('div');
-    div.className = 'vi';
-    div.style.cursor = 'pointer';
-    div.innerHTML = `<b onclick="speakWord('${w.en.replace(/'/g,"\\'")}')">${w.en}</b><span>${w.uz}</span>`;
-    div.onclick = () => speakWord(w.en);
-    sr.appendChild(div);
-  });
-}
-function clS() {
-  document.getElementById('si').value = '';
-  document.getElementById('sr').innerHTML = '';
-}
-
-// ====== CHAT ======
-function tChat() {
-  const cbox = document.getElementById('cbox');
-  if (!cbox) return;
-  cbox.classList.toggle('op');
-  if (cbox.classList.contains('op')) {
-    setTimeout(() => { const inp = document.getElementById('cinp'); if (inp) inp.focus(); }, 100);
-  }
-}
-function sMsg() {
-  const inp = document.getElementById('cinp');
-  const cbody = document.getElementById('cbody');
-  if (!inp || !cbody) return;
-  const text = inp.value.trim();
-  if (!text) return;
-  // User message
-  const userMsg = document.createElement('div');
-  userMsg.className = 'msg u';
-  userMsg.textContent = text;
-  cbody.appendChild(userMsg);
-  inp.value = '';
-  cbody.scrollTop = cbody.scrollHeight;
-  // AI response
-  setTimeout(() => {
-    const botMsg = document.createElement('div');
-    botMsg.className = 'msg b';
-    const lower = text.toLowerCase();
-    let reply = '';
-    if (lower.includes('salom') || lower.includes('hello')) {
-      reply = 'Salom! 👋 Sizni ko\'rdimga xursandman. Bugungi so\'z: <b>' + getCurrentWord().word + '</b> – <i>' + getCurrentWord().translation + '</i>';
-    } else if (lower.includes('rahmat') || lower.includes('thank')) {
-      reply = 'Arzimaydi! 😊 Yana savolingiz bormi?';
-    } else if (lower.includes('yaxshi') || lower.includes('good')) {
-      reply = 'Yaxshi! Siz yangi so\'z yozdingiz. Tebrikler! 🎉';
-    } else if (lower.includes('tarjima') || lower.includes('translate')) {
-      reply = 'Tarjima qilish uchun so\'zni yozing. Men tarjima qilib beraman!';
-    } else {
-      // Simple echo + word
-      const word = getCurrentWord();
-      reply = `Siz yozdingiz: "<b>${text}</b>". Yaxshi! 👏<br><br>💡 *Bugungi so'z:* <b>${word.word}</b> – <i>${word.translation}</i><br>📝 Misol: ${word.example}`;
-    }
-    botMsg.innerHTML = `<span style="color:var(--tx2);font-size:.78rem;margin-bottom:4px;display:block">🤖 AI O'qituvchi</span>${reply}`;
-    cbody.appendChild(botMsg);
-    cbody.scrollTop = cbody.scrollHeight;
-  }, 600);
-}
-function getCurrentWord() {
-  const ww = document.getElementById('ww');
-  if (ww && ww.textContent && ww.textContent !== '...') {
-    return {word: ww.textContent, translation: document.getElementById('wt')?.textContent || '', example: document.getElementById('we')?.textContent || ''};
-  }
-  return {word:'Hello', translation:'Salom', example:'Hello, how are you?'};
-}
-
-// ====== RECORDING (placeholder) ======
-function toggleRec() {
-  const btn = document.getElementById('recBtn');
-  if (!btn) return;
-  btn.classList.toggle('recording');
-  if (btn.classList.contains('recording')) {
-    btn.title = 'Yodlash';
-    setTimeout(() => btn.classList.remove('recording'), 3000);
-  }
-}
-
-// ====== AUDIO ======
-function speakWord(text) {
-  if (!text) return;
-  if ('speechSynthesis' in window) {
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'en-US';
-    u.rate = 0.9;
-    speechSynthesis.cancel();
-    speechSynthesis.speak(u);
-  }
-}
-
-// ====== WORD OF DAY ======
-function setWordOfDay() {
-  const ww = document.getElementById('ww');
-  const wt = document.getElementById('wt');
-  const we = document.getElementById('we');
-  if (!ww) return;
-  const words = [
-    {word:'Hello', translation:'Salom', example:'Hello, how are you?'},
-    {word:'Good morning', translation:'Ertalab tungi', example:'Good morning, teacher!'},
-    {word:'Thank you', translation:'Rahmat', example:'Thank you for your help.'},
-    {word:'Please', translation:'Iltimos', example:'Can you please help me?'},
-    {word:'Sorry', translation:'Kechirasiz', example:'Sorry, I am late.'},
-    {word:'Yes', translation:'Ha', example:'Yes, I understand.'},
-    {word:'No', translation:'Yo\'q', example:'No, thank you.'},
-    {word:'Water', translation:'Suv', example:'Can I have some water?'},
-    {word:'Bread', translation:'Non', example:'I would like some bread.'},
-    {word:'Apple', translation:'Olma', example:'This apple is red.'}
-  ];
-  const day = new Date().getDate();
-  const w = words[day % words.length];
-  if (ww) ww.textContent = w.word;
-  if (wt) wt.textContent = w.translation;
-  if (we) we.textContent = w.example;
-}
-
-// ====== STATS ======
-function updateStats() {
-  const xp = parseInt(localStorage.getItem('xp') || '0');
-  const streak = parseInt(localStorage.getItem('streak') || '0');
-  const completed = parseInt(localStorage.getItem('completed') || '0');
-  const level = localStorage.getItem('level') || 'A0';
-  const sxp = document.getElementById('sxp');
-  const ssk = document.getElementById('ssk');
-  const sdn = document.getElementById('sdn');
-  const slv = document.getElementById('slv');
-  if (sxp) sxp.textContent = xp;
-  if (ssk) ssk.textContent = streak;
-  if (sdn) sdn.textContent = completed + '/50';
-  if (slv) slv.textContent = level;
-  const pxp = document.getElementById('pxp');
-  const pdn = document.getElementById('pdn');
-  const plv = document.getElementById('plv');
-  const psk = document.getElementById('psk');
-  if (pxp) pxp.textContent = xp;
-  if (pdn) pdn.textContent = completed;
-  if (plv) plv.textContent = level;
-  if (psk) psk.textContent = streak;
-  updateProgressPage();
-}
-
-function updateProgressPage() {
-  const xp = parseInt(localStorage.getItem('xp') || '0');
-  const max = 30;
-  const current = xp % max;
-  const pct = Math.min(100, (current / max) * 100);
-  const pxf = document.getElementById('pxf');
-  const pxt = document.getElementById('pxt');
-  if (pxf) pxf.style.width = pct + '%';
-  if (pxt) pxt.textContent = current + '/' + max;
-}
-
-// ====== ACHIEVEMENTS ======
-function renderAchievements() {
-  const al = document.getElementById('al');
-  if (!al) return;
-  const xp = parseInt(localStorage.getItem('xp') || '0');
-  const completed = parseInt(localStorage.getItem('completed') || '0');
-  const streak = parseInt(localStorage.getItem('streak') || '0');
-  const achievements = [];
-  if (xp >= 50) achievements.push({icon:'🏅', name:'First XP', desc:'50 XP tayyorla' });
-  if (xp >= 200) achievements.push({icon:'⚡', name:'XP Cogrizi', desc:'200 XP tayyorla' });
-  if (completed >= 5) achievements.push({icon:'📚', name:'Dars O\'qishi', desc:'5 ta dars tugat' });
-  if (completed >= 15) achievements.push({icon:'🎓', name:'Dars Bitiruvi', desc:'15 ta dars tugat' });
-  if (streak >= 3) achievements.push({icon:'🔥', name:'Streak', desc:'3 kun pose' });
-  if (streak >= 7) achievements.push({icon:'🌟', name:'Haftalik', desc:'7 kun pose' });
-  if (achievements.length === 0) {
-    al.innerHTML = '<div style="color:var(--tx2);text-align:center;padding:10px">Yutuqlaringiz hali yo\'q. Darslarga boshlang!</div>';
-    return;
-  }
-  al.innerHTML = achievements.map(a => `
-    <div class="ach">
-      <div style="font-size:1.6rem">${a.icon}</div>
-      <div>
-        <div class="nm">${a.name}</div>
-        <div class="ds">${a.desc}</div>
-      </div>
-    </div>
-  `).join('');
-}
-
-// ====== LEADERBOARD (localStorage-based) ======
-function renderLeaderboard() {
-  const lb = document.getElementById('lb');
-  if (!lb) return;
-  // Simluated leaderboard from "users" in localStorage (just for demo)
-  const users = JSON.parse(localStorage.getItem('users') || '[]');
-  const xp = parseInt(localStorage.getItem('xp') || '0');
-  // Add current user if not present
-  const currentName = localStorage.getItem('userName') || 'Siz';
-  let existing = users.find(u => u.name === currentName);
-  if (!existing) {
-    users.push({name:currentName, xp:xp, lessons:completed});
-    localStorage.setItem('users', JSON.stringify(users));
-  } else {
-    existing.xp = xp;
-  }
-  // Sort and show top 5
-  const sorted = [...users].sort((a,b) => b.xp - a.xp).slice(0,5);
-  lb.innerHTML = sorted.map((u,i) => `
-    <div class="vi" style="position:relative">
-      <div style="position:absolute;top:0;left:0;font-size:.7rem;color:var(--acc);font-weight:700">#${i+1}</div>
-      <b>${u.name}</b>
-      <span style="color:var(--tx2);font-size:.78rem">${u.xp} XP</span>
-    </div>
-  `).join('');
-}
-
-// ====== STREAK ======
-function updateStreak() {
-  const lastDate = localStorage.getItem('lastActiveDate');
-  const today = new Date().toDateString();
-  let streak = parseInt(localStorage.getItem('streak') || '0');
-  if (lastDate !== today) {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    if (lastDate === yesterday.toDateString()) {
-      streak++;
-    } else if (lastDate !== today) {
-      streak = 1;
-    }
-    localStorage.setItem('lastActiveDate', today);
-    localStorage.setItem('streak', streak);
-  }
-  updateStats();
-}
-
-// ====== INIT ======
-document.addEventListener('DOMContentLoaded', () => {
-  updateStats();
-  setWordOfDay();
-  updateStreak();
-  renderAchievements();
-  renderLeaderboard();
-  // Darslar ro'yxatini ochish (p1 ochilishi kutilmaydi, lekin faqat p1 ochilsa)
-  renderLessons('all');
-  populateFCSelect();
-  fCard();
-});
+  (function draw() {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ps.forEach(function (p) {
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(' + p.c + ',' + p.o + ')'; ctx.fill();
+      p.x += p.dx; p.y += p.dy;
+      if (p.x < 0 || p.x > cv.width) p.dx *= -1;
+      if (p.y < 0 || p.y > cv.height) p.dy *= -1;
+    });
+    requestAnimationFrame(draw);
+  })();
+})();
 </script>
 </body>
 </html>
