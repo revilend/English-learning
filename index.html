@@ -36,11 +36,23 @@
 
 <button class="fab" id="cfab" onclick="tChat()" aria-label="AI o'qituvchi"><i class="fa-solid fa-comment-dots"></i></button>
 
+<!-- ======================= AI + OVOZ SOZLAMALARI ======================= -->
+<div class="panel" id="aiBox" role="dialog" aria-label="AI va ovoz sozlamalari">
+  <div class="cbh">
+    <div class="nm"><i class="fa-solid fa-sliders"></i> AI kaliti va ovoz</div>
+    <button class="cls" onclick="aiCloseSettings()" aria-label="Yopish"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="cbb" id="aiPanelBody"></div>
+</div>
+
 <!-- ======================= AI CHAT ======================= -->
 <div class="cb" id="cbox">
   <div class="cbh">
-    <div class="nm"><i class="fa-solid fa-robot"></i> AI O'qituvchi</div>
-    <button class="cls" onclick="tChat()" aria-label="Yopish"><i class="fa-solid fa-xmark"></i></button>
+    <div class="nm"><i class="fa-solid fa-robot"></i> AI O'qituvchi <span class="bg b-a0" id="aiStatus">📴 AI: oflayn</span></div>
+    <div style="display:flex;align-items:center;gap:2px">
+      <button class="cls" onclick="aiSettings()" aria-label="AI sozlamalari" title="AI kaliti va ovoz sozlamalari"><i class="fa-solid fa-gear"></i></button>
+      <button class="cls" onclick="tChat()" aria-label="Yopish"><i class="fa-solid fa-xmark"></i></button>
+    </div>
   </div>
   <div class="cbb" id="cbody">
     <div class="msg b">Salom! 👋 Menga inglizcha yozing — grammatikani tekshiraman. O'zbekcha yozsangiz — tarjima beraman. Har javobda yangi so'z o'rgataman!</div>
@@ -112,8 +124,11 @@
   <div class="st2">💬 AI o'qituvchi</div>
   <div class="cd" style="text-align:center;padding:22px">
     <div style="font-size:1.8rem;margin-bottom:6px">🤖</div>
-    <p style="color:var(--tx2);margin-bottom:12px">Yozing yoki ovoz chiqarib gapiring — AI sizga yordam beradi.</p>
-    <button class="btn bp" onclick="tChat()"><i class="fa-solid fa-comment"></i> Suhbatni boshlash</button>
+    <p style="color:var(--tx2);margin-bottom:12px">Yozing yoki ovoz chiqarib gapiring — AI sizga yordam beradi. Grammatikani tuzatadi, tarjima qiladi, yangi so'z o'rgatadi.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+      <button class="btn bp" onclick="tChat()"><i class="fa-solid fa-comment"></i> Suhbatni boshlash</button>
+      <button class="btn bo" onclick="aiSettings()"><i class="fa-solid fa-gear"></i> AI kalit / ovoz sozlamalari</button>
+    </div>
   </div>
 
   <div class="st2"><i class="fa-solid fa-wand-magic-sparkles"></i> Qanday ishlaydi</div>
@@ -421,6 +436,8 @@
 <script src="certificate.js"></script>
 <script src="exam.js"></script>
 <script src="mock.js"></script>
+<script src="voice.js"></script>
+<script src="ai.js"></script>
 <script>
 /* Fon zarrachalari (yengil animatsiya) */
 (function () {
