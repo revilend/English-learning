@@ -1,0 +1,22 @@
+{
+  "name": "English Zero-to-Hero — Ingliz tilini 0 dan C1 gacha",
+  "short_name": "English Zero",
+  "description": "50 dars, 4 ko‘nikma (Reading, Listening, Writing, Speaking), CEFR daraja imtihonlari, 10 000+ so‘zli lug‘at va AI o‘qituvchi.",
+  "lang": "uz",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "id": "english-zero-to-hero",
+  "display": "standalone",
+  "display_override": ["standalone", "browser"],
+  "orientation": "any",
+  "background_color": "#0a0e1a",
+  "theme_color": "#6366f1",
+  "categories": ["education", "productivity"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

@@ -24,6 +24,62 @@ function writeTask(prompt, minWords, points) {
   return { type: 'write', part: 'Writing', prompt: prompt, minWords: minWords, points: points || 2 };
 }
 
+/* --------------------- Reading: darslar bankidan ------------------------ */
+/* Har darajaning imtihoniga shu darajaning eng oxirgi (eng uzun) matni
+   qo'yiladi. Daraja oshgani sari matn uzunroq va savol ko'proq bo'ladi:
+     A0 → 2 savol   A1 → 3   A2 → 3   B1 → 4   B2 → 4   C1 → 5
+   Manba: READING_BANK (reading-a/b/c.js). Bank topilmasa — eski savollar qoladi. */
+function mockReadLevels(lv) {
+  return lv === 'CEFR' ? ['B2', 'C1'] : [lv];
+}
+function mockBankReading(level) {
+  if (typeof READING_BANK === 'undefined' || !READING_BANK) return null;
+  if (typeof L === 'undefined' || !L) return null;
+  var lessons = L.filter(function (l) {
+    var b = READING_BANK[l.id];
+    return l.lv === level && b && b.qs && b.qs.length;
+  });
+  if (!lessons.length) return null;
+  return READING_BANK[lessons[lessons.length - 1].id];
+}
+function mockReadItem(level) {
+  var b = mockBankReading(level);
+  if (!b) return null;
+  return read(String(b.t).replace(/\s+/g, ' ').trim(), b.qs.map(function (q) {
+    return { q: q.q, o: q.o, c: q.c };
+  }));
+}
+function mockInstallReadings() {
+  if (typeof READING_BANK === 'undefined' || !READING_BANK) return;
+  Object.keys(MOCK_BANK).forEach(function (lv) {
+    var reads = [];
+    mockReadLevels(lv).forEach(function (x) {
+      var it = mockReadItem(x);
+      if (it) reads.push(it);
+    });
+    if (!reads.length) return;
+    var out = [], inserted = false;
+    MOCK_BANK[lv].items.forEach(function (it) {
+      if (it.type === 'read') {
+        if (!inserted) { reads.forEach(function (r) { out.push(r); }); inserted = true; }
+      } else {
+        out.push(it);
+      }
+    });
+    if (!inserted) reads.forEach(function (r) { out.push(r); });
+    MOCK_BANK[lv].items = out;
+  });
+}
+/* Uzun matn har savolda takrorlanmasligi uchun: birinchi savolda to'liq,
+   keyingi savollarda yig'ilgan (ochiladigan) ko'rinishda ko'rsatiladi. */
+function mockReadTextHtml(it) {
+  if (!it.text) return '';
+  if (it.firstOfRead) return '<div class="gt readbox" style="font-size:.88rem">' + it.text + '</div>';
+  return '<details class="gt readbox" style="font-size:.88rem">' +
+    '<summary><i class="fa-solid fa-book-open"></i> ' + (it.readLabel || 'Matnni') + ' qayta ko‘rsatish</summary>' +
+    it.text + '</details>';
+}
+
 /* ------------------------------- Savollar bazasi ------------------------ */
 var MOCK_BANK = {
   A0: {
@@ -73,7 +129,7 @@ var MOCK_BANK = {
   A2: {
     title: 'A2 — Elementar',
     note: 'O‘tgan zamon, Present Perfect, taqqoslash, sayohat va xarid.',
-    time: 780,
+    time: 840,
     items: [
       mc('We ___ to Samarkand last summer.', ['go', 'goes', 'went', 'going'], 2),
       mc('I have ___ finished my homework.', ['already', 'yet', 'still', 'ago'], 0),
@@ -95,7 +151,7 @@ var MOCK_BANK = {
   B1: {
     title: 'B1 — O‘rta',
     note: 'Present Perfect, shart gaplar, bilvosita savol, fikr bildirish.',
-    time: 840,
+    time: 900,
     items: [
       mc('I ___ in Tashkent since 2019.', ['live', 'lived', 'have lived', 'am living'], 2),
       mc('If it ___ tomorrow, we will stay at home.', ['rains', 'rain', 'rained', 'raining'], 0),
@@ -119,7 +175,7 @@ var MOCK_BANK = {
   B2: {
     title: 'B2 — Yuqori o‘rta',
     note: 'Passiv, gerund/infinitive, bog‘lovchilar, esse va murakkab matnlar.',
-    time: 900,
+    time: 960,
     items: [
       mc('The report ___ by the team yesterday.', ['was completed', 'completed', 'completing', 'completes'], 0),
       mc('Despite ___ hard, he did not pass the exam.', ['study', 'studied', 'studying', 'to study'], 2),
@@ -143,8 +199,8 @@ var MOCK_BANK = {
   /* Imtihonga tayyorgarlik: aralash CEFR uslubidagi sinov (p7 dan ochiladi) */
   CEFR: {
     title: 'CEFR uslubidagi aralash sinov',
-    note: 'Part 1–5 + Listening + Writing: haqiqiy imtihon kabi aralash topshiriqlar.',
-    time: 900,
+    note: 'Part 1–5 + Listening + Writing: haqiqiy imtihon kabi aralash topshiriqlar (2 ta reading matni).',
+    time: 1200,
     items: [
       mc('She has been working in this company ___ three years.', ['for', 'since', 'during', 'from'], 0),
       open_('I am looking forward ___ hearing from you soon. (predlog)', ['to']),
@@ -226,16 +282,19 @@ function mockNorm(s) {
 function mockFlatItems(level) {
   var bank = MOCK_BANK[level];
   if (!bank) return [];
-  var out = [];
+  var out = [], readGroup = 0;
   bank.items.forEach(function (it) {
     if (it.type === 'read') {
+      readGroup++;
       it.items.forEach(function (sub, k) {
         out.push({
           type: 'mc',
-          part: 'Part 5 · Reading · savol ' + (k + 1),
+          part: 'Part 5 · Reading · matn ' + readGroup + ' · savol ' + (k + 1),
           q: sub.q, o: sub.o, c: sub.c,
           text: it.text,
-          group: 'read'
+          group: 'read',
+          readLabel: 'Matn ' + readGroup + ':',
+          firstOfRead: k === 0
         });
       });
     } else {
@@ -289,7 +348,7 @@ function renderMockPage() {
       '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px">' +
         '<b>' + st.bank.title + '</b>' + badge +
         '<span style="margin-left:auto;color:var(--tx2);font-size:.78rem">' +
-          MOCK_BANK[lv].items.length + ' topshiriq · ' + Math.round(MOCK_BANK[lv].time / 60) + ' daqiqa' +
+          mockFlatItems(lv).length + ' topshiriq · ' + Math.round(MOCK_BANK[lv].time / 60) + ' daqiqa' +
         '</span>' +
       '</div>' +
       '<p style="color:var(--tx2);font-size:.85rem;margin-bottom:4px">' + st.bank.note + '</p>' +
@@ -369,7 +428,7 @@ function mockRenderStep() {
 
   var body = '';
   if (it.type === 'mc') {
-    body = (it.text ? '<div class="gt" style="font-size:.85rem">' + it.text + '</div>' : '') +
+    body = mockReadTextHtml(it) +
       '<div class="cd" style="cursor:default">' +
         '<p style="font-weight:600;margin-bottom:12px;font-size:1.05rem">' + it.q + '</p>' +
         '<div class="qos">' + it.o.map(function (o, i) {
@@ -644,6 +703,7 @@ function mockInstallHook() {
 
 /* -------------------------------- Ishga tushirish ---------------------- */
 function mockInit() {
+  mockInstallReadings();
   mockInstallHook();
   if (document.getElementById('mockList')) renderMockPage();
   updateMockHint();

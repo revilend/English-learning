@@ -202,6 +202,21 @@ textarea.inp{resize:vertical;min-height:80px;line-height:1.55}
 /* ---------- Tip boxes ---------- */
 .gt{background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.16);border-radius:12px;padding:14px 16px;margin:12px 0;font-size:.88rem;line-height:1.65}
 .gt b{color:var(--acc)}
+/* ---------- Reading bo'limi (matn banki: bir nechta savol) ---------- */
+/* O'chirilgan tugma (dars tugatilmaguncha) */
+.btn[disabled]{opacity:.5;cursor:not-allowed;pointer-events:none;filter:grayscale(.35)}
+#gateWrap .vi b{font-size:.85rem}
+.voice-toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);max-width:min(520px,92vw);background:rgba(17,24,39,.97);border:1px solid var(--bd);border-left:3px solid var(--acc);border-radius:12px;padding:12px 16px;font-size:.85rem;line-height:1.55;color:var(--tx);box-shadow:0 12px 30px rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:all .3s ease;z-index:9999}
+.voice-toast.op{opacity:1;transform:translate(-50%,0)}
+.rdmeta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px;color:var(--tx2);font-size:.8rem}
+.rdmeta i{color:var(--acc);margin-right:2px}
+.rdmeta .btn{margin-left:auto}
+.readbox{max-height:340px;overflow:auto;line-height:1.75;font-size:.9rem}
+.readbox summary{cursor:pointer;color:var(--acc);font-weight:700;font-size:.82rem;margin-bottom:6px;list-style:none}
+.readbox summary::-webkit-details-marker{display:none}
+.readbox summary:hover{text-decoration:underline}
+.rdfb{font-size:.82rem;margin-top:8px;min-height:2px}
+@media (max-width:560px){.rdmeta .btn{margin-left:0}}
 
 /* ---------- Misc ---------- */
 .gradient-text{background:linear-gradient(135deg,#60a5fa,#a78bfa,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}

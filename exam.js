@@ -61,6 +61,70 @@ var EXAM_WRITING = {
   hint: 'Foydali iboralar: I decided to … / Because of that … / Looking back, …'
 };
 
+/* ------------------- Reading: darajaga mos matnlar ---------------------- */
+/* Foydalanuvchi yetgan daraja va undan keyingi daraja matni beriladi:
+   imtihondagidek bir nechta matn, daraja oshgani sari uzunroq matn va ko'proq savol.
+   Manba: READING_BANK (reading-a/b/c.js). Bank bo'lmasa — eski savollar ishlaydi. */
+function examLevels() {
+  return (typeof LEVELS !== 'undefined' && LEVELS) ? LEVELS : ['A0', 'A1', 'A2', 'B1', 'B2', 'C1'];
+}
+function examUserLevel() {
+  var levels = examLevels();
+  var done = (typeof getCompleted === 'function') ? getCompleted() : [];
+  var lessons = (typeof L !== 'undefined' && L) ? L : [];
+  var best = -1;
+  done.forEach(function (id) {
+    var l = lessons.filter(function (x) { return x.id === id; })[0];
+    if (!l) return;
+    var i = levels.indexOf(l.lv);
+    if (i > best) best = i;
+  });
+  return best < 0 ? levels[0] : levels[best];
+}
+function examReadLevels() {
+  var levels = examLevels();
+  var i = levels.indexOf(examUserLevel());
+  var out = [levels[i]];
+  var next = levels[i + 1] || levels[i - 1];
+  if (next) out.push(next);
+  return out;
+}
+function examBankReading(level) {
+  if (typeof READING_BANK === 'undefined' || !READING_BANK) return null;
+  var lessons = (typeof L !== 'undefined' && L) ? L : [];
+  var found = lessons.filter(function (l) {
+    var b = READING_BANK[l.id];
+    return l.lv === level && b && b.qs && b.qs.length;
+  });
+  if (!found.length) return null;
+  return READING_BANK[found[found.length - 1].id];
+}
+function examReadItems() {
+  var out = [];
+  examReadLevels().forEach(function (lv) {
+    var b = examBankReading(lv);
+    if (!b) return;
+    var text = String(b.t).replace(/\s+/g, ' ').trim();
+    var words = text.split(' ').length;
+    b.qs.forEach(function (q, k) {
+      out.push({
+        text: text, level: lv, words: words, qno: k + 1, qcount: b.qs.length,
+        first: k === 0, q: q.q, o: q.o, c: q.c
+      });
+    });
+  });
+  if (!out.length) {
+    /* bank topilmasa — eski bitta matnli savollar */
+    EXAM_READING.items.forEach(function (it, k) {
+      out.push({
+        text: EXAM_READING.text, level: 'B1', words: 0, qno: k + 1,
+        qcount: EXAM_READING.items.length, first: k === 0, q: it.q, o: it.o, c: it.c
+      });
+    });
+  }
+  return out;
+}
+
 /* ------------------------------- Sinov holati --------------------------- */
 var examState = null;
 var examTimer = null;
@@ -120,7 +184,7 @@ function renderExamPage() {
           '</div>' +
           '<p style="color:var(--tx2);font-size:.88rem">Ball: <b>' + r.score + '/' + r.total + '</b> (' + r.percent + '%). ' +
           'Grammatika/lug‘at: ' + r.gram + '/' + EXAM_GRAMMAR.length +
-          ' · O‘qish: ' + r.read + '/' + EXAM_READING.items.length +
+          ' · O‘qish: ' + r.read + '/' + examReadItems().length +
           ' · Tinglash: ' + r.listen + '/' + EXAM_LISTENING.length +
           ' · Yozish: ' + r.write + '/6</p>' +
           '<p style="font-size:.88rem">' + b.note + '</p>' +
@@ -140,7 +204,7 @@ function examStart() {
 function examSections() {
   return [
     { id: 'gram', title: 'Grammar & Vocabulary', time: 420, count: EXAM_GRAMMAR.length },
-    { id: 'read', title: 'Reading', time: 500, count: EXAM_READING.items.length },
+    { id: 'read', title: 'Reading', time: 600, count: examReadItems().length },
     { id: 'listen', title: 'Listening', time: 300, count: EXAM_LISTENING.length },
     { id: 'write', title: 'Writing', time: 720, count: 1 }
   ];
@@ -202,15 +266,29 @@ function examRenderSection() {
         }).join('') + '</div></div>';
     }).join('');
   } else if (sec.id === 'read') {
-    body = '<div class="gt">' + EXAM_READING.text + '</div>' +
-      EXAM_READING.items.map(function (it, k) {
-        return '<div class="cd" style="cursor:default">' +
-          '<p style="font-weight:600;margin-bottom:10px">' + (k + 1) + '. ' + it.q + '</p>' +
-          '<div class="qos">' + it.o.map(function (o, i) {
-            return '<div class="qo" id="r' + k + '-' + i + '" onclick="examPick(\'read\',' + k + ',' + i + ')">' +
-              String.fromCharCode(65 + i) + '. ' + o + '</div>';
-          }).join('') + '</div></div>';
-      }).join('');
+    /* matnlar foydalanuvchi darajasiga qarab tanlanadi va matn bir marta to'liq ko'rsatiladi */
+    examState.readItems = examReadItems();
+    var readN = 0;
+    body = examState.readItems.map(function (it, k) {
+      var head = '';
+      if (it.first) {
+        readN++;
+        head = '<div class="st2">📄 Matn ' + readN + ' · ' + it.level +
+          (it.words ? ' · ' + it.words + ' so‘z' : '') + ' · ' + it.qcount + ' savol</div>' +
+          '<div class="gt readbox">' + it.text + '</div>';
+      } else {
+        head = '<details class="gt readbox">' +
+          '<summary><i class="fa-solid fa-book-open"></i> Matn ' + readN + ' qayta ko‘rsatish</summary>' +
+          it.text + '</details>';
+      }
+      return head + '<div class="cd" style="cursor:default">' +
+        '<p style="font-weight:600;margin-bottom:10px">' +
+          '<span class="bg b-a2">matn ' + readN + ' · savol ' + it.qno + '/' + it.qcount + '</span> ' + it.q + '</p>' +
+        '<div class="qos">' + it.o.map(function (o, i) {
+          return '<div class="qo" id="r' + k + '-' + i + '" onclick="examPick(\'read\',' + k + ',' + i + ')">' +
+            String.fromCharCode(65 + i) + '. ' + o + '</div>';
+        }).join('') + '</div></div>';
+    }).join('');
   } else if (sec.id === 'listen') {
     body = '<div class="gt">Tinglang (2 martagacha eshitish mumkin), so‘ng savolga javob bering.</div>' +
       EXAM_LISTENING.map(function (it, k) {
@@ -254,7 +332,8 @@ function examRenderSection() {
 
 function examPick(kind, qIndex, choice) {
   if (!examState) return;
-  var data = kind === 'gram' ? EXAM_GRAMMAR : (kind === 'read' ? EXAM_READING.items : EXAM_LISTENING);
+  var data = kind === 'gram' ? EXAM_GRAMMAR
+    : (kind === 'read' ? (examState.readItems || examReadItems()) : EXAM_LISTENING);
   var it = data[qIndex];
   if (!it) return;
   var stateKey = 'l_' + kind + '_' + qIndex;
@@ -304,7 +383,8 @@ function examStop() {
 function examFinish() {
   examStopTimer();
   var st = examState || { gram: 0, read: 0, listen: 0, write: 0 };
-  var objective = EXAM_GRAMMAR.length + EXAM_READING.items.length + EXAM_LISTENING.length;
+  var readTotal = examReadItems().length;
+  var objective = EXAM_GRAMMAR.length + readTotal + EXAM_LISTENING.length;
   var score = (st.gram || 0) + (st.read || 0) + (st.listen || 0) + (st.write || 0);
   var total = objective + 6;
   var percent = Math.round(score / total * 100);
@@ -329,7 +409,7 @@ function examFinish() {
         '<p style="color:var(--tx2);font-size:.9rem;margin-bottom:14px">' + band.note + '</p>' +
         '<div class="vl" style="max-width:640px;margin:0 auto 14px;text-align:left">' +
           '<div class="vi" style="cursor:default"><b>Grammar & Vocabulary</b><span>' + (st.gram || 0) + '/' + EXAM_GRAMMAR.length + '</span></div>' +
-          '<div class="vi" style="cursor:default"><b>Reading</b><span>' + (st.read || 0) + '/' + EXAM_READING.items.length + '</span></div>' +
+          '<div class="vi" style="cursor:default"><b>Reading</b><span>' + (st.read || 0) + '/' + readTotal + '</span></div>' +
           '<div class="vi" style="cursor:default"><b>Listening</b><span>' + (st.listen || 0) + '/' + EXAM_LISTENING.length + '</span></div>' +
           '<div class="vi" style="cursor:default"><b>Writing</b><span>' + (st.write || 0) + '/6</span></div>' +
         '</div>' +

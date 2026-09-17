@@ -10,7 +10,13 @@
 <meta property="og:title" content="English Zero-to-Hero">
 <meta property="og:description" content="Ingliz tilini 0 dan o'rganing: 50 dars, 4 ko'nikma, AI yordamchi.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%236366f1'/><text x='32' y='44' font-size='34' text-anchor='middle'>A</text></svg>">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="English Zero">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -92,7 +98,7 @@
     <div class="cd card-hover" onclick="go('p3')">
       <div style="font-size:1.8rem;margin-bottom:6px">🃏</div>
       <h3 style="margin-bottom:5px">Flashcards</h3>
-      <p style="color:var(--tx2);font-size:.83rem;margin-bottom:10px">100+ so'z kartochkalari va qidiruv.</p>
+      <p style="color:var(--tx2);font-size:.83rem;margin-bottom:10px">10 000+ so'z kartochkalari, tarjima, sevimlilar va qidiruv.</p>
       <span class="btn bs bo" style="width:100%;justify-content:center">O'rganish <i class="fa-solid fa-arrow-right"></i></span>
     </div>
     <div class="cd card-hover" onclick="go('p4')">
@@ -226,10 +232,10 @@
     <button class="btn bo bs" onclick="go('p0')"><i class="fa-solid fa-arrow-left"></i> Bosh</button>
   </div>
   <h2 class="pt">🃏 Flashcards</h2>
-  <p class="ps">100+ so'z. Kartochkani bosing — tarjimani ko'ring. So'z ustiga bosib talaffuzni eshitasiz.</p>
+  <p class="ps"><b>10 156 so'z</b> (ingliz tilining eng ko'p ishlatiladigan so'zlari + kurs so'zlari) va o'zbekcha tarjimalari. Kartochkani bosing — tarjimani ko'ring, so'z ustiga bosib talaffuzni eshitasiz.</p>
 
   <div class="tabs" id="ft">
-    <button class="tab ac" onclick="setFS('a',this)">Umumiy so'zlar</button>
+    <button class="tab ac" onclick="setFS('a',this)">Umumiy so'zlar (10 000+)</button>
     <button class="tab" onclick="setFS('l',this)">Dars so'zlaridan</button>
   </div>
   <div id="fsl" style="display:none;margin-bottom:12px">
@@ -298,7 +304,8 @@
   <div class="st2">🏆 Yutuqlar <span style="font-size:.8rem;color:var(--tx2);margin-left:auto" id="achCount">0/8</span></div>
   <div id="al"></div>
 
-  <div class="st2">🏅 Top o'quvchilar</div>
+  <div class="st2">🏅 Reyting (haqiqiy natijalar)</div>
+  <p class="ps" style="margin:-4px 0 12px;font-size:.85rem">O'ylab topilgan ismlar yo'q: bu yerda faqat sizning haqiqiy natijangiz va o'zingiz kiritgan guruh a'zolari ko'rinadi.</p>
   <div class="vl" id="lb"></div>
 
   <div class="st2">🏆 Sertifikat</div>
@@ -324,7 +331,7 @@
   <div id="examIntro"></div>
 
   <div class="st2">🧪 Tayyorlik sinovi (mock exam)</div>
-  <p class="ps" style="margin-bottom:12px"><b>32 daqiqalik</b> sinov: Grammar &amp; Vocabulary (7 daq.), Reading (8 daq.), Listening (5 daq.), Writing (12 daq.). Imtihondagidek vaqt cheklangan — vaqt tugasa keyingi qismga o'tadi.</p>
+  <p class="ps" style="margin-bottom:12px"><b>34 daqiqalik</b> sinov: Grammar &amp; Vocabulary (7 daq.), Reading (10 daq.), Listening (5 daq.), Writing (12 daq.). Imtihondagidek vaqt cheklangan — vaqt tugasa keyingi qismga o'tadi. <b>Reading</b> qismi darajangizga moslashadi: daraja oshgani sari matn uzunroq va savol ko'proq bo'ladi.</p>
   <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
     <button class="btn bp" onclick="examStart()"><i class="fa-solid fa-play"></i> Sinovni boshlash</button>
     <button class="btn bo" onclick="examStop()">To'xtatish</button>
@@ -333,7 +340,7 @@
   <div id="examLast"></div>
 
   <div class="st2">🧪 Daraja imtihonlari (haqiqiy CEFR formatida)</div>
-  <p class="ps" style="margin-bottom:12px">Har bir daraja (A0–C1) tugagach, shu darajaning imtihoni ochiladi. Savollar haqiqiy imtihon topshiriq turlarida: <b>Part 1</b> multiple-choice cloze, <b>Part 2</b> open cloze, <b>Part 3</b> word formation, <b>Part 4</b> key word transformation, <b>Part 5</b> reading, <b>Listening</b> va <b>Writing</b>. O‘tish chegarasi — 65%.</p>
+  <p class="ps" style="margin-bottom:12px">Har bir daraja (A0–C1) tugagach, shu darajaning imtihoni ochiladi. Savollar haqiqiy imtihon topshiriq turlarida: <b>Part 1</b> multiple-choice cloze, <b>Part 2</b> open cloze, <b>Part 3</b> word formation, <b>Part 4</b> key word transformation, <b>Part 5</b> reading, <b>Listening</b> va <b>Writing</b>. O‘tish chegarasi — 65%. Reading qismi shu darajaning matnlaridan olinadi: A0–A1 da 2–3 savol, B1–B2 da 4–5, C1 da 5 savol, matn esa daraja bilan birga uzayadi.</p>
   <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
     <button class="btn bp" onclick="openMocks()"><i class="fa-solid fa-graduation-cap"></i> Daraja imtihonlari</button>
     <button class="btn bo" onclick="mockStartPractice()"><i class="fa-solid fa-play"></i> CEFR uslubidagi aralash sinov</button>
@@ -432,12 +439,29 @@
   </div>
 </div>
 
+<script src="reading-a.js"></script>
+<script src="reading-b.js"></script>
+<script src="reading-c.js"></script>
+<script src="words-dictionary.js"></script>
 <script src="app.js"></script>
+<script src="reading-ui.js"></script>
+<script src="lesson-plus.js"></script>
+<script src="progress-real.js"></script>
+<script src="flashcards-pro.js"></script>
 <script src="certificate.js"></script>
 <script src="exam.js"></script>
 <script src="mock.js"></script>
 <script src="voice.js"></script>
 <script src="ai.js"></script>
+<script>
+/* Ilova (PWA) sifatida o'rnatilishi uchun service worker.
+   Tarmoq birinchi strategiyasi — sayt hech qachon eski fayllarni ko'rsatmaydi. */
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  });
+}
+</script>
 <script>
 /* Fon zarrachalari (yengil animatsiya) */
 (function () {

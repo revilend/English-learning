@@ -14,11 +14,47 @@ var VOICE = {
   voices: 0,
   lang: '',
   lastError: null,
-  busy: false
+  busy: false,
+  /* O'rnatilgan ilova (standalone / PWA) rejimidami? Shu rejimda brauzer
+     ovozni faqat foydalanuvchi bosishi ICHIDA boshlanganiga ruxsat beradi. */
+  standalone: (function () {
+    try {
+      if (typeof window === 'undefined') return false;
+      if (window.navigator && window.navigator.standalone === true) return true;
+      if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) return true;
+      if (window.matchMedia && window.matchMedia('(display-mode: minimal-ui)').matches) return true;
+      return false;
+    } catch (e) { return false; }
+  })()
 };
 
 function voiceIframe() {
   try { return window.self !== window.top; } catch (e) { return true; }
+}
+
+/* Ovoz chiqmasa — qayerda qanday qilib tuzatish mumkinligini aytamiz */
+function voiceWhereHint() {
+  if (voiceIframe()) {
+    return '<br>Preview oynasida ovoz bloklanadi — saytni to‘g‘ridan-to‘g‘ri ochib ko‘ring.';
+  }
+  if (VOICE.standalone) {
+    return '<br><b>Ilova rejimi:</b> ovoz chiqmasa, telefon <i>Media ovozi</i> yoqilganini tekshiring ' +
+      'yoki <b>Google / Samsung “Text-to-Speech”</b> paketi o‘rnatilganini ko‘ring ' +
+      '(Sozlamalar → Tillar va kiritish → Matnni ovozga aylantirish). ' +
+      '<span style="cursor:pointer;color:var(--acc);text-decoration:underline" onclick="voiceOpenInBrowser()">' +
+      'Brauzerda ochish</span>';
+  }
+  return '';
+}
+
+/* Ilova rejimida muammo bo‘lsa — xuddi shu sahifani brauzerda ochish */
+function voiceOpenInBrowser() {
+  try {
+    var w = window.open((typeof location !== 'undefined' ? location.href : ''), '_blank');
+    if (!w) throw new Error('blocked');
+  } catch (e) {
+    try { alert('Manzilni nusxalab brauzerga qo‘ying:\n' + location.href); } catch (e2) {}
+  }
 }
 
 function voiceVoices() {
@@ -31,15 +67,21 @@ function voicePick() {
   VOICE.voices = v.length;
   if (!v.length) return null;
   var pref = ['Google US English', 'Google UK English Female', 'Microsoft Aria', 'Microsoft Jenny', 'Samantha', 'Daniel', 'Karen'];
+  var en = v.filter(function (x) { return /^en([-_]|$)/i.test(x.lang || ''); });
+  var pool = en.length ? en : v;
+  /* 1) Qurilmada o'rnatilgan (offline) ovozlar ustun: ular internetsiz va
+     bloklanmagan holda ishlaydi, tarmoq ovozlari esa ba'zi brauzerlarda jim qoladi. */
+  var local = pool.filter(function (x) { return x.localService !== false; });
+  var search = local.length ? local : pool;
   var i, j;
   for (i = 0; i < pref.length; i++) {
-    for (j = 0; j < v.length; j++) {
-      if (v[j].name && v[j].name.indexOf(pref[i]) > -1) return v[j];
+    for (j = 0; j < search.length; j++) {
+      if (search[j].name && search[j].name.indexOf(pref[i]) > -1) return search[j];
     }
   }
-  for (i = 0; i < v.length; i++) if (/^en[-_]US/i.test(v[i].lang || '')) return v[i];
-  for (i = 0; i < v.length; i++) if (/^en/i.test(v[i].lang || '')) return v[i];
-  return null;
+  for (i = 0; i < search.length; i++) if (/^en[-_]US/i.test(search[i].lang || '')) return search[i];
+  for (i = 0; i < search.length; i++) if (/^en/i.test(search[i].lang || '')) return search[i];
+  return search[0];
 }
 
 /* Chrome uzun matnni ~15 sekunddan keyin to'xtatadi, shuning uchun bo'laklarga bo'lamiz */
@@ -64,7 +106,22 @@ function voiceChunk(text) {
 function voiceNotify(msg) {
   var el = document.getElementById('voiceOut') || document.getElementById('aiVoiceOut');
   if (el) el.innerHTML = msg;
-  else console.warn('[voice] ' + msg.replace(/<[^>]+>/g, ''));
+  else voiceToast(msg);
+}
+/* Sahifada xabar joyi bo'lmasa (masalan dars sahifasi) — pastda kichik oyna */
+function voiceToast(msg) {
+  if (typeof document === 'undefined' || !document.body) return;
+  var el = document.getElementById('voiceToast');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'voiceToast';
+    el.className = 'voice-toast';
+    document.body.appendChild(el);
+  }
+  el.innerHTML = msg;
+  el.classList.add('op');
+  if (el.__hide) clearTimeout(el.__hide);
+  el.__hide = setTimeout(function () { el.classList.remove('op'); }, 7000);
 }
 
 /* Asosiy: matnni ovoz chiqarib o'qish */
@@ -82,6 +139,7 @@ function voiceSay(text, opts) {
   VOICE.busy = true;
   VOICE.lastError = null;
   try { synth.cancel(); } catch (e) {}
+  try { synth.resume(); } catch (e) {} /* ilova rejimida ba'zan "pauza"da turadi */
 
   var i = 0, keep = null;
   function speakNext() {
@@ -91,7 +149,8 @@ function voiceSay(text, opts) {
       if (opts.onDone) opts.onDone();
       return;
     }
-    var u = new SpeechSynthesisUtterance(parts[i++]);
+    var chunkText = parts[i++];
+    var u = new SpeechSynthesisUtterance(chunkText);
     var v = voicePick();
     u.lang = (v && v.lang) ? v.lang : 'en-US';
     VOICE.lang = u.lang;
@@ -100,6 +159,28 @@ function voiceSay(text, opts) {
     u.pitch = 1;
     u.volume = 1;
     u.onend = function () { setTimeout(speakNext, 70); };
+    /* Ba'zi brauzerlar tanlangan ovoz bilan ovoz chiqarmaydi (masalan tarmoq
+       ovozi bloklangan). Ovoz boshlanmasa — ovozsiz qayta urinamiz. */
+    var started = false;
+    var guard = setTimeout(function () {
+      guard = null;
+      if (started || !VOICE.busy || synth.speaking) return;
+      if (!u.voice) {
+        VOICE.busy = false;
+        if (keep) { clearInterval(keep); keep = null; }
+        voiceNotify('⚠️ Ovoz boshlanmadi. Telefon/kompyuter <b>media ovozini</b> yoqing.' + voiceWhereHint());
+        return;
+      }
+      VOICE.lastError = 'voice-retry';
+      try { synth.cancel(); } catch (e2) {}
+      var u2 = new SpeechSynthesisUtterance(chunkText);
+      u2.lang = 'en-US';
+      u2.rate = u.rate;
+      u2.onend = u.onend;
+      u2.onerror = u.onerror;
+      try { synth.speak(u2); } catch (e3) {}
+    }, 1600);
+    u.onstart = function () { started = true; if (guard) { clearTimeout(guard); guard = null; } };
     u.onerror = function (e) {
       var err = (e && e.error) || 'unknown';
       VOICE.lastError = err;
@@ -109,40 +190,23 @@ function voiceSay(text, opts) {
       var why = err === 'not-allowed'
         ? 'Brauzer ovozga ruxsat bermadi (sahifani bosganingizdan keyin qayta urinib ko‘ring).'
         : (err === 'audio-busy' ? 'Boshqa ovoz ijro etilmoqda — birozdan so‘ng qayta bosing.' : 'Ovoz chiqarishda xatolik: ' + err + '.');
-      voiceNotify('⚠️ ' + why + (voiceIframe() ? '<br>Preview oynasida ovoz bloklanishi mumkin — saytni to‘g‘ridan-to‘g‘ri ochib ko‘ring.' : ''));
+      voiceNotify('⚠️ ' + why + voiceWhereHint());
       if (opts.onFail) opts.onFail();
     };
     try { synth.speak(u); } catch (e) { VOICE.lastError = 'speak-exception'; voiceNotify('⚠️ Ovoz chiqarib bo‘lmadi.'); }
   }
 
-  function begin() {
-    /* Chrome uchun: cancel() dan keyin darhol speak() qilinsa ovoz tushib qolishi mumkin */
-    setTimeout(speakNext, 80);
-    if (String(text).length > 220) {
-      keep = setInterval(function () {
-        if (!synth.speaking) { clearInterval(keep); keep = null; return; }
-        try { synth.resume(); } catch (e) {}
-      }, 8000);
-    }
-  }
-
-  if (!voiceVoices().length) {
-    /* Ovozlar ro'yxati hali yuklanmagan bo'lishi mumkin */
-    var fired = false;
-    var onReady = function () {
-      if (fired) return;
-      fired = true;
-      try { synth.onvoiceschanged = null; } catch (e) {}
-      voicePick();
-      begin();
-    };
-    try {
-      if (typeof synth.addEventListener === 'function') synth.addEventListener('voiceschanged', onReady);
-      else synth.onvoiceschanged = onReady;
-    } catch (e) {}
-    setTimeout(onReady, 700); /* ovoz ro'yxati umuman bo'lmasa ham o'qib ko'ramiz */
-  } else {
-    begin();
+  /* Birinchi bo'lak darhol — foydalanuvchi bosishi ichida (sinxron) boshlanadi.
+     Ilgari bu yerda 80 ms / "ovozlar yuklanishini kutish" kechikishi bor edi:
+     Chrome brauzerida u sezilmasdi, lekin o'rnatilgan ilovada (standalone/PWA)
+     kechiktirilgan speak() bloklanib, ovoz umuman chiqmasdi. Endi kutmaymiz:
+     ovozlar ro'yxati bo'lmasa ham til (en-US) bilan darhol o'qiymiz. */
+  speakNext();
+  if (String(text).length > 220) {
+    keep = setInterval(function () {
+      if (!synth.speaking) { clearInterval(keep); keep = null; return; }
+      try { synth.resume(); } catch (e) {}
+    }, 8000);
   }
   return true;
 }
@@ -150,6 +214,27 @@ function voiceSay(text, opts) {
 function voiceStop() {
   if (VOICE.ttsSupported) { try { window.speechSynthesis.cancel(); } catch (e) {} }
   VOICE.busy = false;
+}
+
+/* Ilova (PWA) rejimida ba'zi qurilmalar ovozni faqat "faollashtirilgan" sahifada
+   chiqaradi: birinchi bosishda jim media elementini o'ynatib, tizimni tayyorlaymiz. */
+function voiceUnlock() {
+  try {
+    var a = document.getElementById('voiceUnlockAudio');
+    if (!a) {
+      a = document.createElement('audio');
+      a.id = 'voiceUnlockAudio';
+      a.setAttribute('playsinline', '');
+      a.src = 'data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCA' +
+        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+      a.style.display = 'none';
+      document.body.appendChild(a);
+    }
+    a.volume = 0;
+    var p = a.play();
+    if (p && p.catch) p.catch(function () {});
+  } catch (e) {}
+  if (VOICE.ttsSupported) { try { window.speechSynthesis.resume(); } catch (e) {} }
 }
 
 function voiceTest() {
@@ -173,13 +258,20 @@ function voiceDiagnostics() {
     ['Mikrofon (nutqni tanish)', VOICE.srSupported ? '✅ ishlaydi' : '❌ yo‘q (Safari/Firefox da cheklangan)'],
     ['Xavfsiz ulanish (https)', (typeof location !== 'undefined' && location.protocol === 'https:') ? '✅ ha' : '⚠️ http — mikrofon ishlamaydi'],
     ['Preview oynasi (iframe)', voiceIframe() ? '⚠️ ha — mikrofon bloklangan bo‘lishi mumkin' : '✅ yo‘q (to‘g‘ridan-to‘g‘ri sayt)'],
+    ['Ish rejimi', VOICE.standalone ? '📱 o‘rnatilgan ilova (standalone)' : '🌐 brauzer oynasi'],
     ['Oxirgi xato', VOICE.lastError ? '⚠️ ' + VOICE.lastError : '✅ yo‘q']
   ];
   return '<div class="vl">' + rows.map(function (r) {
     return '<div class="vi" style="cursor:default"><b>' + r[0] + '</b><span>' + r[1] + '</span></div>';
   }).join('') + '</div>' +
     '<div class="gt" style="margin-top:10px">Mikrofon ishlamasa: brauzer ruxsatini bering (manzil yonidagi 🔒 belgisi → Mikrofon → Ruxsat), ' +
-    'preview oynasi o‘rniga saytni to‘g‘ridan-to‘g‘ri oching va telefon ovozini yoqing. Ishlamasa ham mashqni <b>yozib</b> bajarish mumkin.</div>';
+    'preview oynasi o‘rniga saytni to‘g‘ridan-to‘g‘ri oching va telefon ovozini yoqing. Ishlamasa ham mashqni <b>yozib</b> bajarish mumkin.</div>' +
+    (VOICE.standalone
+      ? '<div class="gt" style="margin-top:10px">📱 <b>Siz saytni ilova sifatida ochdingiz.</b> Ilovada ovoz chiqmasa: ' +
+        '1) ovoz tugmasini <b>bir marta bosib</b> turing (ilova birinchi bosishda ovozga ruxsat oladi), ' +
+        '2) telefon <i>media ovozi</i> va <b>Matnni ovozga aylantirish (TTS)</b> paketi yoqilganini tekshiring, ' +
+        '3) ishlamasa <span style="cursor:pointer;color:var(--acc);text-decoration:underline" onclick="voiceOpenInBrowser()">brauzerda ochib</span> ko‘ring.</div>'
+      : '');
 }
 
 /* ============================ MIKROFON ================================== */
@@ -347,6 +439,7 @@ function voiceInit() {
   window.startSpeech = startSpeech;
   window.voiceTest = voiceTest;
   window.voiceStop = voiceStop;
+  window.voiceOpenInBrowser = voiceOpenInBrowser;
   window.deviceSpeak = voiceSay;
   if (VOICE.ttsSupported) {
     voicePick();
@@ -355,12 +448,30 @@ function voiceInit() {
       var h = function () { voicePick(); };
       if (typeof synth.addEventListener === 'function') synth.addEventListener('voiceschanged', h);
       else synth.onvoiceschanged = h;
+      /* Ovozlar ro'yxati ba'zi brauzerlarda bir necha soniyada yuklanadi —
+         bo'sh bo'lsa, qayta-qayta so'rab turamiz. */
+      var tries = 0;
+      var poll = setInterval(function () {
+        tries++;
+        voicePick();
+        if (VOICE.voices || tries > 12) clearInterval(poll);
+      }, 300);
     } catch (e) {}
-    /* Ba'zi brauzerlarda birinchi bosishda ovoz "uxlab qoladi" */
+    /* Chrome/Safari ovozni faqat foydalanuvchi bosishidan keyin ochadi:
+       shu yerda ovoz tizimini "uyg'otamiz" (jim, eshitilmaydigan qism). */
     document.addEventListener('click', function once() {
-      try { window.speechSynthesis.resume(); } catch (e) {}
+      try {
+        window.speechSynthesis.resume();
+        voiceUnlock();
+        if (!VOICE.busy) {
+          var warm = new SpeechSynthesisUtterance(' ');
+          warm.volume = 0;
+          warm.lang = 'en-US';
+          window.speechSynthesis.speak(warm);
+        }
+      } catch (e) {}
       document.removeEventListener('click', once);
-    });
+    }, { once: true });
   }
 }
 

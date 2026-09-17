@@ -5,9 +5,15 @@
    - Kalit bo'lmasa: oflayn o'qituvchi (lug'at, grammatika tekshiruvi,
      tarjima) ishlaydi — sayt hech qachon "javobsiz" qolmaydi.
    Kalit hech qayerga yuborilmaydi, faqat shu brauzerda (localStorage) saqlanadi.
+   Diqqat: kalitni sayt kodi ichiga (GitHub'ga) yozib bo'lmaydi — ochiq repoda
+   sir saqlanmaydi va GitHub bunday push'ni bloklaydi. Shuning uchun kalit
+   foydalanuvchi tomonidan ⚙️ tugmasi orqali bir marta kiritiladi.
    ========================================================================== */
 
-var AI_MODELS = ['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-flash-latest', 'gemini-1.5-flash-latest'];
+/* Google model nomlarini vaqti-vaqti bilan o'chiradi: 2026-yil holatiga
+   gemini-1.5-* va gemini-2.0-* modellari 404 qaytaradi, shuning uchun ro'yxatdagi
+   nomlar 404/503 bo'lsa keyingisiga o'tiladi. "latest" nomlari eng ishonchli. */
+var AI_MODELS = ['gemini-flash-latest', 'gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-flash-lite-latest', 'gemini-3.1-flash-lite'];
 var AI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/';
 var AI_KEY_PAGE = 'https://aistudio.google.com/apikey';
 var AI_HISTORY = [];
@@ -15,11 +21,12 @@ var AI_LAST_ERROR = '';
 var AI_BUSY = false;
 
 /* ------------------------------ Kalit ----------------------------------- */
-function aiKey() {
+function aiUserKey() {
   try {
     return (localStorage.getItem('geminiApiKey') || localStorage.getItem('GEMINI_API_KEY') || '').trim();
   } catch (e) { return ''; }
 }
+function aiKey() { return aiUserKey(); }
 function aiSetKey(k) {
   try {
     if (k) localStorage.setItem('geminiApiKey', String(k).trim());
@@ -59,18 +66,18 @@ function aiCloseSettings() {
 function aiRenderPanel() {
   var body = document.getElementById('aiPanelBody');
   if (!body) return;
-  var key = aiKey();
+  var key = aiUserKey();
   body.innerHTML =
     '<div class="msg b" style="max-width:100%">' +
       (aiHasKey()
         ? '✅ <b>Gemini AI yoqilgan.</b> Savollaringiz haqiqiy AI tomonidan javoblanadi (grammatika, tarjima, izoh).'
-        : '📴 <b>Hozir oflayn rejim.</b> AI chat ishlaydi, lekin javoblar oddiy qoidaga asoslanadi. Haqiqiy AI uchun pastdan kalit qo‘shing (bepul).') +
+        : '📴 <b>Hozir oflayn rejim.</b> AI chat ishlaydi, lekin javoblar oddiy qoidaga asoslanadi. Haqiqiy AI uchun pastdan <b>bepul</b> kalit qo‘shing — 1 daqiqada olinadi.') +
     '</div>' +
     '<div class="gt">' +
       '<b>1) Gemini API kaliti</b><br>' +
       'Kalitni <a href="' + AI_KEY_PAGE + '" target="_blank" rel="noopener" style="color:var(--acc)">aistudio.google.com/apikey</a> dan bepul olasiz ' +
       '(Google hisobi bilan, karta talab qilinmaydi). Telegram bot ham xuddi shu <code>GEMINI_API_KEY</code> dan foydalanadi.' +
-      '<input class="inp" id="aiKeyInput" type="password" placeholder="AIza... (Gemini API kaliti)" style="margin-top:8px" value="' + (key ? key.replace(/.(?=.{4})/g, '•') : '') + '">' +
+      '<input class="inp" id="aiKeyInput" type="password" placeholder="AQ.Ab8... yoki AIza... (Gemini API kaliti)" style="margin-top:8px" value="' + (key ? key.replace(/.(?=.{4})/g, '•') : '') + '">' +
       '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">' +
         '<button class="btn bp bs" onclick="aiSaveKey()"><i class="fa-solid fa-floppy-disk"></i> Saqlash</button>' +
         '<button class="btn bo bs" onclick="aiTestKey()"><i class="fa-solid fa-plug-circle-check"></i> Sinash</button>' +
@@ -137,11 +144,11 @@ function aiCallAPI(prompt, history) {
   var body = {
     systemInstruction: { parts: [{ text: aiSystemPrompt() }] },
     contents: contents,
-    generationConfig: { temperature: 0.7, maxOutputTokens: 500 }
+    generationConfig: { temperature: 0.7, maxOutputTokens: 800 }
   };
   var i = 0;
   function tryModel() {
-    if (i >= AI_MODELS.length) return Promise.reject(new Error('Model topilmadi. Internet aloqasini tekshiring.'));
+    if (i >= AI_MODELS.length) return Promise.reject(new Error('Google AI modellari javob bermadi (barcha nomlar sinab ko‘rildi). Internet aloqasini tekshiring yoki bir daqiqadan so‘ng qayta urinib ko‘ring.'));
     var model = AI_MODELS[i++];
     return fetch(AI_ENDPOINT + model + ':generateContent?key=' + encodeURIComponent(key), {
       method: 'POST',
@@ -153,7 +160,8 @@ function aiCallAPI(prompt, history) {
         try { data = JSON.parse(raw); } catch (e) {}
         if (!r.ok) {
           var msg = (data && data.error && data.error.message) || ('HTTP ' + r.status);
-          if (r.status === 404) return tryModel(); /* model nomi mos kelmadi — keyingisini sinaymiz */
+          if (r.status === 404) return tryModel(); /* model o‘chirilgan — keyingisini sinaymiz */
+          if (r.status === 503 || r.status === 502 || r.status === 500) return tryModel(); /* vaqtincha band */
           if (r.status === 400 && /API key not valid/i.test(msg)) throw new Error('API kalit noto‘g‘ri. Kalitni qayta nusxalab qo‘ying.');
           if (r.status === 403) throw new Error('Kalitga ruxsat yo‘q (403). Google AI Studio dan yangi kalit oling.');
           if (r.status === 429) throw new Error('Bepul limit tugadi (429). Bir daqiqadan so‘ng qayta urinib ko‘ring.');
@@ -161,7 +169,11 @@ function aiCallAPI(prompt, history) {
         }
         var txt = '';
         try {
-          (data.candidates[0].content.parts || []).forEach(function (p) { if (p.text) txt += p.text; });
+          (data.candidates[0].content.parts || []).forEach(function (p) {
+            /* 2.5/3.x modellari "o‘ylash" (thinking) qismlarini ham qaytaradi —
+               ularni javobga qo‘shmaymiz */
+            if (p.text && !p.thought) txt += p.text;
+          });
         } catch (e) {}
         if (!txt && data && data.promptFeedback) throw new Error('AI javob bermadi (kontent filtri).');
         if (!txt) throw new Error('Bo‘sh javob keldi.');
@@ -388,6 +400,27 @@ function aiInit() {
   window.aiCloseSettings = aiCloseSettings;
   aiStatusChip();
   aiChips();
+  aiFirstRunHint();
+}
+/* Kalit kiritilmagan bo'lsa — bir marta, qisqa eslatma (chat ichida) */
+function aiFirstRunHint() {
+  if (aiHasKey()) return;
+  try {
+    if (sessionStorage.getItem('aiHintShown') === '1') return;
+    sessionStorage.setItem('aiHintShown', '1');
+  } catch (e) {}
+  setTimeout(function () {
+    var body = document.getElementById('cbody');
+    if (!body || aiHasKey()) return;
+    body.insertAdjacentHTML('beforeend',
+      '<div class="msg b">🤖 <b>Haqiqiy AI uchun bepul kalit kerak</b> (1 daqiqa): ' +
+      '<a href="' + AI_KEY_PAGE + '" target="_blank" rel="noopener" style="color:var(--acc)">aistudio.google.com/apikey</a> dan kalit oling, ' +
+      'so‘ng yuqoridagi <b>⚙️</b> tugmani bosib shu yerga qo‘ying. Kalit faqat shu qurilmada saqlanadi.<br>' +
+      'Kalit kiritilmaguncha men <b>oflayn rejimda</b> ham javob beraman (grammatika tekshiruvi, lug‘at, tarjima).</div>');
+    var chips = document.getElementById('aiChips');
+    if (chips) body.appendChild(chips);
+    body.scrollTop = body.scrollHeight;
+  }, 900);
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', aiInit);
 else aiInit();
