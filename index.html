@@ -86,6 +86,12 @@
       <p style="color:var(--tx2);font-size:.83rem;margin-bottom:10px">XP, kunlik maqsad, yutuqlar va reyting.</p>
       <span class="btn bs bo" style="width:100%;justify-content:center">Ko'rish <i class="fa-solid fa-arrow-right"></i></span>
     </div>
+    <div class="cd card-hover" onclick="openCertificate()">
+      <div style="font-size:1.8rem;margin-bottom:6px">🏆</div>
+      <h3 style="margin-bottom:5px">Sertifikat</h3>
+      <p style="color:var(--tx2);font-size:.83rem;margin-bottom:10px">Darslarni tugatasiz — sertifikat avtomatik ochiladi.</p>
+      <span class="btn bs bo" style="width:100%;justify-content:center">Sertifikat <i class="fa-solid fa-arrow-right"></i></span>
+    </div>
   </div>
 
   <div class="st2">💬 AI o'qituvchi</div>
@@ -252,9 +258,71 @@
 
   <div class="st2">🏅 Top o'quvchilar</div>
   <div class="vl" id="lb"></div>
+
+  <div class="st2">🏆 Sertifikat</div>
+  <div class="cd" style="cursor:default">
+    <p id="certHint" style="color:var(--tx2);font-size:.9rem">Darslar tugatilgach sertifikat shu yerda ochiladi.</p>
+    <div class="prr"><div class="prf" id="certBar" style="width:0%"></div></div>
+    <button class="btn bp" style="margin-top:12px" onclick="openCertificate()"><i class="fa-solid fa-award"></i> Sertifikat sahifasi</button>
+  </div>
+</div>
+
+<!-- ======================= PAGE 6: CERTIFICATE ======================= -->
+<div class="pg" id="p6">
+  <div class="no-print" style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <button class="btn bo bs" onclick="go('p4')"><i class="fa-solid fa-arrow-left"></i> Natijalar</button>
+    <button class="btn bs bo" onclick="go('p1')"><i class="fa-solid fa-book-open"></i> Darslar</button>
+  </div>
+
+  <h2 class="pt no-print">🏆 Sertifikat</h2>
+  <p class="ps no-print">Barcha darslarni tugatsangiz, sertifikat avtomatik ochiladi. Uni rasm sifatida yuklab olishingiz yoki chop etib PDF qilishingiz mumkin.</p>
+
+  <div class="no-print" id="certInfo"></div>
+
+  <div class="no-print" id="certNameRow" style="display:none">
+    <div class="cd" style="cursor:default">
+      <label for="certName" style="display:block;font-weight:700;margin-bottom:8px">Sertifikatdagi ism-familiya</label>
+      <input class="inp" id="certName" placeholder="Masalan: Aziz Karimov" oninput="updateCertName()">
+      <p style="color:var(--tx2);font-size:.82rem;margin-top:8px">Ismni o'zgartirsangiz, sertifikat avtomatik yangilanadi.</p>
+    </div>
+  </div>
+
+  <div class="cert-wrap" id="certWrap">
+    <canvas id="certCanvas" width="1400" height="990"></canvas>
+  </div>
+
+  <div class="no-print" id="certActions" style="display:none;margin-top:14px">
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn bp" onclick="downloadCert()"><i class="fa-solid fa-download"></i> Rasm (PNG) yuklab olish</button>
+      <button class="btn bo" onclick="printCert()"><i class="fa-solid fa-print"></i> Chop etish / PDF</button>
+      <button class="btn bo" onclick="go('p1')"><i class="fa-solid fa-book-open"></i> Darslarga qaytish</button>
+    </div>
+  </div>
+
+  <div class="no-print" style="margin-top:20px">
+    <div class="st2">📊 Sertifikat va CEFR darajalari</div>
+    <div class="cd" style="cursor:default;overflow-x:auto">
+      <table class="cefr">
+        <thead><tr><th>Daraja</th><th>Nima qila olasiz</th><th>Bu kursda</th></tr></thead>
+        <tbody>
+          <tr><td><b>A1</b></td><td>Tanish so'zlar, oddiy savol-javob, o'zini tanishtirish</td><td>1–11-darslar</td></tr>
+          <tr><td><b>A2</b></td><td>Kundalik suhbat, o'tgan/kelasi zamon, qisqa yozish</td><td>12–21-darslar</td></tr>
+          <tr><td><b>B1</b></td><td>Fikr bildirish, shart gaplar, passiv, ish/ta'lim mavzulari</td><td>22–31-darslar</td></tr>
+          <tr><td><b>B2</b></td><td>Erkin suhbat, frazal fe'llar, biznes, ilmiy matnlar</td><td>32–41-darslar</td></tr>
+          <tr><td><b>C1</b></td><td>Akademik yozish, ritorika, murakkab grammatika</td><td>42–50-darslar</td></tr>
+        </tbody>
+      </table>
+      <div class="gt" style="margin-top:14px">
+        <b>Muhim izoh:</b> bu sahifadagi daraja va sertifikat — ushbu kurs doirasidagi <b>natija va tugatganlik guvohnomasi</b>.
+        U <b>rasmiy CEFR sertifikati emas</b>: rasmiy hujjat faqat akkreditatsiyalangan markazlar (Cambridge, British Council, IELTS va boshqalar)
+        imtihoni orqali beriladi. Kursdagi 20 savollik test — taxminiy darajani ko'rsatuvchi mashq, rasmiy baholash emas.
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="app.js"></script>
+<script src="certificate.js"></script>
 <script>
 /* Fon zarrachalari (yengil animatsiya) */
 (function () {

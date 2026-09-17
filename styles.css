@@ -227,4 +227,34 @@ a{color:inherit}
   .vl{grid-template-columns:1fr 1fr}
   .pg2{grid-template-columns:repeat(2,1fr)}
   .fc{max-width:260px;height:180px}
+  #certCanvas{border-radius:10px}
+  .cert-wrap{padding:8px}
+}
+
+/* ---------- Sertifikat ---------- */
+.cert-wrap{
+  background:linear-gradient(145deg,rgba(99,102,241,.14),rgba(168,85,247,.08));
+  border:1px solid rgba(99,102,241,.25);border-radius:18px;padding:14px;margin-top:8px;
+}
+#certCanvas{
+  width:100%;height:auto;display:block;border-radius:12px;background:#fff;
+  box-shadow:0 12px 40px rgba(0,0,0,.45);
+}
+table.cefr{width:100%;border-collapse:collapse;font-size:.85rem}
+table.cefr th,table.cefr td{
+  text-align:left;padding:10px 12px;border-bottom:1px solid rgba(30,41,59,.9);vertical-align:top;
+}
+table.cefr th{color:var(--acc);font-size:.78rem;text-transform:uppercase;letter-spacing:.4px}
+table.cefr td b{color:var(--tx)}
+table.cefr tr:last-child td{border-bottom:none}
+table.cefr tbody tr:hover{background:rgba(99,102,241,.06)}
+
+/* ---------- Chop etish / PDF ---------- */
+@media print{
+  .tp,.fab,.cb,#bgCanvas,.no-print{display:none!important}
+  body{background:#fff!important}
+  .pg{display:none!important}
+  body.printing-cert #p6{display:block!important;padding:0!important;margin:0!important;max-width:none!important;min-height:0!important}
+  .cert-wrap{background:none!important;border:none!important;padding:0!important;margin:0!important}
+  #certCanvas{box-shadow:none!important;border-radius:0!important;width:100%!important;height:auto!important}
 }
