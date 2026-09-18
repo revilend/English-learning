@@ -232,42 +232,61 @@
     <button class="btn bo bs" onclick="go('p0')"><i class="fa-solid fa-arrow-left"></i> Bosh</button>
   </div>
   <h2 class="pt">🃏 Flashcards</h2>
-  <p class="ps"><b>10 156 so'z</b> (ingliz tilining eng ko'p ishlatiladigan so'zlari + kurs so'zlari) va o'zbekcha tarjimalari. Kartochkani bosing — tarjimani ko'ring, so'z ustiga bosib talaffuzni eshitasiz.</p>
+  <p class="ps"><b>10 000+ so'z</b> — eng ko'p ishlatiladigan ingliz so'zlari, kurs so'zlari va har bir darsga qo'shilgan <b>10 ta qo'shimcha so'z</b>. Har bir so'z uchun <b>misol gap</b> va uning o'zbekcha tarjimasi bor: kartani bosing, tarjimani o'qing, ovozni eshiting.</p>
+
+  <div class="fcstats" id="fcStats"></div>
 
   <div class="tabs" id="ft">
-    <button class="tab ac" onclick="setFS('a',this)">Umumiy so'zlar (10 000+)</button>
-    <button class="tab" onclick="setFS('l',this)">Dars so'zlaridan</button>
+    <button class="tab ac" onclick="fcAllMode(this)">Umumiy lug'at (10 000+)</button>
+    <button class="tab" onclick="fcLessonMode(this)">Dars so'zlari</button>
+    <button class="tab" onclick="fcExtrasMode(this)">➕ Qo'shimcha so'zlar</button>
   </div>
   <div id="fsl" style="display:none;margin-bottom:12px">
-    <select id="fli" class="inp" style="max-width:320px" onchange="setFL(this.value)">
+    <select id="fli" class="inp" style="max-width:340px" onchange="setFL(this.value)">
       <option value="0">Darsni tanlang...</option>
     </select>
   </div>
 
+  <div class="fchead">
+    <div class="fcbar"><i id="fcBar"></i></div>
+  </div>
+
   <div class="fcw">
-    <div class="fc" id="fcCard" onclick="this.classList.toggle('flp')">
+    <div class="fc" id="fcCard" onclick="fcFlip(event)">
       <div class="fci">
         <div class="fcf">
+          <div class="fcbadge" id="fcBad"></div>
           <div class="fcw2" id="fw" onclick="event.stopPropagation();speakWord(this.textContent)">...</div>
-          <div class="fch"><i class="fa-solid fa-hand-pointer"></i> Bosing</div>
+          <div class="fcsound" onclick="event.stopPropagation();speakWord(document.getElementById('fw').textContent)">
+            <i class="fa-solid fa-volume-high"></i> Talaffuz
+          </div>
+          <div class="fch"><i class="fa-solid fa-hand-pointer"></i> Tarjima va misol gap uchun bosing</div>
         </div>
         <div class="fcb">
           <div class="fcm" id="fm"></div>
-          <div class="fce" id="fe"></div>
+          <div class="fce" id="fcEx">
+            <div class="fce-t" id="fe"></div>
+            <div class="fce-u" id="feu"></div>
+          </div>
+          <button class="btn bo bs fcsay" onclick="event.stopPropagation();fcSpeakExample()">
+            <i class="fa-solid fa-volume-high"></i> Misolni eshitish
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <div style="display:flex;justify-content:center;gap:10px;align-items:center;margin:4px 0 16px">
-    <button class="btn bo bs" onclick="mFc(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+  <div style="display:flex;justify-content:center;gap:10px;align-items:center;margin:4px 0 16px;flex-wrap:wrap">
+    <button class="btn bo bs" onclick="mFc(-1)" title="Oldingi so'z"><i class="fa-solid fa-chevron-left"></i></button>
     <span style="color:var(--tx2);font-size:.85rem" id="fp">1/1</span>
-    <button class="btn bp bs" onclick="mFc(1)"><i class="fa-solid fa-chevron-right"></i></button>
+    <button class="btn bp bs" onclick="mFc(1)" title="Keyingi so'z"><i class="fa-solid fa-chevron-right"></i></button>
+    <button class="btn bo bs" onclick="fcFlip()"><i class="fa-solid fa-rotate"></i> Aylantirish</button>
+    <button class="btn bo bs" onclick="fcRandom()"><i class="fa-solid fa-dice"></i> Tasodifiy</button>
   </div>
 
-  <div class="st2"><i class="fa-solid fa-magnifying-glass"></i> So'z qidirish</div>
+  <div class="st2"><i class="fa-solid fa-magnifying-glass"></i> Butun lug'atdan qidirish (10 000+ so'z)</div>
   <div class="cd" style="cursor:default">
-    <input class="inp" id="si" placeholder="So'z yoki tarjima qidirish..." onkeydown="if(event.key==='Enter')doS()">
+    <input class="inp" id="si" placeholder="So'z yoki tarjima qidirish (misol gaplar bilan)..." onkeydown="if(event.key==='Enter')doS()">
     <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn bs bp" onclick="doS()"><i class="fa-solid fa-magnifying-glass"></i> Qidirish</button>
       <button class="btn bs bo" onclick="clS()">Tozalash</button>
@@ -443,6 +462,7 @@
 <script src="reading-b.js"></script>
 <script src="reading-c.js"></script>
 <script src="words-dictionary.js"></script>
+<script src="lesson-vocab.js"></script>
 <script src="app.js"></script>
 <script src="reading-ui.js"></script>
 <script src="lesson-plus.js"></script>

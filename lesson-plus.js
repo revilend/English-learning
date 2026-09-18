@@ -8,7 +8,9 @@
       Hammasi bajarilmaguncha "Darsni tugatish" tugmasi ishlamaydi va
       keyingi darsga o'tish tugmasi chiqmaydi ("oddiy bosib o'tib ketish" yo'q).
    2) QO'SHIMCHA SO'ZLAR: har darsga 10 000+ so'zli lug'atdan o'sha darajaga
-      mos 12 ta qo'shimcha so'z (chastota bo'yicha) qo'shiladi.
+      mos 10 ta qo'shimcha so'z qo'shiladi (lesson-vocab.js — tools/build-vocab.js
+      yig'gan, har bir so'z uchun misol gap va uning tarjimasi bilan).
+      Shu so'zlar flashcardlarga ham qo'shiladi (➕ Qo'shimcha so'zlar rejimi).
 
    app.js o'z joyida qoladi: bu modul uning renderLessonDetail funksiyasini
    o'rab oladi (wrapper) va sahifa chizilgach qo'shimchalarni joylashtiradi.
@@ -120,7 +122,7 @@ var VOCAB_BANDS = {
   A0: [0.00, 0.12], A1: [0.12, 0.24], A2: [0.24, 0.36],
   B1: [0.36, 0.52], B2: [0.52, 0.74], C1: [0.74, 1.00]
 };
-var VOCAB_PER_LESSON = 12;
+var VOCAB_PER_LESSON = 10;
 /* Yordamchi so'zlar (grammatika darslarida o'rganiladi) — qo'shimcha so'zlar
    ro'yxatiga qo'shmaymiz, shunda faqat ma'noli so'zlar chiqadi. */
 var VOCAB_STOP = {
@@ -175,7 +177,19 @@ function vocabList() {
 function vocabLessonOf(id) {
   try { return (typeof L !== 'undefined' && L) ? L.filter(function (x) { return x.id === id; })[0] : null; } catch (e) { return null; }
 }
+/* Tayyor (static) qo'shimcha so'zlar: lesson-vocab.js dan, misol gaplari bilan */
+function vocabStatic(id) {
+  try {
+    if (typeof lessonExtras === 'function') {
+      var list = lessonExtras(id);
+      if (list && list.length) return list;
+    }
+  } catch (e) {}
+  return null;
+}
 function vocabFor(id) {
+  var ready = vocabStatic(id);
+  if (ready) return ready;
   var l = vocabLessonOf(id);
   var all = vocabList();
   if (!l || !all.length) return [];
@@ -217,17 +231,21 @@ function vocabHtml(id) {
   if (!words.length) return '';
   var learned = vocabLearned(id);
   var l = vocabLessonOf(id);
-  return '<div class="st2">➕ Qo‘shimcha so‘zlar (' + ((l && l.lv) || '') + ' daraja lug‘atidan)</div>' +
-    '<div style="color:var(--tx2);font-size:.8rem;margin-bottom:8px">10 000+ so‘zli chastota lug‘atidan shu darajaga mos so‘zlar. ' +
-    'So‘zni bosib talaffuzini eshiting, ✅ bilan “o‘rgandim” deb belgilang. ' +
+  return '<div class="st2">➕ Qo‘shimcha so‘zlar (' + ((l && l.lv) || '') + ' daraja)</div>' +
+    '<div style="color:var(--tx2);font-size:.8rem;margin-bottom:8px">10 000+ so‘zli chastota lug‘atidan shu darajaga mos <b>' + words.length + ' ta</b> so‘z — ' +
+    'har biri misol gap va uning o‘zbekcha tarjimasi bilan. So‘zni bosib talaffuzini eshiting, ' +
+    '✅ bilan “o‘rgandim” deb belgilang (bu so‘zlar flashcardlarga ham qo‘shilgan). ' +
     'Belgilangan: <b>' + learned.length + '/' + words.length + '</b></div>' +
     '<div class="vl">' + words.map(function (w) {
       var ok = learned.indexOf(w.en) > -1;
       return '<div class="vi" style="cursor:default;' + (ok ? 'border-color:rgba(16,185,129,.45)' : '') + '">' +
         '<div style="display:flex;align-items:flex-start;gap:6px">' +
-          '<div style="flex:1;min-width:0" onclick="speakWord(this.parentNode.dataset.w)" data-w="' + esc(w.en) + '">' +
-            '<b>' + esc(w.en) + ' <i class="fa-solid fa-volume-high" style="font-size:.6rem"></i></b>' +
+          '<div style="flex:1;min-width:0" data-w="' + esc(w.en) + '">' +
+            '<b style="cursor:pointer" onclick="speakWord(this.parentNode.dataset.w)">' + esc(w.en) +
+              ' <i class="fa-solid fa-volume-high" style="font-size:.6rem"></i></b>' +
             '<span>' + esc(w.uz) + '</span>' +
+            (w.ex ? '<div class="vocab-ex"><i class="fa-solid fa-quote-left"></i> ' + esc(w.ex) +
+              (w.exUz ? '<span class="vocab-exu">' + esc(w.exUz) + '</span>' : '') + '</div>' : '') +
           '</div>' +
           '<button class="btn bo bs" style="padding:4px 8px" onclick="vocabToggle(' + id + ',this.dataset.w)" data-w="' + esc(w.en) + '" title="O‘rgandim">' +
             (ok ? '✅' : '＋') + '</button>' +
