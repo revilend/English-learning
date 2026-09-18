@@ -12,7 +12,7 @@ const PLAN = require('./plan');
 
 const ROOT = path.join(__dirname, '..');
 const EX = JSON.parse(fs.readFileSync(path.join(__dirname, 'examples.json'), 'utf8'));
-const PER_LESSON = 10;                       /* har bir darsga qo'shiladigan so'zlar */
+const PER_LESSON = 20;                       /* har bir darsga qo'shiladigan so'zlar */
 
 function exOf(word) {
   const e = EX[String(word).trim().toLowerCase()];
@@ -64,6 +64,14 @@ PLAN.L.forEach(function (l) {
   shortLessons.push(l.id + '(' + list.length + ')');
 });
 
+/* Qo'shimcha lug'at (tools/gen-dict.js) — misol gaplari bilan birga */
+const dictExtras = PLAN.dictExtras || [];
+let dictExtraWithEx = 0;
+dictExtras.forEach(function (w) {
+  const e = exOf(w.en);
+  if (e) { examplesOut[String(w.en).toLowerCase()] = e; examplesTotal++; dictExtraWithEx++; }
+});
+
 Object.keys(extrasOut).forEach(function (id) {
   extrasOut[id] = extrasOut[id].map(function (w) {
     examplesOut[w.en.toLowerCase()] = w.ex;
@@ -89,7 +97,22 @@ const body =
   '};\n';
 
 fs.writeFileSync(path.join(ROOT, 'lesson-vocab.js'), header + body);
+
+/* ---- words-extra.js: lug'atga qo'shiladigan yangi so'zlar va iboralar ---- */
+const extraHeader =
+  '/* ==========================================================================\n' +
+  '   English Zero-to-Hero — lug\'at qo\'shimchasi (avtomatik yaratilgan)\n' +
+  '   tools/gen-dict.js + tools/build-vocab.js yig\'gan ' + dictExtras.length + ' ta yangi so\'z va ibora\n' +
+  '   (mavzular bo\'yicha: oshxona, sayohat, ish, sog\'liq, texnologiya va h.k.).\n' +
+  '   words-dictionary.js dan KEYIN yuklanadi va DICT_EN_UZ ga qo\'shiladi.\n' +
+  '   ========================================================================== */\n';
+const extraBody = 'DICT_EN_UZ += "\\n" + ' +
+  JSON.stringify(dictExtras.map(function (w) { return String(w.en) + '|' + String(w.uz); })) +
+  '.join("\\n");\n';
+fs.writeFileSync(path.join(ROOT, 'words-extra.js'), extraHeader + extraBody);
+
 console.log('lesson-vocab.js yozildi | misollar:', examplesTotal, '| qo\'shimcha so\'zlar:', extrasTotal);
+console.log('words-extra.js yozildi | yangi lug\'at so\'zlari:', dictExtras.length, '| misolli:', dictExtraWithEx);
 console.log('to\'lmagan darslar:', shortLessons.length ? shortLessons.join(' ') : 'yo\'q');
 console.log('zaxirada qolgan so\'zlar:', pool.length);
 console.log('namuna (dars 1):', JSON.stringify(extrasOut['1']));

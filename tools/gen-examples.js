@@ -41,6 +41,8 @@ PLAN.L.forEach(function (l) {
 PLAN.L.forEach(function (l) {
   (PLAN.plan.extras[l.id] || []).forEach(function (w) { add(w.en, w.uz, l.lv, 1); });
 });
+/* 3) tools/gen-dict.js qo'shgan yangi lug'at so'zlari (mavzular bo'yicha) */
+(PLAN.dictExtras || []).forEach(function (w) { add(w.en, w.uz, w.lv || 'A2', 2); });
 
 const done = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, 'utf8')) : {};
 const queue = Array.from(targets.values())

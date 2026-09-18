@@ -10,7 +10,7 @@ const path = require('path');
 const vm = require('vm');
 
 const ROOT = path.join(__dirname, '..');
-const SCRIPTS = ['reading-a.js', 'reading-b.js', 'reading-c.js', 'words-dictionary.js', 'lesson-vocab.js',
+const SCRIPTS = ['reading-a.js', 'reading-b.js', 'reading-c.js', 'words-dictionary.js', 'words-extra.js', 'lesson-vocab.js',
   'app.js', 'reading-ui.js', 'lesson-plus.js', 'progress-real.js', 'flashcards-pro.js',
   'certificate.js', 'exam.js', 'mock.js', 'voice.js', 'ai.js'];
 
@@ -99,34 +99,48 @@ console.log('— Flashcard bog\u2018lanishi —');
 try { sandbox.fcInstall(); } catch (e) { failures++; console.log('  ❌ fcInstall: ' + e.message); }
 
 ok(typeof sandbox.lessonExtras === 'function', 'lessonExtras() mavjud');
-ok((sandbox.lessonExtras(1) || []).length === 10, 'dars 1 uchun 10 ta qo\u2018shimcha so\u2018z', (sandbox.lessonExtras(1) || []).length);
+ok((sandbox.lessonExtras(1) || []).length === 20, 'dars 1 uchun 20 ta qo\u2018shimcha so\u2018z', (sandbox.lessonExtras(1) || []).length);
 ok((sandbox.lessonExtras(1) || []).every(function (w) { return w.ex && w.uz; }), 'har bir qo\u2018shimcha so\u2018zda misol gap bor');
 ok(sandbox.window.wordsOfLesson === sandbox.wordsOfLesson, 'wordsOfLesson app.js dan almashtirilgan');
 
 const lesson1 = sandbox.wordsOfLesson(1);
-ok(lesson1.length === 30, 'dars 1: 20 dars so\u2018zi + 10 qo\u2018shimcha = 30 karta', lesson1.length);
+ok(lesson1.length === 40, 'dars 1: 20 dars so\u2018zi + 20 qo\u2018shimcha = 40 karta', lesson1.length);
 ok(lesson1.slice(20).every(function (w) { return w.x && w.ex; }), 'qo\u2018shimcha kartalarda misol gap va belgisi bor');
 const withEx = lesson1.filter(function (w) { return w.ex; }).length;
-ok(withEx >= 25, 'dars 1 kartalarida misol gaplar: ' + withEx + '/30');
+ok(withEx >= 35, 'dars 1 kartalarida misol gaplar: ' + withEx + '/40');
 
 const all = sandbox.buildAllWords();
-ok(all.length > 10000, 'butun lug\u2018at 10 000+ so\u2018z: ' + all.length);
+ok(all.length > 11500, 'butun lug\u2018at 11 500+ so\u2018z: ' + all.length);
 ok(all.filter(function (w) { return w.ex; }).length > 1000, 'lug\u2018atda misol gapli so\u2018zlar: ' + all.filter(function (w) { return w.ex; }).length);
 
 console.log('— Karta chizilishi —');
+ok((sandbox.window.fcWords || []).length > 11000, 'birinci ochilishda butun lug\u2018at yuklanadi: ' + (sandbox.window.fcWords || []).length);
+
+/* Karta aylanishi (flip) — butun karta va so\u2018zning o\u2018zi bosilganda ishlashi kerak */
+const card = byId('fcCard');
+sandbox.fcFlip({ target: byId('fw') });
+ok(card.classList.contains('flp'), 'karta orqasiga aylanadi');
+sandbox.fcFlip({ target: byId('fw') });
+ok(!card.classList.contains('flp'), 'karta yana oldiga qaytadi');
+sandbox.fcFlip({ target: byId('fm') });
+const flipped = card.classList.contains('flp');
+ok(flipped, 'orqa tomondagi matnni bosganda ham aylanadi');
+sandbox.fcFlip({ target: byId('fcCard') });
+ok(String(byId('fcHint').innerHTML).length > 0, 'karta izohi (hint) yangilanadi');
+
 sandbox.fcExtrasMode(null);
-ok((sandbox.window.fcWords || []).length === 10, '➕ rejimida 10 so\u2018z', (sandbox.window.fcWords || []).length);
+ok((sandbox.window.fcWords || []).length === 20, '➕ rejimida 20 so\u2018z', (sandbox.window.fcWords || []).length);
 ok(byId('fw').textContent === sandbox.window.fcWords[0].en, 'karta old tomoni so\u2018zni ko\u2018rsatadi', byId('fw').textContent);
 ok(byId('fm').textContent === sandbox.window.fcWords[0].uz, 'karta orqasi tarjimani ko\u2018rsatadi', byId('fm').textContent);
 ok(byId('fe').textContent === sandbox.window.fcWords[0].ex, 'misol gap chiziladi: ' + byId('fe').textContent);
 ok(byId('feu').textContent === sandbox.window.fcWords[0].exUz, 'misol gap tarjimasi chiziladi');
-ok(byId('fp').textContent === '1 / 10', 'sanoq: ' + byId('fp').textContent);
-ok(byId('fcBar').style.width === '10%', 'progress: ' + byId('fcBar').style.width);
+ok(byId('fp').textContent === '1 / 20', 'sanoq: ' + byId('fp').textContent);
+ok(byId('fcBar').style.width === '5%', 'progress: ' + byId('fcBar').style.width);
 ok(byId('fcBad').style.display === 'inline-block', 'qo\u2018shimcha so\u2018z belgisi ko\u2018rinadi');
-ok(String(byId('fcStats').innerHTML).indexOf('10 ta karta') > -1, 'statistika chiziladi');
+ok(String(byId('fcStats').innerHTML).indexOf('20 ta karta') > -1, 'statistika chiziladi');
 
 sandbox.fcLessonMode(null);
-ok((sandbox.window.fcWords || []).length === 30, '📘 dars rejimida 30 so\u2018z', (sandbox.window.fcWords || []).length);
+ok((sandbox.window.fcWords || []).length === 40, '📘 dars rejimida 40 so\u2018z', (sandbox.window.fcWords || []).length);
 sandbox.fcAllMode(null);
 ok((sandbox.window.fcWords || []).length > 10000, '📚 butun lug\u2018at rejimi', (sandbox.window.fcWords || []).length);
 sandbox.fcExampleMode(null);
@@ -142,8 +156,31 @@ ok(sandbox.fcFavs().indexOf(sandbox.fcCurrentWord().en) > -1, 'Sevimlilar belgis
 
 console.log('— Dars sahifasi lug\u2018ati —');
 const vf = sandbox.vocabFor(3);
-ok((vf || []).length === 10, 'dars 3 qo\u2018shimcha so\u2018zlari: ' + ((vf || []).length));
+ok((vf || []).length === 20, 'dars 3 qo\u2018shimcha so\u2018zlari: ' + ((vf || []).length));
 ok((vf || []).every(function (w) { return w.ex; }), 'dars lug\u2018atida misol gaplar bor');
+
+/* ---------- index.html dagi barcha tugmalar ishlaydimi? ---------- */
+console.log('— Tugmalar (inline onclick/oninput) —');
+const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+const BUILTIN = ['event', 'this', 'window', 'document', 'localStorage', 'navigator', 'location', 'alert', 'confirm',
+  'parseInt', 'parseFloat', 'String', 'Number', 'JSON', 'Math', 'Date', 'Object', 'Array', 'if', 'for', 'while',
+  'return', 'function', 'typeof', 'new', 'true', 'false', 'null', 'undefined', 'catch', 'console'];
+const handlers = html.match(/on(?:click|change|input|keydown|submit|load)="[^"]*"/g) || [];
+const missing = {};
+handlers.forEach(function (h) {
+  const re = /(?:^|[^.\w$])([A-Za-z_$][\w$]*)\s*\(/g;
+  let m;
+  while ((m = re.exec(h)) !== null) {
+    const name = m[1];
+    if (BUILTIN.indexOf(name) > -1) continue;
+    if (typeof sandbox[name] !== 'function') missing[name] = (missing[name] || 0) + 1;
+  }
+});
+const missingList = Object.keys(missing);
+ok(missingList.length === 0, 'barcha tugma funksiyalari mavjud (' + handlers.length + ' handler)', missingList.join(', '));
+['fcAllMode', 'fcLessonMode', 'fcExtrasMode', 'fcFlip', 'fcSpeakExample', 'fcRandom', 'setFL', 'doS'].forEach(function (f) {
+  ok(typeof sandbox[f] === 'function', 'global funksiya: ' + f);
+});
 
 console.log('');
 if (failures) { console.log('❌ ' + failures + ' ta tekshiruv muvaffaqiyatsiz'); process.exit(1); }

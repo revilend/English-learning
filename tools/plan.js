@@ -97,4 +97,13 @@ function buildPlan() {
   return { lessons: L, lessonWords: lessonWords, extras: extras };
 }
 
-module.exports = { L: L, DICT_WORDS: DICT_WORDS, BANDS: BANDS, goodWord: goodWord, plan: buildPlan() };
+/* tools/gen-dict.js to'plagan qo'shimcha lug'at (mavzular bo'yicha) */
+const DICT_EXTRA_FILE = path.join(__dirname, 'dict-extra.json');
+const dictExtras = fs.existsSync(DICT_EXTRA_FILE)
+  ? (JSON.parse(fs.readFileSync(DICT_EXTRA_FILE, 'utf8')).words || [])
+  : [];
+
+module.exports = {
+  L: L, DICT_WORDS: DICT_WORDS, BANDS: BANDS, goodWord: goodWord,
+  plan: buildPlan(), dictExtras: dictExtras
+};

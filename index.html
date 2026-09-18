@@ -98,7 +98,7 @@
     <div class="cd card-hover" onclick="go('p3')">
       <div style="font-size:1.8rem;margin-bottom:6px">🃏</div>
       <h3 style="margin-bottom:5px">Flashcards</h3>
-      <p style="color:var(--tx2);font-size:.83rem;margin-bottom:10px">10 000+ so'z kartochkalari, tarjima, sevimlilar va qidiruv.</p>
+      <p style="color:var(--tx2);font-size:.83rem;margin-bottom:10px">11 700+ so'z kartochkalari, misol gaplar, tarjima, sevimlilar va qidiruv.</p>
       <span class="btn bs bo" style="width:100%;justify-content:center">O'rganish <i class="fa-solid fa-arrow-right"></i></span>
     </div>
     <div class="cd card-hover" onclick="go('p4')">
@@ -232,12 +232,12 @@
     <button class="btn bo bs" onclick="go('p0')"><i class="fa-solid fa-arrow-left"></i> Bosh</button>
   </div>
   <h2 class="pt">🃏 Flashcards</h2>
-  <p class="ps"><b>10 000+ so'z</b> — eng ko'p ishlatiladigan ingliz so'zlari, kurs so'zlari va har bir darsga qo'shilgan <b>10 ta qo'shimcha so'z</b>. Har bir so'z uchun <b>misol gap</b> va uning o'zbekcha tarjimasi bor: kartani bosing, tarjimani o'qing, ovozni eshiting.</p>
+  <p class="ps"><b>11 700+ so'z va ibora</b> — eng ko'p ishlatiladigan ingliz so'zlari, mavzuli lug'at (oshxona, sayohat, ish, sog'liq, texnologiya...) va har bir darsga qo'shilgan <b>20 ta qo'shimcha so'z</b>. Har bir so'z uchun <b>misol gap</b> va uning o'zbekcha tarjimasi bor: kartani bosing — tarjima, misol gap va uning tarjimasi chiqadi.</p>
 
   <div class="fcstats" id="fcStats"></div>
 
   <div class="tabs" id="ft">
-    <button class="tab ac" onclick="fcAllMode(this)">Umumiy lug'at (10 000+)</button>
+    <button class="tab ac" onclick="fcAllMode(this)">Umumiy lug'at (11 700+)</button>
     <button class="tab" onclick="fcLessonMode(this)">Dars so'zlari</button>
     <button class="tab" onclick="fcExtrasMode(this)">➕ Qo'shimcha so'zlar</button>
   </div>
@@ -256,11 +256,11 @@
       <div class="fci">
         <div class="fcf">
           <div class="fcbadge" id="fcBad"></div>
-          <div class="fcw2" id="fw" onclick="event.stopPropagation();speakWord(this.textContent)">...</div>
+          <div class="fcw2" id="fw">...</div>
           <div class="fcsound" onclick="event.stopPropagation();speakWord(document.getElementById('fw').textContent)">
             <i class="fa-solid fa-volume-high"></i> Talaffuz
           </div>
-          <div class="fch"><i class="fa-solid fa-hand-pointer"></i> Tarjima va misol gap uchun bosing</div>
+          <div class="fch" id="fcHint"><i class="fa-solid fa-hand-pointer"></i> Tarjima va misol gap uchun bosing</div>
         </div>
         <div class="fcb">
           <div class="fcm" id="fm"></div>
@@ -284,7 +284,7 @@
     <button class="btn bo bs" onclick="fcRandom()"><i class="fa-solid fa-dice"></i> Tasodifiy</button>
   </div>
 
-  <div class="st2"><i class="fa-solid fa-magnifying-glass"></i> Butun lug'atdan qidirish (10 000+ so'z)</div>
+  <div class="st2"><i class="fa-solid fa-magnifying-glass"></i> Butun lug'atdan qidirish (11 700+ so'z)</div>
   <div class="cd" style="cursor:default">
     <input class="inp" id="si" placeholder="So'z yoki tarjima qidirish (misol gaplar bilan)..." onkeydown="if(event.key==='Enter')doS()">
     <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
@@ -462,6 +462,7 @@
 <script src="reading-b.js"></script>
 <script src="reading-c.js"></script>
 <script src="words-dictionary.js"></script>
+<script src="words-extra.js"></script>
 <script src="lesson-vocab.js"></script>
 <script src="app.js"></script>
 <script src="reading-ui.js"></script>

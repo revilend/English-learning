@@ -187,6 +187,7 @@ function fcRenderCard() {
   if (bar) bar.style.width = Math.round((i + 1) / list.length * 100) + '%';
   var card = document.getElementById('fcCard');
   if (card) card.classList.remove('flp');
+  fcHint(false);
   fcRefresh();
 }
 function fCard() { fcRenderCard(); }
@@ -371,14 +372,31 @@ function fcInstall() {
   if (tabs && !document.getElementById('fcCtl')) {
     tabs.insertAdjacentHTML('afterend', '<div id="fcCtl">' + fcControlsHtml() + '</div>');
   }
-  if (!fcList().length) fcSetWords(fcAppWords(), '');
+  /* Birinchi ochilishda ro'yxat app.js ning kichik so'z banki (130 so'z) bilan
+     to'ldirilgan bo'ladi — uni butun 10 000+ so'zli lug'at bilan almashtiramiz,
+     shunda hech bir so'z "yo'qolib" qolmaydi. */
+  if (!fcList().length || fcList().length < 500) fcSetWords(fcAppWords(), '');
   else fcRenderCard();
 }
+/* Kartani aylantirish: butun karta bosilganda ishlaydi (so'zning o'zi ham).
+   Faqat "Talaffuz" va "Misolni eshitish" tugmalari ovoz chiqaradi. */
 function fcFlip(ev) {
   var card = document.getElementById('fcCard');
   if (!card) return;
-  card.classList.toggle('flp');
-  if (ev && ev.target && ev.target.closest && ev.target.closest('.fcsay,.fcsound')) return;
+  var target = ev && ev.target;
+  if (target && target.closest) {
+    if (target.closest('.fcsound') || target.closest('.fcsay')) return;
+  }
+  var open = card.classList.toggle('flp');
+  fcHint(open);
+}
+function fcHint(open) {
+  var h = document.getElementById('fcHint');
+  if (h) {
+    h.innerHTML = open
+      ? '<i class="fa-solid fa-rotate-left"></i> So\u2018z tomoniga qaytish uchun bosing'
+      : '<i class="fa-solid fa-hand-pointer"></i> Tarjima va misol gap uchun bosing';
+  }
 }
 function fcKeys(e) {
   if (!e || !e.key) return;
@@ -410,6 +428,7 @@ if (typeof window !== 'undefined') {
   window.fcExampleMode = fcExampleMode;
   window.fcAutoToggle = fcAutoToggle;
   window.fcFlip = fcFlip;
+  window.fcHint = fcHint;
   window.fcSpeakExample = fcSpeakExample;
   window.fcRenderCard = fcRenderCard;
   window.fcRefresh = fcRefresh;
